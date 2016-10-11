@@ -31,13 +31,43 @@ header nav ul {
 header nav ul li {
     flex: 1;
 }
-header, header nav ul li a, footer {
+header, header a, footer {
     color: #FFFFFF;
 }
 header nav ul li a {
+    display: inline-block;
+    padding: 20px;
+    white-space: nowrap;
+}
+header a {
     text-decoration: none;
-    padding: 2%;
-    display: block;
+}
+header > div {
+    position: absolute;
+    right: 80px;
+    top: 25px;
+    text-align: right;
+    white-space: nowrap;
+}
+header div button {
+    width: 100px;
+    margin-left: 6px;
+}
+header div button a {
+    color: #252525;
+}
+header nav ul .submenu {
+    background-color: #252525;
+    position: absolute;
+    visibility: hidden;
+}
+header nav ul a:hover ~ .submenu, .submenu:hover {
+    visibility: visible;
+}
+
+/* SECTION */
+section {
+    padding: 1% 2%;
 }
 
 /* FOOTER */
