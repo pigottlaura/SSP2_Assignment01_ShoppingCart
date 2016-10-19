@@ -5,9 +5,9 @@
         }
 
         public function validateLogin($username, $password){
-            $dataValidated = validateData::validate();
+            $dataValidated = InputData::validate();
             if($dataValidated == true){
-                SanitiseData::sanitise();
+                InputData::sanitise();
                 $database = Database::getInstance();
                 $this->createNewSession($username);
             } else {
