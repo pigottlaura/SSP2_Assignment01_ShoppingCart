@@ -63,10 +63,12 @@ CREATE table sOrder_items (
 
 INSERT INTO sCategory(name) VALUES("All Products");
 INSERT INTO sCategory(name) VALUES("Teddy Bears");
+INSERT INTO sCategory(name) VALUES("Toy Cars");
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Teddy Bear", "Brown cuddly bear", 12.00, "teddy-bear.png", 2);
-INSERT INTO sProduct(name, description, price, image, category) VALUES("Car", "", 10.00, "car.jpg", 1);
+INSERT INTO sProduct(name, description, price, image, category) VALUES("Car", "", 10.00, "car.jpg", 3);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Giraffe", "", 18.00, "giraffe.jpg", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Monkey", "", 14.00, "monkey.jpg", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Minion", "", 12.00, "minion.png", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Furby", "", 12.00, "furby.png", 1);
-SELECT * from sProduct;
+#SELECT * from sProduct;
+#SELECT * from sCategory;

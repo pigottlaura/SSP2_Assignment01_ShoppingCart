@@ -30,11 +30,11 @@
         ?>
         <section>
             <?php
-                if(isset($_GET["page"])){
-                    if($_GET["page"] == "products"){
+                if(isset($_GET["page"])) {
+                    if ($_GET["page"] == "products") {
                         $category = isset($_GET["category"]) && $_GET["category"] > 0 ? $_GET["category"] : 1;
                         $products = Database::getProducts(10, $category);
-                        foreach($products as $product){
+                        foreach ($products as $product) {
                             echo "<div class='productContainer'>";
                             echo "<h4>" . $product["name"] . "</h4>";
                             echo "<figure>";
@@ -45,12 +45,12 @@
                             echo "<a class='addToCart' href='?" . $_SERVER['QUERY_STRING'] . "&productId=" . $product["id"] . "'><button>Add to Cart</button></a>";
                             echo "</div>";
                         }
-                    } else if($_GET["page"] == "shopping-cart"){
-                        if($_SESSION["shopping_session"]->shopping_cart->getTotalNumItems() > 0){
+                    } else if ($_GET["page"] == "shopping-cart") {
+                        if ($_SESSION["shopping_session"]->shopping_cart->getTotalNumItems() > 0) {
                             $orderTotal = 0;
 
                             echo "<h1>Order Details</h1>";
-                            foreach($_SESSION["shopping_session"]->shopping_cart->getItemsDetails() as $item => $itemInfo){
+                            foreach ($_SESSION["shopping_session"]->shopping_cart->getItemsDetails() as $item => $itemInfo) {
                                 $numItems = $_SESSION["shopping_session"]->shopping_cart->getItem($itemInfo["id"])->numItems;
                                 $orderTotal += $itemInfo["price"] * $numItems;
 
@@ -61,7 +61,17 @@
                                 echo "</div>";
                             }
                             echo "Total: €" . $orderTotal;
+                            echo "<a href='page.php?page=order'><button>Place Order</button></a>";
+                            $_SESSION["shopping_session"]->shopping_cart->orderTotal = $orderTotal;
                         }
+                    } else if ($_GET["page"] == "order") {
+                        echo "PLACING ORDER... Order Total: €" . $_SESSION["shopping_session"]->shopping_cart->orderTotal;
+                    } else if($_GET["page"] == "login-register") {
+                        include("./includes/templates/login_form.inc");
+                        include("./includes/templates/register_form.inc");
+                    } else {
+                        echo "<h1>Welcome to My Shopping Cart</h1>";
+                        echo "<h2>The one stop shop for toys</h2>";
                     }
                 }
             ?>

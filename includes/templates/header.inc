@@ -17,7 +17,7 @@
         </ul>
     </nav>
     <div>
-        <a href="?page=login">Login/Register</a>
+        <a href="?page=login-register">Login/Register</a>
         <button>
             <a href="?page=shopping-cart">
                 View Cart
