@@ -61,8 +61,8 @@ CREATE table sOrder_items (
 	CONSTRAINT orderitems_pk PRIMARY KEY(order_id, product_id)
 );
 
-INSERT INTO sCategory(name) VALUES("general");
-INSERT INTO sCategory(name) VALUES("teddy bears");
+INSERT INTO sCategory(name) VALUES("All Products");
+INSERT INTO sCategory(name) VALUES("Teddy Bears");
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Teddy Bear", "Brown cuddly bear", 12.00, "teddy-bear.png", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Car", "", 10.00, "car.jpg", 1);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Giraffe", "", 18.00, "giraffe.jpg", 2);

@@ -43,8 +43,21 @@
             return $tempTotal;
         }
 
-        public function getItems(){
-            return $this->_items;
+        public function getItem($itemId){
+            $tempItem = null;
+            foreach($this->_items as $key => $value){
+                if($key == $itemId){
+                    $tempItem = $value;
+                }
+            }
+            return $tempItem;
+        }
+        public function getItemsDetails(){
+            $itemIds = array();
+            foreach($this->_items as $item) {
+                array_push($itemIds, $item->itemId);
+            }
+            return Database::getOrderProductInfo($itemIds);
         }
 
         public function getTotalNumItems(){

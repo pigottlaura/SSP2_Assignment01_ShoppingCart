@@ -4,12 +4,14 @@
         <ul>
             <li><a href="?page=home">Home</a></li>
             <li><a href="?page=products">Products</a>
-                <ul class="submenu">
-                    <li><a href="?page=products&category=1">All Products</a></li>
-                    <li><a href="?page=products&category=2">Teddy Bears</a></li>
-                    <li><a href="?page=products&category=3">Category03</a></li>
-                    <li><a href="?page=products&category=4">Category04</a></li>
-                </ul>
+                <?php
+                    echo "<ul class='submenu'>";
+                    $categories = Database::getCategories();
+                    foreach($categories as $key => $category) {
+                        echo "<li><a href='?page=products&category=" . $category["id"] . "'>" . $category["name"] . "</a></li>";
+                    }
+                    echo "</ul>";
+                ?>
             </li>
             <li><a href="?page=contact-us">Contact Us</a></li>
         </ul>

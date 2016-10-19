@@ -46,8 +46,21 @@
                             echo "</div>";
                         }
                     } else if($_GET["page"] == "shopping-cart"){
-                        foreach($_SESSION["shopping_session"]->shopping_cart->getItems() as $item => $itemDetails){
+                        if($_SESSION["shopping_session"]->shopping_cart->getTotalNumItems() > 0){
+                            $orderTotal = 0;
 
+                            echo "<h1>Order Details</h1>";
+                            foreach($_SESSION["shopping_session"]->shopping_cart->getItemsDetails() as $item => $itemInfo){
+                                $numItems = $_SESSION["shopping_session"]->shopping_cart->getItem($itemInfo["id"])->numItems;
+                                $orderTotal += $itemInfo["price"] * $numItems;
+
+                                echo "<div class='cartItemContainer'>";
+                                echo "<img src='./images/products/" . $itemInfo["image"] . "' alt='" . $itemInfo["name"] . "'>";
+                                echo "<strong>" . $itemInfo["name"] . "</strong>";
+                                echo " @ €" . $itemInfo["price"] . " x " . $numItems . " = €" . ($itemInfo["price"] * $numItems);
+                                echo "</div>";
+                            }
+                            echo "Total: €" . $orderTotal;
                         }
                     }
                 }

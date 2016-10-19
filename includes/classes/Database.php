@@ -43,12 +43,26 @@
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        static public function getOrderProductInfo($productIds){
+            $productIdsString = implode(",", $productIds);
+            $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE id IN ($productIdsString);");
+            $statement->execute();
+
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         static public function getItemPrice($itemId){
-            $statement = self::getConnection()->prepare("SELECT price FROM sProduct WHERE id = :itemId");
+            $statement = self::getConnection()->prepare("SELECT price FROM sProduct WHERE id = :itemId;");
             $statement->bindParam(":itemId", $itemId);
             $statement->execute();
             $price = $statement->fetch(PDO::FETCH_ASSOC)["price"];
             return $price;
+        }
+
+        static public function getCategories(){
+            $statement = self::getConnection()->prepare("SELECT * FROM sCategory;");
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
     }

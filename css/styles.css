@@ -80,7 +80,10 @@ footer {
 /* PRODUCTS */
 .productContainer {
     display: inline-block;
-    width: 25%;
+    width: 22%;
+    margin: 1% 2% 4% 1%;
+    box-sizing: border-box;
+    text-align: center;
 }
 .productContainer img {
     height: 100px;
@@ -88,4 +91,16 @@ footer {
 }
 .productContainer figure {
     margin: 2px;
+}
+
+/* CART ITEMS */
+.cartItemContainer {
+    margin: 2% 0;
+}
+.cartItemContainer img {
+    height: 40px;
+    display: inline;
+}
+.cartItemContainer * {
+    vertical-align: middle;
 }
