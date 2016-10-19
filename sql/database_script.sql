@@ -1,4 +1,5 @@
 DROP DATABASE SSP2_Assignment01;
+DROP DATABASE SSP2_Assignment01;
 CREATE DATABASE SSP2_Assignment01;
 use SSP2_Assignment01;
 
@@ -46,9 +47,9 @@ CREATE table sUser (
 CREATE table sOrder (
 	id INT(10) AUTO_INCREMENT,
 	ordered_by INT(10) NOT NULL,
-	date_ordered DATETIME DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT productOrder_fk FOREIGN KEY (ordered_by) REFERENCES sUser(id),
-	CONSTRAINT productOrder_pk PRIMARY KEY (id)
+	date_ordered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT order_fk FOREIGN KEY (ordered_by) REFERENCES sUser(id),
+	CONSTRAINT order_pk PRIMARY KEY (id)
 );
 
 CREATE table sOrder_items (

@@ -7,7 +7,7 @@
                     array_splice($queryArray, $key, 1);
                 }
             }
-            $rebuiltQueryString = implode($queryArray);
+            $rebuiltQueryString = implode("&", $queryArray);
             header("Location: " . $page . "?" . $rebuiltQueryString);
             die();
         }
