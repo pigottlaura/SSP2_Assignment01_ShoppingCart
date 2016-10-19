@@ -63,10 +63,10 @@ CREATE table sOrder_items (
 
 INSERT INTO sCategory(name) VALUES("general");
 INSERT INTO sCategory(name) VALUES("teddy bears");
-INSERT INTO sProduct(name, description, price, image, category) VALUES("Teddy Bear", "Brown cuddly bear", 12.99, "teddy-bear.png", 2);
-INSERT INTO sProduct(name, description, price, image, category) VALUES("Car", "", 10.99, "car.jpg", 1);
-INSERT INTO sProduct(name, description, price, image, category) VALUES("Giraffe", "", 18.99, "giraffe.jpg", 2);
-INSERT INTO sProduct(name, description, price, image, category) VALUES("Monkey", "", 14.99, "monkey.jpg", 2);
-INSERT INTO sProduct(name, description, price, image, category) VALUES("Minion", "", 12.99, "minion.png", 2);
-INSERT INTO sProduct(name, description, price, image, category) VALUES("Furby", "", 12.99, "furby.png", 1);
+INSERT INTO sProduct(name, description, price, image, category) VALUES("Teddy Bear", "Brown cuddly bear", 12.00, "teddy-bear.png", 2);
+INSERT INTO sProduct(name, description, price, image, category) VALUES("Car", "", 10.00, "car.jpg", 1);
+INSERT INTO sProduct(name, description, price, image, category) VALUES("Giraffe", "", 18.00, "giraffe.jpg", 2);
+INSERT INTO sProduct(name, description, price, image, category) VALUES("Monkey", "", 14.00, "monkey.jpg", 2);
+INSERT INTO sProduct(name, description, price, image, category) VALUES("Minion", "", 12.00, "minion.png", 2);
+INSERT INTO sProduct(name, description, price, image, category) VALUES("Furby", "", 12.00, "furby.png", 1);
 SELECT * from sProduct;

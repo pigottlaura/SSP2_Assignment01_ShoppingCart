@@ -17,9 +17,10 @@
             } else {
                 //echo "existing session";
             }
-            if(isset($_POST["addToOrder"])){
-            } else if(isset($_POST["removeFromOrder"])){
-
+            if(isset($_GET["productId"])){
+                $_SESSION["shopping_session"]->shopping_cart->addItem($_GET["productId"]);
+            } else if(isset($_GET["emptyCart"])) {
+                $_SESSION["shopping_session"]->shopping_cart->emptyCart();
             }
         ?>
     </head>
@@ -41,7 +42,12 @@
                             echo "<figcaption>" . $product["description"] . "</figcaption>";
                             echo "</figure>";
                             echo "<div class='price'>€" . $product["price"] . "</div>";
+                            echo "<a class='addToCart' href='?" . $_SERVER['QUERY_STRING'] . "&productId=" . $product["id"] . "'><button>Add to Cart</button></a>";
                             echo "</div>";
+                        }
+                    } else if($_GET["page"] == "shopping-cart"){
+                        foreach($_SESSION["shopping_session"]->shopping_cart->getItems() as $item => $itemDetails){
+
                         }
                     }
                 }

@@ -3,18 +3,18 @@
         private $_items;
 
         public function __construct(){
-            $this->_items = (object) array();
+            $this->emptyCart();
         }
 
-        public function addItem($item){
+        public function addItem($itemId){
             // If this item is already in the order, just add one to it's total
-            if(isset($this->_items[$item->name])){
-                $this->_items[$item->name]["numItems"] += 1;
+            if(isset($this->_items->$itemId)){
+                $this->_items->$itemId->numItems += 1;
             } else {
                 // This is the first time this item has been added to this array
-                $this->_items[$item->name] = array(
-                    "numItems" => 1,
-                    "item" => $item
+                $this->_items->$itemId = (object) array(
+                    "itemId" => $itemId,
+                    "numItems" => 1
                 );
             }
         }
@@ -37,18 +37,26 @@
 
         public function calculateTotal(){
             $tempTotal = 0;
-            foreach($this->_items as $itemName => $itemDetails){
-                $tempTotal += ($itemDetails["numItems"] * $itemDetails["item"]->price);
+            foreach($this->_items as $itemId => $itemDetails){
+                $tempTotal += ($itemDetails->numItems * Database::getItemPrice($itemId));
             }
             return $tempTotal;
+        }
+
+        public function getItems(){
+            return $this->_items;
         }
 
         public function getTotalNumItems(){
             $tempTotal = 0;
             foreach($this->_items as $itemName => $itemDetails){
-                $tempTotal += $itemDetails["numItems"];
+                $tempTotal += $itemDetails->numItems;
             }
             return $tempTotal;
+        }
+
+        public function emptyCart(){
+            $this->_items = (object) array();
         }
     }
 ?>

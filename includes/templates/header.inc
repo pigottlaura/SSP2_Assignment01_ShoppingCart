@@ -24,5 +24,11 @@
                 ?>
             </a>
         </button>
+        <p>
+            Total:
+            <?php
+                echo "€" . $_SESSION["shopping_session"]->shopping_cart->calculateTotal();
+            ?>
+        </p>
     </div>
 </header>
