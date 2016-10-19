@@ -8,6 +8,15 @@
         <script src="js/script.js"></script>
         <?php
             include_once("./autoloader.php");
+            session_start();
+            if(!$_SESSION) {
+                $_SESSION["shopping_session"] = (object) array(
+                    "shopping_cart" => new ShoppingCart()
+                );
+                echo "new session";
+            } else {
+                echo "existing session";
+            }
         ?>
     </head>
     <body>

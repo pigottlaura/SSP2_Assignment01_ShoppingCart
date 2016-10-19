@@ -16,6 +16,13 @@
     </nav>
     <div>
         <a href="?page=login">Login/Register</a>
-        <button><a href="?page=shopping-cart">View Cart (0)</a></button>
+        <button>
+            <a href="?page=shopping-cart">
+                View Cart
+                <?php
+                    echo "(" . $_SESSION["shopping_session"]->shopping_cart->getTotalNumItems() . ")";
+                ?>
+            </a>
+        </button>
     </div>
 </header>
