@@ -19,8 +19,10 @@
             }
             if(isset($_GET["productId"])){
                 $_SESSION["shopping_session"]->shopping_cart->addItem($_GET["productId"]);
+                Functions::removeFromQueryString($_SERVER['QUERY_STRING'], "productId=", "page.php");
             } else if(isset($_GET["emptyCart"])) {
                 $_SESSION["shopping_session"]->shopping_cart->emptyCart();
+                Functions::removeFromQueryString($_SERVER['QUERY_STRING'], "emptyCart", "page.php");
             }
         ?>
     </head>
@@ -61,8 +63,11 @@
                                 echo "</div>";
                             }
                             echo "Total: €" . $orderTotal;
-                            echo "<a href='page.php?page=order'><button>Place Order</button></a>";
+                            echo "<a href='page.php?page=order'><button class='placeOrder'>Place Order</button></a>";
+                            echo "<a href='page.php?page=shopping-cart&emptyCart'><button>Empty Cart</button></a>";
                             $_SESSION["shopping_session"]->shopping_cart->orderTotal = $orderTotal;
+                        } else {
+                            echo "<h1>Shopping Cart is Empty</h1>";
                         }
                     } else if ($_GET["page"] == "order") {
                         echo "PLACING ORDER... Order Total: €" . $_SESSION["shopping_session"]->shopping_cart->orderTotal;

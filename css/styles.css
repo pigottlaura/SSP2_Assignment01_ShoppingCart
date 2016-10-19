@@ -104,3 +104,7 @@ footer {
 .cartItemContainer * {
     vertical-align: middle;
 }
+
+.placeOrder {
+    margin-left: 50px;
+}

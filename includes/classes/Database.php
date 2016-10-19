@@ -14,6 +14,7 @@
             if(!isset(self::$_connection)){
                 try {
                     self::$_connection = new PDO("mysql:host=localhost;dbname=SSP2_Assignment01", "root", "");
+                    //self::$_connection = new PDO("mysql:host=mysql2275.cp.blacknight.com;dbname=db1281003_SSP2_Assignment01", "u1281003_root", "ABCdef123456");
                     self::$_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 } catch (PDOException $err) {
                     echo "Error - " . $err->getMessage();

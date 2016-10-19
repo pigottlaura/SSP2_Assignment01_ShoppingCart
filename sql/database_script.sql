@@ -19,19 +19,6 @@ CREATE table sProduct (
 	CONSTRAINT product_pk PRIMARY KEY (id)
 );
 
-CREATE table sUser (
-	id INT(10) AUTO_INCREMENT,
-	first_name VARCHAR(20) NOT NULL,
-	last_name VARCHAR(20) NOT NULL,
-	address INT(10),
-	email VARCHAR(50) NOT NULL,
-	username VARCHAR(50) NOT NULL,
-	password VARCHAR(250) NOT NULL,
-	CONSTRAINT users_unique UNIQUE (email, username),
-	CONSTRAINT users_address FOREIGN KEY (address) REFERENCES sAddress(id),
-	CONSTRAINT users_pk PRIMARY KEY (id)
-);
-
 CREATE table sAddress (
 	id INT(10) AUTO_INCREMENT,
 	address_houseNumber INT(4),
@@ -42,6 +29,18 @@ CREATE table sAddress (
 	address_country VARCHAR(40),
 	address_zipCode VARCHAR(40),
 	CONSTRAINT address_pk PRIMARY KEY (id)
+);
+
+CREATE table sUser (
+	id INT(10) AUTO_INCREMENT,
+	first_name VARCHAR(20) NOT NULL,
+	last_name VARCHAR(20) NOT NULL,
+	address INT(10),
+	email VARCHAR(50) NOT NULL,
+	username VARCHAR(50) UNIQUE NOT NULL,
+	password VARCHAR(250) UNIQUE NOT NULL,
+	CONSTRAINT users_address FOREIGN KEY (address) REFERENCES sAddress(id),
+	CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
 CREATE table sOrder (
@@ -70,5 +69,3 @@ INSERT INTO sProduct(name, description, price, image, category) VALUES("Giraffe"
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Monkey", "", 14.00, "monkey.jpg", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Minion", "", 12.00, "minion.png", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Furby", "", 12.00, "furby.png", 1);
-#SELECT * from sProduct;
-#SELECT * from sCategory;
