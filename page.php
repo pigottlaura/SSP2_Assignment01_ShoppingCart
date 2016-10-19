@@ -13,9 +13,13 @@
                 $_SESSION["shopping_session"] = (object) array(
                     "shopping_cart" => new ShoppingCart()
                 );
-                echo "new session";
+                //echo "new session";
             } else {
-                echo "existing session";
+                //echo "existing session";
+            }
+            if(isset($_POST["addToOrder"])){
+            } else if(isset($_POST["removeFromOrder"])){
+
             }
         ?>
     </head>
@@ -26,7 +30,20 @@
         <section>
             <?php
                 if(isset($_GET["page"])){
-                    echo $_GET["page"];
+                    if($_GET["page"] == "products"){
+                        $category = isset($_GET["category"]) && $_GET["category"] > 0 ? $_GET["category"] : 1;
+                        $products = Database::getProducts(10, $category);
+                        foreach($products as $product){
+                            echo "<div class='productContainer'>";
+                            echo "<h4>" . $product["name"] . "</h4>";
+                            echo "<figure>";
+                            echo "<img src='./images/products/" . $product["image"] . "' alt='" . $product["name"] . "'>";
+                            echo "<figcaption>" . $product["description"] . "</figcaption>";
+                            echo "</figure>";
+                            echo "<div class='price'>€" . $product["price"] . "</div>";
+                            echo "</div>";
+                        }
+                    }
                 }
             ?>
         </section>

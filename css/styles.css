@@ -76,3 +76,16 @@ footer {
     bottom: 0;
     padding: 1%;
 }
+
+/* PRODUCTS */
+.productContainer {
+    display: inline-block;
+    width: 25%;
+}
+.productContainer img {
+    height: 100px;
+    width: auto;
+}
+.productContainer figure {
+    margin: 2px;
+}

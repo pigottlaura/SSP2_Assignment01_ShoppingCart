@@ -2,7 +2,7 @@
     class Database {
         private static $_database;
         private static $allowCreate = false;
-        private $_connection;
+        private static $_connection;
 
         public function __construct(){
             if(!self::$allowCreate){
@@ -10,25 +10,37 @@
             }
         }
 
-        static public function getInstance(){
-            if(!isset(self::$_database)){
-                self::$allowCreate = true;
-                self::$_database = new Database();
-                self::$allowCreate = false;
+        static public function getConnection(){
+            if(!isset(self::$_connection)){
+                try {
+                    self::$_connection = new PDO("mysql:host=localhost;dbname=SSP2_Assignment01", "root", "");
+                    self::$_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                } catch (PDOException $err) {
+                    echo "Error - " . $err->getMessage();
+                }
             }
-            return self::$_database;
+            return self::$_connection;
         }
 
-        public function connect(){
-            $this->_connection = "";
-        }
-
-        public function addUser($newUser){
+        static public function addUser($newUser){
 
         }
 
-        public function removeUser($rmvUser){
+        static public function removeUser($rmvUser){
 
+        }
+
+        static public function getProducts($numProducts=10, $category=1){
+            $tempProducts = null;
+            if($category == 1){
+                $statement = self::getConnection()->prepare("SELECT * FROM sProduct LIMIT :numProducts;");
+            } else {
+                $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE category = :category LIMIT :numProducts;");
+                $statement->bindParam(":category", $category);
+            }
+            $statement->bindParam(":numProducts", $numProducts, PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
     }
