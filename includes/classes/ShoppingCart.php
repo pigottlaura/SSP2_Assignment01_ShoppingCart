@@ -71,5 +71,9 @@
         public function emptyCart(){
             $this->_items = (object) array();
         }
+
+        public function placeOrder(){
+            Database.createOrder($this->_items);
+        }
     }
 ?>

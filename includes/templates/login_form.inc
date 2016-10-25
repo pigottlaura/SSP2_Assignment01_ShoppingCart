@@ -1,5 +1,5 @@
 <h2>Login</h2>
-<form method="POST" action="login.php">
+<form method="POST" action="page.php?page=login">
     <label>
         Username:
         <input type="text" name="username" required>

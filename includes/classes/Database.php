@@ -1,6 +1,5 @@
 <?php
     class Database {
-        private static $_database;
         private static $allowCreate = false;
         private static $_connection;
 
@@ -32,6 +31,16 @@
 
         }
 
+        static public function validateUser($username, $password){
+            $statement = self::getConnection()->prepare("SELECT id FROM sUser WHERE username = :username AND password = :password");
+            $statement->bindParam(":username", $username);
+            $statement->bindParam(":password", $password);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            var_dump($result);
+            return 1;
+        }
+
         static public function getProducts($numProducts=10, $category=1){
             $tempProducts = null;
             if($category == 1){
@@ -47,7 +56,7 @@
 
         static public function getOrderProductInfo($productIds){
             $productIdsString = implode(",", $productIds);
-            $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE id IN ($productIdsString);");
+            $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE id IN ($productIdsString) ORDER BY name ASC;");
             $statement->execute();
 
             return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -68,5 +77,8 @@
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        static public function createOrder($items){
+            //$statement = self::getConnection()->prepare("INSERT INTO sOrder(ordered_by) VALUES());
+        }
     }
 ?>
