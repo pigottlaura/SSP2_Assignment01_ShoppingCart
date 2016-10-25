@@ -8,7 +8,16 @@
                 }
             }
             $rebuiltQueryString = implode("&", $queryArray);
-            header("Location: " . $page . "?" . $rebuiltQueryString);
+            self::goToPage($page . "?" . $rebuiltQueryString);
+        }
+
+        static public function goToPage($page){
+            header("Location: " . $page);
+            die();
+        }
+
+        static public function reloadPage() {
+            header("Refresh:0");
             die();
         }
     }

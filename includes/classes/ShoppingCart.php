@@ -52,6 +52,10 @@
             }
             return $tempItem;
         }
+
+        public function getItems(){
+            return $this->_items;
+        }
         public function getItemsDetails(){
             $itemIds = array();
             foreach($this->_items as $item) {
@@ -72,8 +76,8 @@
             $this->_items = (object) array();
         }
 
-        public function placeOrder(){
-            Database.createOrder($this->_items);
+        public function placeOrder($order){
+            Database.createOrder($order);
         }
     }
 ?>

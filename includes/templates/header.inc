@@ -17,7 +17,13 @@
         </ul>
     </nav>
     <div>
-        <a href="?page=login-register">Login/Register</a>
+        <?php
+            if(isset($_SESSION["shopping_session"]->userId)){
+                echo "<a href='?page=logout'>Logout</a>";
+            } else {
+                echo "<a href='?page=login-register'>Login/Register</a>";
+            }
+        ?>
         <button>
             <a href="?page=shopping-cart">
                 View Cart

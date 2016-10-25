@@ -74,17 +74,18 @@
                             echo "<h1>Shopping Cart is Empty</h1>";
                         }
                     } else if ($_GET["page"] == "order") {
-                        //echo "PLACING ORDER... Order Total: €" . $_SESSION["shopping_session"]->shopping_cart->orderTotal;
                         if(isset($_SESSION["shopping_session"]->userId)){
-                            echo "PLACING ORDER... Order Total: €" . $_SESSION["shopping_session"]->shopping_cart->orderTotal;
+                            $newOrder = new Order($_SESSION["shopping_session"]->shopping_cart->getItems());
+                            $newOrder->placeOrder();
                         } else {
-                            include("./includes/templates/login_form.inc");
+                            include("./includes/templates/login-register.inc");
                         }
                     } else if($_GET["page"] == "login-register") {
-                        include("./includes/templates/login_form.inc");
-                        include("./includes/templates/register_form.inc");
+                        include("./includes/templates/login-register.inc");
                     } else if($_GET["page"] == "login") {
                         include("./includes/templates/login.inc");
+                    } else if($_GET["page"] == "logout") {
+                        Login::logout();
                     } else {
                         echo "<h1>Welcome to My Shopping Cart</h1>";
                         echo "<h2>The one stop shop for toys</h2>";

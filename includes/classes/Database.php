@@ -32,13 +32,13 @@
         }
 
         static public function validateUser($username, $password){
-            $statement = self::getConnection()->prepare("SELECT id FROM sUser WHERE username = :username AND password = :password");
+            $statement = self::getConnection()->prepare("SELECT id FROM sUser WHERE username = :username AND password = SHA1(:password)");
             $statement->bindParam(":username", $username);
             $statement->bindParam(":password", $password);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
-            var_dump($result);
-            return 1;
+            $userId = $result["id"];
+            return $userId;
         }
 
         static public function getProducts($numProducts=10, $category=1){
@@ -77,8 +77,31 @@
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        static public function createOrder($items){
-            //$statement = self::getConnection()->prepare("INSERT INTO sOrder(ordered_by) VALUES());
+        static public function createOrder(&$order){
+            $successful = false;
+            $statement = self::getConnection()->prepare("INSERT INTO sOrder(ordered_by, order_total) VALUES(:ordered_by, :order_total);");
+            $statement->bindParam(":ordered_by", $order->orderedBy);
+            $statement->bindParam(":order_total", $order->orderTotal);
+            if($statement->execute()){
+                $order->orderId = self::$_connection->lastInsertId();
+                if(self::addItemsToOrder($order)){
+                    $successful = true;
+                }
+            }
+            return $successful;
+        }
+
+        static private function addItemsToOrder($order){
+            $successful = false;
+            foreach($order->orderItems as $key => $item) {
+                echo $item->itemId;
+                $statement = self::getConnection()->prepare("INSERT INTO sOrder_items(order_id, product_id, number_items) VALUES(:order_id, :product_id, :number_items);");
+                $statement->bindParam(":order_id", $order->orderId);
+                $statement->bindParam(":product_id", $item->itemId);
+                $statement->bindParam(":number_items", $item->numItems);
+                $successful = $statement->execute();
+            }
+            return $successful;
         }
     }
 ?>

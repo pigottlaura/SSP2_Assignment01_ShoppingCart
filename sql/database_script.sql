@@ -1,5 +1,4 @@
 DROP DATABASE SSP2_Assignment01;
-DROP DATABASE SSP2_Assignment01;
 CREATE DATABASE SSP2_Assignment01;
 use SSP2_Assignment01;
 
@@ -48,6 +47,7 @@ CREATE table sOrder (
 	id INT(10) AUTO_INCREMENT,
 	ordered_by INT(10) NOT NULL,
 	date_ordered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	order_total INT(10),
 	CONSTRAINT order_fk FOREIGN KEY (ordered_by) REFERENCES sUser(id),
 	CONSTRAINT order_pk PRIMARY KEY (id)
 );
@@ -57,7 +57,7 @@ CREATE table sOrder_items (
 	product_id INT(10) NOT NULL,
 	number_items INT(10) DEFAULT 1,
 	CONSTRAINT orderItems_order_fk FOREIGN KEY (order_id) REFERENCES sOrder(id),
-	CONSTRAINT orderItems_itemId_fk FOREIGN KEY (product_id) REFERENCES sOrder(id),
+	CONSTRAINT orderItems_productId_fk FOREIGN KEY (product_id) REFERENCES sProduct(id),
 	CONSTRAINT orderitems_pk PRIMARY KEY(order_id, product_id)
 );
 
@@ -70,3 +70,4 @@ INSERT INTO sProduct(name, description, price, image, category) VALUES("Giraffe"
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Monkey", "", 14.00, "monkey.jpg", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Minion", "", 12.00, "minion.png", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Furby", "", 12.00, "furby.png", 1);
+INSERT INTO sUser(first_name, last_name, email, username, password) VALUES("Laura", "Pigott", "pigottlaura@gmail.com", "pigottlaura", SHA1("test"));
