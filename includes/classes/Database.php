@@ -13,11 +13,12 @@
         static public function getConnection(){
             if(!isset(self::$_connection)){
                 try {
-                    self::$_connection = new PDO("mysql:host=localhost;dbname=SSP2_Assignment01", "root", "");
-                    //self::$_connection = new PDO("mysql:host=mysql2275.cp.blacknight.com;dbname=db1281003_SSP2_Assignment01", "u1281003_root", "ABCdef123456");
+                    //self::$_connection = new PDO("mysql:host=localhost;dbname=SSP2_Assignment01", "root", "");
+                    self::$_connection = new PDO("mysql:host=mysql2844.cp.blacknight.com;dbname=db1281003_SSP2_Assignment01", "u1281003_root", "ABCdef123456");
                     self::$_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 } catch (PDOException $err) {
                     echo "Error - " . $err->getMessage();
+                    echo "Error - " . $err->errorInfo();
                 }
             }
             return self::$_connection;
@@ -56,7 +57,8 @@
             $statement = self::getConnection()->prepare("SELECT price FROM sProduct WHERE id = :itemId;");
             $statement->bindParam(":itemId", $itemId);
             $statement->execute();
-            $price = $statement->fetch(PDO::FETCH_ASSOC)["price"];
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            $price = $result["price"];
             return $price;
         }
 

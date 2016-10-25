@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <?php
+            ini_set('display_errors', 1);
+            error_reporting(E_ALL);
+        ?>
         <meta charset="UTF-8">
         <title>My Shopping Cart</title>
         <link rel="stylesheet" href="./css/styles.css">
