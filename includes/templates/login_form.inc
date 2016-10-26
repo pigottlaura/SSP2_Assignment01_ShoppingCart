@@ -8,5 +8,6 @@
         Password:
         <input type="password" name="password" required>
     </label>
+    <input type="hidden" name="honeypot">
     <input type="submit" value="Login">
 </form>

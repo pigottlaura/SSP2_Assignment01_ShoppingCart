@@ -1,6 +1,6 @@
 <?php
     if(isset($_POST["username"]) && isset($_POST["password"])){
-        if(Login::validateLogin($_POST["username"], $_POST["password"])){
+        if(Login::validateLogin($_POST)){
             Functions::goToPage("page.php?page=order");
         } else {
             echo "Unsuccessful login";

@@ -4,21 +4,27 @@
         public function __construct(){
         }
 
-        public static function validateLogin($username, $password){
-            $loginValidated = false;
-            if(InputData::validate(array($username, $password))){
-                $sanitisedData = InputData::sanitise(array("username" => $username, "password" => $password));
+        public static function validateLogin($loginData){
+            $successful = false;
+            $dataValidated = InputData::validate($loginData, array(
+                "empty" => array("honeypot"),
+                "required" => array("username", "password"),
+                "string" => array("username", "password")
+            ));
+
+            if($dataValidated){
+                $sanitisedData = InputData::sanitise($loginData);
                 $userId = Database::validateUser($sanitisedData["username"], $sanitisedData["password"]);
                 if($userId > 0){
                     self::addUserToSession($userId);
-                    $loginValidated = true;
+                    $successful = true;
                 } else {
                     self::loginError("Wrong credentials");
                 }
             } else {
                 self::loginError("Invalid Data");
             }
-            return $loginValidated;
+            return $successful;
         }
 
         public static function addUserToSession($userId){
@@ -31,7 +37,8 @@
         }
 
         private static function loginError($error){
-            throw new Exception($error);
+            //throw new Exception($error);#
+            echo "Login error - " . $error . "<br>";
         }
     }
 ?>
