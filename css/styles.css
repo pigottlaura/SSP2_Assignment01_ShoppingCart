@@ -1,4 +1,7 @@
 /* GENERAL */
+html {
+    overflow-y: scroll;
+}
 html, body, header nav ul {
     padding: 0;
     margin: 0;
