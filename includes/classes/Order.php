@@ -8,7 +8,7 @@
 
         public function __construct($orderItems){
             $this->orderedBy = $_SESSION["shopping_session"]->userId;
-            $this->orderDate = date('H:i:s jS F Y');
+            $this->orderDate = date('d F Y');
             $this->orderItems = $orderItems;
             $this->orderPlaced = false;
         }

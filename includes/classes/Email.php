@@ -58,6 +58,15 @@
             $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
             $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
+            $html .= "<tr>";
+            $html .= "<td colspan='2'><strong>Order ID:</strong> #" . $order->orderId . "</td>";
+            $html .= "<td></td>";
+            $html .= "<td colspan='2' align='right'><strong>Order Date:</strong> " . $order->orderDate ."</td>";
+            $html .= "</tr>";
+
+            $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
+            $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
+
             // ITEM DETAILS HEADING
             $html .= "<tr>";
             $html .= "<th align='left'>Product ID</th>";
