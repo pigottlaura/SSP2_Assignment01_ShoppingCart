@@ -1,5 +1,9 @@
 <h2>Login</h2>
-<form method="POST" action="page.php?page=login">
+<form method="POST" action="
+    <?php
+        echo "page.php?" . $_SERVER["QUERY_STRING"] . "&action=login"
+    ?>
+">
     <label>
         Username:
         <input type="text" name="username" required>

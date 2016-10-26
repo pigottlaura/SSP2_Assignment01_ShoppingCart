@@ -33,7 +33,7 @@
 
         public static function logout(){
             unset($_SESSION["shopping_session"]->userId);
-            Functions::goToPage("page.php");
+            Functions::removeFromQueryString("action=");
         }
 
         private static function loginError($error){

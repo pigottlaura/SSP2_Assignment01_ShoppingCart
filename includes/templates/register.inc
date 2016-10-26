@@ -11,7 +11,11 @@
         $sanitisedData = InputData::sanitise($_POST);
 
         if(Database::addUser($sanitisedData)){
-            Functions::goToPage("page.php?page=order");
+            if($_GET["page"] == "login-register"){
+                Functions::goToPage("page.php?page=products");
+            } else {
+                Functions::removeFromQueryString("action=");
+            }
         } else {
             echo "Unable to add user";
         }

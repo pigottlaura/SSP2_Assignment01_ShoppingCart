@@ -1,5 +1,9 @@
 <h2>Register</h2>
-<form method="POST" action="page.php?page=register">
+<form method="POST" action="
+    <?php
+    echo "page.php?" . $_SERVER["QUERY_STRING"] . "&action=register"
+    ?>
+">
     <label>
         First Name:
         <input type="text" name="first_name" required>

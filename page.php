@@ -13,21 +13,18 @@
         <?php
             include_once("./autoloader.php");
             session_start();
-            //session_destroy();
             if(!$_SESSION) {
                 $_SESSION["shopping_session"] = (object) array(
                     "shopping_cart" => new ShoppingCart()
                 );
-                //echo "new session";
-            } else {
-                //echo "existing session";
             }
+
             if(isset($_GET["productId"])){
                 $_SESSION["shopping_session"]->shopping_cart->addItem($_GET["productId"]);
-                Functions::removeFromQueryString($_SERVER['QUERY_STRING'], "productId=", "page.php");
+                Functions::removeFromQueryString("productId=");
             } else if(isset($_GET["emptyCart"])) {
                 $_SESSION["shopping_session"]->shopping_cart->emptyCart();
-                Functions::removeFromQueryString($_SERVER['QUERY_STRING'], "emptyCart", "page.php");
+                Functions::removeFromQueryString("emptyCart");
             }
         ?>
     </head>
@@ -68,30 +65,34 @@
                                 echo "</div>";
                             }
                             echo "Total: €" . $orderTotal;
-                            echo "<a href='page.php?page=order'><button class='placeOrder'>Place Order</button></a>";
+                            echo "<a href='page.php?action=order'><button class='placeOrder'>Place Order</button></a>";
                             echo "<a href='page.php?page=shopping-cart&emptyCart'><button>Empty Cart</button></a>";
                             $_SESSION["shopping_session"]->shopping_cart->orderTotal = $orderTotal;
                         } else {
                             echo "<h1>Shopping Cart is Empty</h1>";
                         }
-                    } else if ($_GET["page"] == "order") {
+                    } else if($_GET["page"] == "login-register") {
+                        include("./includes/templates/login-register.inc");
+                    } else {
+                        echo "<h1>Welcome to My Shopping Cart</h1>";
+                        echo "<h2>The one stop shop for toys</h2>";
+                    }
+                }
+
+                if(isset($_GET["action"])){
+                    if ($_GET["action"] == "order") {
                         if(isset($_SESSION["shopping_session"]->userId) && $_SESSION["shopping_session"]->shopping_cart->getTotalNumItems() > 0){
                             $newOrder = new Order($_SESSION["shopping_session"]->shopping_cart->getItems());
                             $newOrder->placeOrder();
                         } else {
                             include("./includes/templates/login-register.inc");
                         }
-                    } else if($_GET["page"] == "login-register") {
-                        include("./includes/templates/login-register.inc");
-                    } else if($_GET["page"] == "login") {
+                    } else if($_GET["action"] == "login") {
                         include("./includes/templates/login.inc");
-                    } else if($_GET["page"] == "register") {
+                    } else if($_GET["action"] == "register") {
                         include("./includes/templates/register.inc");
-                    } else if($_GET["page"] == "logout") {
+                    } else if($_GET["action"] == "logout") {
                         Login::logout();
-                    } else {
-                        echo "<h1>Welcome to My Shopping Cart</h1>";
-                        echo "<h2>The one stop shop for toys</h2>";
                     }
                 }
             ?>

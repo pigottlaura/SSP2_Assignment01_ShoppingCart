@@ -1,11 +1,15 @@
 <?php
     if(isset($_POST["username"]) && isset($_POST["password"])){
         if(Login::validateLogin($_POST)){
-            Functions::goToPage("page.php?page=order");
+            if($_GET["page"] == "login-register"){
+                Functions::goToPage("page.php?page=products");
+            } else {
+                Functions::removeFromQueryString("action=");
+            }
         } else {
             echo "Unsuccessful login";
         }
     } else {
-        Functions::removeFromQueryString($_SERVER['QUERY_STRING'], "page=", "page.php?page=home");
+        Functions::removeFromQueryString("action=");
     }
 ?>
