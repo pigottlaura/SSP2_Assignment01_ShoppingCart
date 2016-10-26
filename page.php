@@ -75,7 +75,7 @@
                             echo "<h1>Shopping Cart is Empty</h1>";
                         }
                     } else if ($_GET["page"] == "order") {
-                        if(isset($_SESSION["shopping_session"]->userId)){
+                        if(isset($_SESSION["shopping_session"]->userId) && $_SESSION["shopping_session"]->shopping_cart->getTotalNumItems() > 0){
                             $newOrder = new Order($_SESSION["shopping_session"]->shopping_cart->getItems());
                             $newOrder->placeOrder();
                         } else {

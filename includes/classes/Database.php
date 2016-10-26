@@ -23,7 +23,6 @@
         }
 
         static public function addUser($inputData){
-            var_dump($inputData["first_name"]);
             $statement = self::getConnection()->prepare("INSERT INTO sUser(first_name, last_name, email, username, password) VALUES(:first_name, :last_name, :email, :username, SHA1(:password));");
             $statement->bindParam(":first_name", $inputData["first_name"]);
             $statement->bindParam(":last_name", $inputData["last_name"]);
@@ -38,10 +37,6 @@
             }
 
             return $successful;
-        }
-
-        static public function removeUser($rmvUser){
-
         }
 
         static public function validateUser($username, $password){

@@ -31,9 +31,25 @@
                 }
 
                 if(isset($options["email"]) && in_array($key, $options["email"], true)){
-                    if(!is_email($value)){
+                    if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
                         $dataValidated = false;
                         $errorMessage .= "<li>'" . $key . "' requires a valid email address.</li>";
+                    }
+                }
+
+                if(isset($options["enum"]) && array_key_exists($key,$options["enum"])){
+                    $enumPassed = false;
+
+                    foreach($options["enum"][$key] as $enumVal) {
+                        echo strtolower($value) . " " . strtolower($enumVal);
+                        if(strtolower($value) == strtolower($enumVal)) {
+                            $enumPassed = true;
+                        }
+                    }
+
+                    if(!$enumPassed) {
+                        $dataValidated = false;
+                        $errorMessage .= "<li>'" . $key . "' does not match.</li>";
                     }
                 }
             }
