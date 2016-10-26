@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-    ?>
     <meta charset="UTF-8">
     <title>My Shopping Cart</title>
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="icon" type="image/png" href="./images/logo.png" />
     <script src="js/script.js"></script>
-    <?php
-    include_once("./autoloader.php");
-    session_start();
-    if(!$_SESSION) {
-        $_SESSION["shopping_session"] = (object) array(
-            "shopping_cart" => new ShoppingCart()
-        );
-    }
 
-    if(isset($_GET["productId"])){
-        $_SESSION["shopping_session"]->shopping_cart->addItem($_GET["productId"]);
-        Functions::removeFromQueryString("productId=");
-    } else if(isset($_GET["emptyCart"])) {
-        $_SESSION["shopping_session"]->shopping_cart->emptyCart();
-        Functions::removeFromQueryString("emptyCart");
-    }
+    <?php
+        include_once("./includes/actions/init.inc");
     ?>
+
 </head>
 <body>
     <header>

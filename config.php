@@ -1,4 +1,5 @@
 <?php
+    define("CONF_DEBUG", true);
     if($_SERVER['SERVER_NAME'] == "localhost"){
         define("CONF_DB_HOST", "localhost");
         define("CONF_DB_NAME", "SSP2_Assignment01");
