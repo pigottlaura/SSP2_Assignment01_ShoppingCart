@@ -57,11 +57,7 @@
             return $this->_items;
         }
         public function getItemsDetails(){
-            $itemIds = array();
-            foreach($this->_items as $item) {
-                array_push($itemIds, $item->itemId);
-            }
-            return Database::getOrderProductInfo($itemIds);
+            return Database::getOrderProductInfo($this->_items);
         }
 
         public function getTotalNumItems(){

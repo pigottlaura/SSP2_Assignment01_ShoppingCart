@@ -32,13 +32,30 @@
         }
 
         static public function validateUser($username, $password){
-            $statement = self::getConnection()->prepare("SELECT id FROM sUser WHERE username = :username AND password = SHA1(:password)");
+            $statement = self::getConnection()->prepare("SELECT id FROM sUser WHERE username = :username AND password = SHA1(:password);");
             $statement->bindParam(":username", $username);
             $statement->bindParam(":password", $password);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             $userId = $result["id"];
             return $userId;
+        }
+
+        static public function getUserDetails($userId){
+            $user = null;
+
+            $statement1 = self::getConnection()->prepare("SELECT first_name, last_name, email FROM sUser WHERE id = :userId;");
+            $statement1->bindParam(":userId", $userId);
+            $statement1->execute();
+            $user->contact = $statement1->fetch(PDO::FETCH_ASSOC);
+            var_dump($user);
+
+            $statement2 = self::getConnection()->prepare("SELECT * FROM sAddress WHERE user_id = :userId;");
+            $statement2->bindParam(":userId", $userId);
+            $statement2->execute();
+            $user->address = $statement2->fetch(PDO::FETCH_ASSOC);
+            var_dump($user);
+            return $user;
         }
 
         static public function getProducts($numProducts=10, $category=1){
@@ -54,8 +71,9 @@
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        static public function getOrderProductInfo($productIds){
-            $productIdsString = implode(",", $productIds);
+        static public function getOrderProductInfo($items){
+            $tempProductIds = Functions::retrieveItemIds($items);
+            $productIdsString = implode(",", $tempProductIds);
             $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE id IN ($productIdsString) ORDER BY name ASC;");
             $statement->execute();
 
@@ -91,10 +109,9 @@
             return $successful;
         }
 
-        static private function addItemsToOrder($order){
+        static private function addItemsToOrder(&$order){
             $successful = false;
             foreach($order->orderItems as $key => $item) {
-                echo $item->itemId;
                 $statement = self::getConnection()->prepare("INSERT INTO sOrder_items(order_id, product_id, number_items) VALUES(:order_id, :product_id, :number_items);");
                 $statement->bindParam(":order_id", $order->orderId);
                 $statement->bindParam(":product_id", $item->itemId);

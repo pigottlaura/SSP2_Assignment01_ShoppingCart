@@ -20,5 +20,13 @@
             header("Refresh:0");
             die();
         }
+
+        static public function retrieveItemIds($items){
+            $itemIds = array();
+            foreach($items as $item) {
+                array_push($itemIds, $item->itemId);
+            }
+            return $itemIds;
+        }
     }
 ?>
