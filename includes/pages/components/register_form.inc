@@ -3,7 +3,7 @@
     <?php
     echo "page.php?" . $_SERVER["QUERY_STRING"] . "&action=register"
     ?>
-">
+" id="register">
     <label>
         First Name:
         <input type="text" name="first_name" required>
@@ -24,7 +24,7 @@
     <br>
     <label>
         Password:
-        <input type="password" name="password" required>
+        <input type="password" name="password" required data-match="confirm_password">
     </label>
     <label>
         Confirm Password:

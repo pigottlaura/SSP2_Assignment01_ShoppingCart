@@ -3,7 +3,7 @@
     <?php
         echo "page.php?" . $_SERVER["QUERY_STRING"] . "&action=login"
     ?>
-">
+" id="login">
     <label>
         Username:
         <input type="text" name="username" required>
