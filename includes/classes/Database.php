@@ -48,13 +48,12 @@
             $statement1->bindParam(":userId", $userId);
             $statement1->execute();
             $user->contact = $statement1->fetch(PDO::FETCH_ASSOC);
-            var_dump($user);
 
             $statement2 = self::getConnection()->prepare("SELECT * FROM sAddress WHERE user_id = :userId;");
             $statement2->bindParam(":userId", $userId);
             $statement2->execute();
             $user->address = $statement2->fetch(PDO::FETCH_ASSOC);
-            var_dump($user);
+
             return $user;
         }
 

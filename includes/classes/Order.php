@@ -16,8 +16,9 @@
         public function placeOrder(){
             $this->orderTotal = $_SESSION["shopping_session"]->shopping_cart->calculateTotal();
             if(Database::createOrder($this)) {
-                Email::sendOrderEmail($this);
-                //$_SESSION["shopping_session"]->shopping_cart->emptyCart();
+                if(Email::sendOrderEmail($this)){
+                    $_SESSION["shopping_session"]->shopping_cart->emptyCart();
+                }
             }
         }
     }
