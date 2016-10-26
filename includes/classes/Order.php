@@ -18,8 +18,17 @@
             if(Database::createOrder($this)) {
                 if(Email::sendOrderEmail($this)){
                     $_SESSION["shopping_session"]->shopping_cart->emptyCart();
+                    echo $this->confirmationEmail;
+                } else {
+                    self::orderError("Order has been successfully placed, but confirmation email failed to send - Order ID #" . $this->orderId);
                 }
+            } else {
+                self::orderError("Failed to create order in database");
             }
+        }
+
+       static private function orderError($error){
+            echo "\r\nERROR - " . $error . "\r\n";
         }
     }
 ?>

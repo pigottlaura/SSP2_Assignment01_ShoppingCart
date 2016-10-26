@@ -70,6 +70,20 @@ section {
     padding: 1% 2%;
 }
 
+label {
+    display: inline-block;
+    width: 48%;
+    padding-right: 2%;
+    box-sizing: border-box;
+}
+label input {
+    width: 70%;
+    float: right;
+}
+form {
+    width: 1000px;
+}
+
 /* FOOTER */
 footer {
     text-align: center;

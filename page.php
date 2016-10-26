@@ -13,6 +13,7 @@
         <?php
             include_once("./autoloader.php");
             session_start();
+            //session_destroy();
             if(!$_SESSION) {
                 $_SESSION["shopping_session"] = (object) array(
                     "shopping_cart" => new ShoppingCart()

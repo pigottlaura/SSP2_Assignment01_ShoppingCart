@@ -35,14 +35,6 @@
             }
         }
 
-        public function calculateTotal(){
-            $tempTotal = 0;
-            foreach($this->_items as $itemId => $itemDetails){
-                $tempTotal += ($itemDetails->numItems * Database::getItemPrice($itemId));
-            }
-            return $tempTotal;
-        }
-
         public function getItem($itemId){
             $tempItem = null;
             foreach($this->_items as $key => $value){
@@ -56,6 +48,7 @@
         public function getItems(){
             return $this->_items;
         }
+
         public function getItemsDetails(){
             return Database::getOrderProductInfo($this->_items);
         }
@@ -68,12 +61,24 @@
             return $tempTotal;
         }
 
+        public function calculateTotal(){
+            $tempTotal = 0;
+            foreach($this->_items as $itemId => $itemDetails){
+                $tempTotal += ($itemDetails->numItems * Database::getItemPrice($itemId));
+            }
+            return $tempTotal;
+        }
+
         public function emptyCart(){
             $this->_items = (object) array();
         }
 
-        public function placeOrder($order){
-            Database.createOrder($order);
+        static public function retrieveItemIds($items){
+            $itemIds = array();
+            foreach($items as $item) {
+                array_push($itemIds, $item->itemId);
+            }
+            return $itemIds;
         }
     }
 ?>

@@ -1,4 +1,5 @@
 <?php
+    include_once("./config.php");
     class Database {
         private static $allowCreate = false;
         private static $_connection;
@@ -12,12 +13,10 @@
         static public function getConnection(){
             if(!isset(self::$_connection)){
                 try {
-                    //self::$_connection = new PDO("mysql:host=localhost;dbname=SSP2_Assignment01", "root", "");
-                    self::$_connection = new PDO("mysql:host=mysql2844.cp.blacknight.com;dbname=db1281003_SSP2_Assignment01", "u1281003_root", "ABCdef123456");
+                    self::$_connection = new PDO("mysql:host=" . CONF_DB_HOST . ";dbname=" . CONF_DB_NAME, CONF_DB_USERNAME, CONF_DB_PASSWORD);
                     self::$_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 } catch (PDOException $err) {
                     echo "Error - " . $err->getMessage();
-                    echo "Error - " . $err->errorInfo();
                 }
             }
             return self::$_connection;
@@ -42,7 +41,7 @@
         }
 
         static public function getUserDetails($userId){
-            $user = null;
+            $user = (object) array();
 
             $statement1 = self::getConnection()->prepare("SELECT first_name, last_name, email FROM sUser WHERE id = :userId;");
             $statement1->bindParam(":userId", $userId);
@@ -71,7 +70,7 @@
         }
 
         static public function getOrderProductInfo($items){
-            $tempProductIds = Functions::retrieveItemIds($items);
+            $tempProductIds = ShoppingCart::retrieveItemIds($items);
             $productIdsString = implode(",", $tempProductIds);
             $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE id IN ($productIdsString) ORDER BY name ASC;");
             $statement->execute();

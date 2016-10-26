@@ -1,5 +1,6 @@
 <?php
     class Email {
+        static private $websiteOwnerEmail = "k00190475@student.lit.ie";
         static private $companyAddress = array(
             "address_houseName" => "5 Wolfe Tone Street",
             "address_town" => "Clonmel",
@@ -31,7 +32,7 @@
             // TITLE LINES
             $userDetails = Database::getUserDetails($order->orderedBy);
             $html .= "<tr>";
-            $html .= "<td colspan='2'>" . $userDetails->contact["first_name"] . $userDetails->contact["last_name"] . "</td>";
+            $html .= "<td colspan='2'>" . $userDetails->contact["first_name"] . " " . $userDetails->contact["last_name"] . "</td>";
             $html .= "<td>&nbsp;</td>";
             $html .= "<td colspan='2' align='right'>Blueberry Toys</td>";
             $html .= "</tr>";
@@ -96,7 +97,7 @@
             $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
             $html .= "</table>";
-            echo $html;
+            $order->confirmationEmail = $html;
 
             $order->orderPlaced = self::sendEmail($userDetails->contact["email"], "Order Confirmation - Order #" . $order->orderId, $html);
             return $order->orderPlaced;
@@ -109,7 +110,9 @@
         static private function sendEmail($to, $subject, $emailBody){
             $sentSuccessfully = false;
 
-            $headers = "From: pigottlaura@gmail.com\r\n";
+
+            $headers = "From: orders@pigottlaura.com\r\n";
+            $headers .= "Bcc: " . self::$websiteOwnerEmail . "\r\n";
             $headers .= "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
