@@ -22,8 +22,22 @@
             return self::$_connection;
         }
 
-        static public function addUser($newUser){
+        static public function addUser($inputData){
+            var_dump($inputData["first_name"]);
+            $statement = self::getConnection()->prepare("INSERT INTO sUser(first_name, last_name, email, username, password) VALUES(:first_name, :last_name, :email, :username, SHA1(:password));");
+            $statement->bindParam(":first_name", $inputData["first_name"]);
+            $statement->bindParam(":last_name", $inputData["last_name"]);
+            $statement->bindParam(":email", $inputData["email"]);
+            $statement->bindParam(":username", $inputData["username"]);
+            $statement->bindParam(":password", $inputData["password"]);
+            $successful = $statement->execute();
 
+            if($successful){
+                $userId = self::$_connection->lastInsertId();
+                Login::addUserToSession($userId);
+            }
+
+            return $successful;
         }
 
         static public function removeUser($rmvUser){

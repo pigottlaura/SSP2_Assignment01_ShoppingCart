@@ -21,7 +21,7 @@
             return $loginValidated;
         }
 
-        private static function addUserToSession($userId){
+        public static function addUserToSession($userId){
             $_SESSION["shopping_session"]->userId = $userId;
         }
 

@@ -85,6 +85,8 @@
                         include("./includes/templates/login-register.inc");
                     } else if($_GET["page"] == "login") {
                         include("./includes/templates/login.inc");
+                    } else if($_GET["page"] == "register") {
+                        include("./includes/templates/register.inc");
                     } else if($_GET["page"] == "logout") {
                         Login::logout();
                     } else {

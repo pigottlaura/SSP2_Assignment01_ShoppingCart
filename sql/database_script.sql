@@ -25,7 +25,7 @@ CREATE table sUser (
 	last_name VARCHAR(20) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	username VARCHAR(50) UNIQUE NOT NULL,
-	password VARCHAR(250) UNIQUE NOT NULL,
+	password VARCHAR(250) NOT NULL,
 	CONSTRAINT users_pk PRIMARY KEY (id)
 );
 

@@ -2,7 +2,8 @@
     class Email {
         static private $websiteOwnerEmail = "k00190475@student.lit.ie";
         static private $companyAddress = array(
-            "address_houseName" => "5 Wolfe Tone Street",
+            "address_houseName" => "The Showgrounds",
+            "address_street" => "5 Wolfe Tone Street",
             "address_town" => "Clonmel",
             "address_county" => "Tipperary",
             "address_country" => "Ireland",
