@@ -14,7 +14,7 @@
             echo "</div>";
         }
         echo "Total: €" . $orderTotal;
-        echo "<a href='page.php?action=order'><button class='placeOrder'>Place Order</button></a>";
+        echo "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=order'><button class='placeOrder'>Place Order</button></a>";
         echo "<a href='page.php?page=shopping-cart&emptyCart'><button>Empty Cart</button></a>";
         $_SESSION["shopping_session"]->shopping_cart->orderTotal = $orderTotal;
     } else {

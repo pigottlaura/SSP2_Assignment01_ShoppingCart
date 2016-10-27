@@ -8,7 +8,9 @@
             if ($_GET["page"] == "products") {
                 include("./includes/pages/products.inc");
             } else if ($_GET["page"] == "shopping-cart") {
-                include("./includes/pages/shopping-cart.inc");
+                if(!isset($_GET["action"]) || $_GET["action"] != "order") {
+                    include("./includes/pages/shopping-cart.inc");
+                }
             } else if($_GET["page"] == "login-register") {
                 include("./includes/pages/login-register.inc");
             } else if($_GET["page"] == "contact-us") {

@@ -3,6 +3,6 @@
         $newOrder = new Order($_SESSION["shopping_session"]->shopping_cart->getItems());
         $newOrder->placeOrder();
     } else {
-        include("./includes/templates/login-register.inc");
+        include("./includes/pages/login-register.inc");
     }
 ?>
