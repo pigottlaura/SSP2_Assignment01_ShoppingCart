@@ -65,12 +65,14 @@
             return $user;
         }
 
-        static public function getProducts($numProducts=10, $category=1){
+        static public function getProducts($numProducts=10, $category=1, $orderBy="name", $ascDesc="desc"){
             $tempProducts = null;
+            $ascDesc = strtoupper($ascDesc);
+
             if($category == 1){
-                $statement = self::getConnection()->prepare("SELECT * FROM sProduct LIMIT :numProducts;");
+                $statement = self::getConnection()->prepare("SELECT * FROM sProduct ORDER BY " . $orderBy . " " . $ascDesc . " LIMIT :numProducts;");
             } else {
-                $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE category = :category LIMIT :numProducts;");
+                $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE category = :category ORDER BY " . $orderBy . " " . $ascDesc . " LIMIT :numProducts;");
                 $statement->bindParam(":category", $category);
             }
             $statement->bindParam(":numProducts", $numProducts, PDO::PARAM_INT);

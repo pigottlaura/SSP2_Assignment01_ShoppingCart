@@ -1,6 +1,6 @@
 <?php
     $category = isset($_GET["category"]) && $_GET["category"] > 0 ? $_GET["category"] : 1;
-    $products = Database::getProducts(10, $category);
+    $products = Database::getProducts(10, $category, "id", "desc");
     foreach ($products as $product) {
         echo "<div class='productContainer'>";
         echo "<h4>" . $product["name"] . "</h4>";

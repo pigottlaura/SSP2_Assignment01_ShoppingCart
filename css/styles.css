@@ -95,12 +95,18 @@ footer {
 }
 
 /* PRODUCTS */
-.productContainer {
+.productContainer, .latestProductContainer {
     display: inline-block;
     width: 22%;
     margin: 1% 2% 4% 1%;
     box-sizing: border-box;
     text-align: center;
+}
+.productContainer {
+    width: 22%;
+}
+.latestProductContainer {
+    width: 30%;
 }
 .productContainer img {
     height: 100px;

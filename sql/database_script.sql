@@ -15,6 +15,7 @@ CREATE table sProduct (
 	price DECIMAL(6, 2),
 	image VARCHAR(255),
 	category INT(10) DEFAULT 1,
+	date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT product_fk FOREIGN KEY (category) REFERENCES sCategory(id),
 	CONSTRAINT product_pk PRIMARY KEY (id)
 );
