@@ -131,3 +131,6 @@ footer {
 .placeOrder {
     margin-left: 50px;
 }
+#sortBy {
+    display: block;
+}

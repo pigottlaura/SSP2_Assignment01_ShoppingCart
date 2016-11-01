@@ -18,6 +18,8 @@
             } else {
                 include("./includes/pages/home.inc");
             }
+        } else {
+            include("./includes/pages/home.inc");
         }
 
         // COMPLETE ACTIONS
