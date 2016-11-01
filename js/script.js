@@ -9,15 +9,11 @@ window.onload = function(){
 
     if(document.getElementById("sortBy")) {
         var sortBySelect = document.getElementById("sortBy");
-        console.log(document.cookie);
-        console.log(getCookieValue("sortOrder"));
-        if(document.cookie.indexOf("sortBy") > -1 && document.cookie.indexOf("sortOrder") > -1){
-            console.log(getCookieValue("sortBy") + "-" + getCookieValue("sortOrder"));
+        if(cookieExists("sortBy") && cookieExists("sortOrder")){
             sortBySelect.value = getCookieValue("sortBy") + "-" + getCookieValue("sortOrder");
         }
         sortBySelect.addEventListener("change", sortProducts);
     }
-
 }
 
 
@@ -69,4 +65,9 @@ function getCookieValue(cookieName){
         }
     });
     return cookieValue;
+}
+
+function cookieExists(cookieName){
+    var result = document.cookie.indexOf(cookieName) > -1 ? true : false;
+    return result;
 }
