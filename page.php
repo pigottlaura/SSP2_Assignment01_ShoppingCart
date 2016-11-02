@@ -28,6 +28,8 @@
         if(isset($_GET["action"])){
             if ($_GET["action"] == "order") {
                 include("./includes/actions/order.inc");
+            } else if ($_GET["action"] == "adjustNumItems") {
+                include("./includes/actions/adjustNumItems.inc");
             } else if($_GET["action"] == "login") {
                 include("./includes/actions/login.inc");
             } else if($_GET["action"] == "register") {

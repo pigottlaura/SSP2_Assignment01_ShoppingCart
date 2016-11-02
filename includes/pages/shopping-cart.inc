@@ -11,6 +11,8 @@
             echo "<img src='./images/products/" . $itemInfo["image"] . "' alt='" . $itemInfo["name"] . "'>";
             echo "<strong>" . $itemInfo["name"] . "</strong>";
             echo " @ €" . $itemInfo["price"] . " x " . $numItems . " = €" . ($itemInfo["price"] * $numItems);
+            echo "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=adjustNumItems&adjustBy=-1&productId=" . $itemInfo["id"] . "' class='addNumItems'><button>-</button></a>";
+            echo "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=adjustNumItems&adjustBy=1&productId=" . $itemInfo["id"] . "' class='removeNumItems'><button>+</button></a>";
             echo "</div>";
         }
         echo "Total: €" . $orderTotal;

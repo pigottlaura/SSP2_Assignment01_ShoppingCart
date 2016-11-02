@@ -6,32 +6,30 @@
             $this->emptyCart();
         }
 
-        public function addItem($itemId){
+        public function addItem($itemId, $num=1){
             // If this item is already in the order, just add one to it's total
             if(isset($this->_items->$itemId)){
-                $this->_items->$itemId->numItems += 1;
+                $this->_items->$itemId->numItems += $num;
             } else {
                 // This is the first time this item has been added to this array
                 $this->_items->$itemId = (object) array(
                     "itemId" => $itemId,
-                    "numItems" => 1
+                    "numItems" => $num
                 );
             }
         }
 
-        public function removeItem($item, $num=1) {
+        public function removeItem($itemId, $num=1) {
             // If this item is already in the order, just add one to it's total
-            if(isset($this->_items[$item->name])){
-                if($num >= sizeof($this->order["items"][$item->name]["numItems"])) {
+            if(isset($this->_items->$itemId)){
+                if($num >= $this->_items->$itemId->numItems) {
                     // Remove this product from the order
-                    array_splice($this->_items[$item->name], 1);
+                    unset($this->_items->$itemId);
                 } else {
                     // Remove the specified number of this product from the order
-                    $this->_items[$item->name]["numItems"] -= $num;
+                    $this->_items->$itemId->numItems -= $num;
                 }
 
-            } else {
-                throw new error("This items is not in this order");
             }
         }
 
