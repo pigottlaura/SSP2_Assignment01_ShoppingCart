@@ -81,7 +81,7 @@
         static public function getOrderProductInfo($items){
             $tempProductIds = ShoppingCart::retrieveItemIds($items);
             $productIdsString = implode(",", $tempProductIds);
-            $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE id IN ($productIdsString) ORDER BY name ASC;");
+            $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE id IN ($productIdsString);");
             $statement->execute();
 
             return $statement->fetchAll(PDO::FETCH_ASSOC);
