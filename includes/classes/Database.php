@@ -128,10 +128,11 @@
         static private function addItemsToOrder(&$order){
             $successful = false;
             foreach($order->orderItems as $key => $item) {
-                $statement = self::getConnection()->prepare("INSERT INTO sOrder_items(order_id, product_id, number_items) VALUES(:order_id, :product_id, :number_items);");
+                $statement = self::getConnection()->prepare("INSERT INTO sOrder_items(order_id, product_id, number_items, selling_price) VALUES(:order_id, :product_id, :number_items, :selling_price);");
                 $statement->bindParam(":order_id", $order->orderId);
                 $statement->bindParam(":product_id", $item->itemId);
                 $statement->bindParam(":number_items", $item->numItems);
+                $statement->bindParam(":selling_price", $item->price);
                 $successful = $statement->execute();
             }
             return $successful;

@@ -14,7 +14,7 @@ CREATE table sProduct (
 	description VARCHAR(255),
 	price DECIMAL(6, 2),
 	image VARCHAR(255),
-	category INT(10) DEFAULT 1,
+	category INT(10),
 	date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT product_fk FOREIGN KEY (category) REFERENCES sCategory(id),
 	CONSTRAINT product_pk PRIMARY KEY (id)
@@ -57,6 +57,7 @@ CREATE table sOrder_items (
 	order_id INT(10) NOT NULL,
 	product_id INT(10) NOT NULL,
 	number_items INT(10) DEFAULT 1,
+	selling_price DECIMAL(6, 2),
 	CONSTRAINT orderItems_order_fk FOREIGN KEY (order_id) REFERENCES sOrder(id),
 	CONSTRAINT orderItems_productId_fk FOREIGN KEY (product_id) REFERENCES sProduct(id),
 	CONSTRAINT orderitems_pk PRIMARY KEY(order_id, product_id)
@@ -70,6 +71,9 @@ INSERT INTO sProduct(name, description, price, image, category) VALUES("Car", ""
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Giraffe", "", 18.00, "giraffe.jpg", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Monkey", "", 14.00, "monkey.jpg", 2);
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Minion", "", 12.00, "minion.png", 2);
-INSERT INTO sProduct(name, description, price, image, category) VALUES("Furby", "", 12.00, "furby.png", 1);
+INSERT INTO sProduct(name, description, price, image) VALUES("Furby", "", 12.00, "furby.png");
 INSERT INTO sUser(first_name, last_name, email, username, password) VALUES("Laura", "Pigott", "pigottlaura@gmail.com", "pigottlaura", SHA1("test"));
 INSERT INTO sAddress(user_id, address_houseName, address_street, address_town, address_county , address_country, address_zipCode) VALUES(1, "Angel Heights", "Dromleigh South", "Bantry", "Cork", "Ireland", "XN11254");
+
+SELECT * FROM sOrder;
+SELECT * FROM sproduct;

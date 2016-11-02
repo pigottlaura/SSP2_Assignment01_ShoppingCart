@@ -1,7 +1,6 @@
 <?php
     $category = isset($_GET["category"]) && $_GET["category"] > 0 ? $_GET["category"] : 1;
     $heading = $category > 1 ? Database::getCategoryName($category) : "All Products";
-
     echo "<h2>" . $heading . "</h2>";
 ?>
 <label for="sortBy">Sort Products by:</label>

@@ -25,25 +25,25 @@
                 $startRow = $_COOKIE["productPage"] * $numRows;
             }
 
-            $products = Database::getProducts($startRow . "," . $numRows, $category, $sortBy, $sortOrder);
-
-            if(count($products) == 0){
-                setcookie("lastPage", true, time() + 2500, "/");
-                if($_COOKIE["productPage"] > 0){
-                    setcookie("productPage", $_COOKIE["productPage"] - 1);
-                }
-                Functions::reloadPage();
+            $products = Database::getProducts($startRow . "," . ($numRows + 1), $category, $sortBy, $sortOrder);
+            
+            if(count($products) < ($numRows + 1)) {
+                $lastPage = true;
+                $loopProducts = count($products);
+            } else {
+                $lastPage = false;
+                $loopProducts = count($products) - 1;
             }
 
-            foreach ($products as $product) {
+            for($i=0; $i < $loopProducts; $i++) {
                 $html .= "<div class='productContainer'>";
-                $html .= "<h4>" . $product["name"] . "</h4>";
+                $html .= "<h4>" . $products[$i]["name"] . "</h4>";
                 $html .= "<figure>";
-                $html .= "<img src='./images/products/" . $product["image"] . "' alt='" . $product["name"] . "'>";
-                $html .= "<figcaption>" . $product["description"] . "</figcaption>";
+                $html .= "<img src='./images/products/" . $products[$i]["image"] . "' alt='" . $products[$i]["name"] . "'>";
+                $html .= "<figcaption>" . $products[$i]["description"] . "</figcaption>";
                 $html .= "</figure>";
-                $html .= "<div class='price'>€" . $product["price"] . "</div>";
-                $html .= "<button class='addToCart' id=" . $product["id"] . "'>Add to Cart</button>";
+                $html .= "<div class='price'>€" . $products[$i]["price"] . "</div>";
+                $html .= "<button class='addToCart' id=" . $products[$i]["id"] . "'>Add to Cart</button>";
                 $html .= "</div>";
             }
 
@@ -58,7 +58,7 @@
 
                 // Next Page Button
                 $html .= "<button id='nextPage'";
-                if(isset($_COOKIE["lastPage"]) || count($products) < $numRows){
+                if($lastPage){
                     $html .= " disabled";
                 }
                 $html .= "> Next " . $numRows . " products >>></button>";

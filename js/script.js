@@ -116,8 +116,8 @@ function changeItemsPerPage(e){
 
 function refreshProducts(){
     if(document.getElementById("products")){
-        var category = getParamValue("category").length > 0 ? category : 1;
-        var requestURL = "ajax.php?action=getProducts&category=" + category + "";
+        var category = getParamValue("category").length > 0 ? getParamValue("category") : 1;
+        var requestURL = "ajax.php?action=getProducts&category=" + category;
 
         ajaxRequest(requestURL, function(response){
             document.getElementById("products").innerHTML = response.responseText;
