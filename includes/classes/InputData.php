@@ -37,6 +37,13 @@
                     }
                 }
 
+                if(isset($options["int"]) && in_array($key, $options["int"], true)) {
+                    if(!filter_var($value, FILTER_VALIDATE_INT)){
+                        $dataValidated = false;
+                        $errorMessage .= "<li>'" . $key . "' product page number is not valid.</li>";
+                    }
+                }
+
                 if(isset($options["enum"]) && array_key_exists($key,$options["enum"])){
                     $enumPassed = false;
 

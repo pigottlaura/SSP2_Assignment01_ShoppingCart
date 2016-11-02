@@ -70,12 +70,12 @@
             $ascDesc = strtoupper($ascDesc);
 
             if($category == 1){
-                $statement = self::getConnection()->prepare("SELECT * FROM sProduct ORDER BY " . $orderBy . " " . $ascDesc . " LIMIT :numProducts;");
+                $statement = self::getConnection()->prepare("SELECT * FROM sProduct ORDER BY " . $orderBy . " " . $ascDesc . " LIMIT " . $numProducts);
             } else {
                 $statement = self::getConnection()->prepare("SELECT * FROM sProduct WHERE category = :category ORDER BY " . $orderBy . " " . $ascDesc . " LIMIT :numProducts;");
                 $statement->bindParam(":category", $category);
             }
-            $statement->bindParam(":numProducts", $numProducts, PDO::PARAM_INT);
+            //$statement->bindParam(":numProducts", $numProducts);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
