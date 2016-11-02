@@ -55,6 +55,15 @@ function clickEvent(e){
             break;
         }
     }
+
+    if(e.target.tagName == "BUTTON" && e.target.parentNode.classList.contains("addToCart")){
+        var requestURL = "ajax.php?action=addToCart&productId=" + parseInt(e.target.parentNode.id);
+        ajaxRequest(requestURL, function(response){
+            var jsonResponse = JSON.parse(response.responseText);
+            document.getElementById("scNumItems").innerHTML = jsonResponse.shoppingCartTotalItems;
+            document.getElementById("scTotal").innerHTML = jsonResponse.shoppingCartTotalCost;
+        });
+    }
 }
 
 
@@ -110,16 +119,21 @@ function refreshProducts(){
         var category = getParamValue("category").length > 0 ? category : 1;
         var requestURL = "ajax.php?action=getProducts&category=" + category + "";
 
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("products").innerHTML = this.responseText;
-            }
-        };
-
-        xhttp.open("GET", requestURL, true);
-        xhttp.send();
+        ajaxRequest(requestURL, function(response){
+            document.getElementById("products").innerHTML = response.responseText;
+        });
     }
+}
+
+function ajaxRequest(url, cb){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            cb(this);
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
 }
 
 function getCookieValue(cookieName){

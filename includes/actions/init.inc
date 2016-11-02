@@ -19,10 +19,6 @@
     }
 
     // Tidying Up URL
-    if(isset($_GET["productId"])){
-        $_SESSION["shopping_session"]->shopping_cart->addItem($_GET["productId"]);
-        Functions::removeFromQueryString("productId=");
-    }
     if(isset($_GET["emptyCart"])) {
         $_SESSION["shopping_session"]->shopping_cart->emptyCart();
         Functions::removeFromQueryString("emptyCart");

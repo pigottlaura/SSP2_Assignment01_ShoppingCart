@@ -43,14 +43,14 @@
                 <a href="?page=shopping-cart">
                     View Cart
                     <?php
-                        echo "(" . $_SESSION["shopping_session"]->shopping_cart->getTotalNumItems() . ")";
+                        echo "(<span id='scNumItems'>" . $_SESSION["shopping_session"]->shopping_cart->getTotalNumItems() . "</span>)";
                     ?>
                 </a>
             </button>
             <p>
                 Total:
                 <?php
-                    echo "€" . $_SESSION["shopping_session"]->shopping_cart->calculateTotal();
+                    echo "€<span id='scTotal'>" . $_SESSION["shopping_session"]->shopping_cart->calculateTotal() . "</span>";
                 ?>
             </p>
         </div>
