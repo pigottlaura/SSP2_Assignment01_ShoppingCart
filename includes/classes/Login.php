@@ -2,6 +2,7 @@
     include_once("InputData.php");
     class Login {
         public function __construct(){
+            throw new Exception("Cannot instantiate this class. Please use the static methods validateLogin() and logout() instead.");
         }
 
         public static function validateLogin($loginData){
@@ -27,13 +28,13 @@
             return $successful;
         }
 
-        public static function addUserToSession($userId){
-            $_SESSION["shopping_session"]->userId = $userId;
-        }
-
         public static function logout(){
             unset($_SESSION["shopping_session"]->userId);
             Functions::removeFromQueryString("action=");
+        }
+
+        private static function addUserToSession($userId){
+            $_SESSION["shopping_session"]->userId = $userId;
         }
 
         private static function loginError($error){

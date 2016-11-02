@@ -1,5 +1,9 @@
 <?php
     class Products {
+        public function __construct(){
+            throw new error("Cannot instantiate this class. Please use the static method display() instead.");
+        }
+
         static public function display($category=1, $numRows=4, $sortBy="name", $sortOrder="asc", $startRow=0){
             $html = "";
 

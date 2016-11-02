@@ -19,7 +19,7 @@
         );
 
         public function __construct(){
-            throw new Exception("Cannont instantiate this class. Please use the static methods sendOrderEmail() and sendNewUserEmail() instead.");
+            throw new Exception("Cannot instantiate this class. Please use the static methods sendOrderEmail() and sendNewUserEmail() instead.");
         }
 
         static public function sendOrderEmail(&$order){

@@ -6,11 +6,11 @@
 
         public function __construct(){
             if(!self::$allowCreate){
-                throw new error("Cannot use new() constructor on this class. Please use getInstance() to access the singleton instance instead.");
+                throw new Exception("Cannot instantiate this class. Please use the static methods provided to access the database instead.");
             }
         }
 
-        static public function getConnection(){
+        static private function getConnection(){
             if(!isset(self::$_connection)){
                 try {
                     self::$_connection = new PDO("mysql:host=" . CONF_DB_HOST . ";dbname=" . CONF_DB_NAME, CONF_DB_USERNAME, CONF_DB_PASSWORD);

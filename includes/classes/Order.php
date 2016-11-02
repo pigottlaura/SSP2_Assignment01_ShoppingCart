@@ -16,12 +16,12 @@
         public function placeOrder(){
             $this->orderTotal = $_SESSION["shopping_session"]->shopping_cart->calculateTotal();
             if(Database::createOrder($this)) {
-                if(Email::sendOrderEmail($this)){
-                    $_SESSION["shopping_session"]->shopping_cart->emptyCart();
-                    echo $this->confirmationEmail;
-                } else {
+                if(!Email::sendOrderEmail($this)){
                     self::orderError("Order has been successfully placed, but confirmation email failed to send - Order ID #" . $this->orderId);
+                    echo "<br>";
                 }
+                $_SESSION["shopping_session"]->shopping_cart->emptyCart();
+                echo $this->confirmationEmail;
             } else {
                 self::orderError("Failed to create order in database");
             }

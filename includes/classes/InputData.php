@@ -2,6 +2,7 @@
     class InputData {
 
         public function __construct(){
+            throw new Exception("Cannot instantiate this class. Please use the static methods validate() and sanitise() instead.");
         }
 
         static public function validate($data, $options){
