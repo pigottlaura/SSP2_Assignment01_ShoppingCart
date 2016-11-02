@@ -136,5 +136,12 @@
             }
             return $successful;
         }
+
+        static public function getUsersOrders($userId){
+            $statement = self::getConnection()->prepare("SELECT * FROM sOrder WHERE ordered_by = :userId");
+            $statement->bindParam(":userId", $userId);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>

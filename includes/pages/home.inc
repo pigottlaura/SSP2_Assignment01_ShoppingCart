@@ -13,7 +13,7 @@
         echo "<figcaption>" . $product["description"] . "</figcaption>";
         echo "</figure>";
         echo "<div class='price'>€" . $product["price"] . "</div>";
-        echo "<a class='addToCart' id=" . $product["id"] . "'><button>Add to Cart</button></a>";
+        echo "<button class='addToCart' id=" . $product["id"] . "'>Add to Cart</button>";
         echo "</div>";
     }
 ?>

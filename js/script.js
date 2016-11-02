@@ -56,8 +56,8 @@ function clickEvent(e){
         }
     }
 
-    if(e.target.tagName == "BUTTON" && e.target.parentNode.classList.contains("addToCart")){
-        var requestURL = "ajax.php?action=addToCart&productId=" + parseInt(e.target.parentNode.id);
+    if(e.target.classList.contains("addToCart")){
+        var requestURL = "ajax.php?action=addToCart&productId=" + parseInt(e.target.id);
         ajaxRequest(requestURL, function(response){
             var jsonResponse = JSON.parse(response.responseText);
             document.getElementById("scNumItems").innerHTML = jsonResponse.shoppingCartTotalItems;

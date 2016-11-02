@@ -43,7 +43,7 @@
                 $html .= "<figcaption>" . $product["description"] . "</figcaption>";
                 $html .= "</figure>";
                 $html .= "<div class='price'>€" . $product["price"] . "</div>";
-                $html .= "<a class='addToCart' id=" . $product["id"] . "'><button>Add to Cart</button></a>";
+                $html .= "<button class='addToCart' id=" . $product["id"] . "'>Add to Cart</button>";
                 $html .= "</div>";
             }
 

@@ -34,6 +34,7 @@
         <div>
             <?php
                 if(isset($_SESSION["shopping_session"]->userId)){
+                    echo "<a href='page.php?page=view-my-orders'>View My Orders</a>  / ";
                     echo "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=logout'>Logout</a>";
                 } else {
                     echo "<a href='page.php?page=login-register'>Login/Register</a>";
