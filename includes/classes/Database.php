@@ -66,7 +66,6 @@
         }
 
         static public function getProducts($numProducts=10, $category=1, $orderBy="name", $ascDesc="desc"){
-            $tempProducts = null;
             $ascDesc = strtoupper($ascDesc);
 
             if($category == 1){

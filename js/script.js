@@ -1,4 +1,33 @@
 window.onload = function(){
+    initialiseCookies();
+    setCookieOptions();
+    addEventListeners();
+    refreshProducts();
+}
+
+function initialiseCookies(){
+    if(!cookieExists("productPage")){
+        document.cookie = "productPage=0";
+    }
+    if(!cookieExists("sortBy")){
+        document.cookie = "sortBy=name";
+    }
+    if(!cookieExists("sortOrder")){
+        document.cookie = "sortOrder=asc";
+    }
+    if(!cookieExists("itemsPerPage")){
+        document.cookie = "itemsPerPage=4";
+    }
+}
+
+function setCookieOptions() {
+    if(document.getElementById("products")) {
+        document.getElementById("sortBy").value = getCookieValue("sortBy") + "-" + getCookieValue("sortOrder");
+        document.getElementById("itemsPerPage").value = getCookieValue("itemsPerPage");
+    }
+}
+
+function addEventListeners() {
     document.addEventListener("click", clickEvent);
 
     if(document.getElementById("login")){
@@ -9,28 +38,9 @@ window.onload = function(){
         document.getElementById("register").addEventListener("submit", validateForm);
     }
 
-    if(document.getElementById("sortBy")) {
-        var sortBySelect = document.getElementById("sortBy");
-        var itemsPerPageSelect = document.getElementById("itemsPerPage");
-
-        if(!cookieExists("productPage")){
-            document.cookie = "productPage=0";
-        }
-        if(!cookieExists("sortBy")){
-            document.cookie = "sortBy=name";
-        }
-        if(!cookieExists("sortOrder")){
-            document.cookie = "sortOrder=asc";
-        }
-        if(!cookieExists("itemsPerPage")){
-            document.cookie = "itemsPerPage=4";
-        }
-
-        sortBySelect.value = getCookieValue("sortBy") + "-" + getCookieValue("sortOrder");
-        itemsPerPageSelect.value = getCookieValue("itemsPerPage");
-
-        sortBySelect.addEventListener("change", sortProducts);
-        itemsPerPageSelect.addEventListener("change", changeItemsPerPage);
+    if(document.getElementById("products")) {
+        document.getElementById("sortBy").addEventListener("change", sortProducts);
+        document.getElementById("itemsPerPage").addEventListener("change", changeItemsPerPage);
     }
 }
 
@@ -84,7 +94,7 @@ function sortProducts(e){
     document.cookie = "sortOrder=" + sortOrder;
     document.cookie = "productPage=0";
 
-    location.reload(true);
+    refreshProducts();
 }
 
 function changeItemsPerPage(e){
@@ -92,7 +102,24 @@ function changeItemsPerPage(e){
 
     document.cookie = "itemsPerPage=" + itemsPerPage;
 
-    location.reload(true);
+    refreshProducts();
+}
+
+function refreshProducts(){
+    if(document.getElementById("products")){
+        var category = getParamValue("category").length > 0 ? category : 1;
+        var requestURL = "ajax.php?action=getProducts&category=" + category + "";
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("products").innerHTML = this.responseText;
+            }
+        };
+
+        xhttp.open("GET", requestURL, true);
+        xhttp.send();
+    }
 }
 
 function getCookieValue(cookieName){
@@ -113,6 +140,32 @@ function cookieExists(cookieName){
 }
 
 function incrementCookie(cookieName, incrementBy){
-    document.cookie = "productPage=" + (parseInt(getCookieValue("productPage"))  + incrementBy);
-    location.reload(true);
+    var newCookieValue = parseInt(getCookieValue("productPage"))  + incrementBy;
+    if(newCookieValue > -1){
+        document.cookie = "productPage=" + newCookieValue;
+        refreshProducts();
+    }
+}
+
+function getParamValue(paramName){
+    var result = "";
+    if(queryStringExists()){
+        var queryString = document.location.toString().split("?")[1];
+        var params = queryString.split("&");
+        for(var i=0; i < params.length; i++){
+            var name = params[i].split("=")[0];
+            if(name == paramName){
+                result = params[i].split("=")[1];
+            }
+        }
+    }
+    return result;
+}
+
+function queryStringExists(){
+    var result = false;
+    if(document.location.toString().indexOf('?') > -1){
+        result = true;
+    }
+    return result;
 }
