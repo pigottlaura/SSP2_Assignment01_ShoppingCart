@@ -56,6 +56,7 @@ CREATE table sOrder (
 CREATE table sOrder_items (
 	order_id INT(10) NOT NULL,
 	product_id INT(10) NOT NULL,
+	product_name VARCHAR(20),
 	number_items INT(10) DEFAULT 1,
 	selling_price DECIMAL(6, 2),
 	CONSTRAINT orderItems_order_fk FOREIGN KEY (order_id) REFERENCES sOrder(id),
@@ -75,5 +76,5 @@ INSERT INTO sProduct(name, description, price, image) VALUES("Furby", "", 12.00,
 INSERT INTO sUser(first_name, last_name, email, username, password) VALUES("Laura", "Pigott", "pigottlaura@gmail.com", "pigottlaura", SHA1("test"));
 INSERT INTO sAddress(user_id, address_houseName, address_street, address_town, address_county , address_country, address_zipCode) VALUES(1, "Angel Heights", "Dromleigh South", "Bantry", "Cork", "Ireland", "XN11254");
 
-SELECT * FROM sOrder;
-SELECT * FROM sproduct;
+#SELECT * FROM sOrder_items;
+#SELECT * FROM sproduct;
