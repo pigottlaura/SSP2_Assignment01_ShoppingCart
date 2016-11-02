@@ -28,16 +28,17 @@
 ?>
 <label for="sortBy">Sort Products by:</label>
 <select id="sortBy">
+    <option class="hidden" selected disabled></option>
     <option value="price-asc">Price (Ascending)</option>
     <option value="price-desc">Price (Descending)</option>
     <option value="name-asc">Name (Ascending)</option>
     <option value="name-desc">Name (Descending)</option>
-    <option value="date_added-asc">Latest (Ascending)</option>
-    <option value="date_added-desc">Latest (Descending)</option>
+    <option value="date_added-desc">Latest</option>
 </select>
 
-<label for="itemsPerPage">Number of Items Per Page:</label>
+<label for="itemsPerPage">Items Per Page:</label>
 <select id="itemsPerPage">
+    <option class="hidden" selected disabled></option>
     <option value="2">2</option>
     <option value="4">4</option>
     <option value="8">8</option>
@@ -53,30 +54,33 @@
         Functions::reloadPage();
     }
 
-    echo "<div>";
-    foreach ($products as $product) {
-        echo "<div class='productContainer'>";
-        echo "<h4>" . $product["name"] . "</h4>";
-        echo "<figure>";
-        echo "<img src='./images/products/" . $product["image"] . "' alt='" . $product["name"] . "'>";
-        echo "<figcaption>" . $product["description"] . "</figcaption>";
-        echo "</figure>";
-        echo "<div class='price'>€" . $product["price"] . "</div>";
-        echo "<a class='addToCart' href='?" . $_SERVER['QUERY_STRING'] . "&productId=" . $product["id"] . "'><button>Add to Cart</button></a>";
-        echo "</div>";
-    }
+    echo "<div id='products'>";
+        foreach ($products as $product) {
+            echo "<div class='productContainer'>";
+            echo "<h4>" . $product["name"] . "</h4>";
+            echo "<figure>";
+            echo "<img src='./images/products/" . $product["image"] . "' alt='" . $product["name"] . "'>";
+            echo "<figcaption>" . $product["description"] . "</figcaption>";
+            echo "</figure>";
+            echo "<div class='price'>€" . $product["price"] . "</div>";
+            echo "<a class='addToCart' href='?" . $_SERVER['QUERY_STRING'] . "&productId=" . $product["id"] . "'><button>Add to Cart</button></a>";
+            echo "</div>";
+        }
     echo "</div>";
 
     echo "<div align='center'>";
-    echo "<button id='prevPage'";
-    if($startRow == 0){
-        echo " disabled";
-    }
-    echo "><<< Previous " . $numRows . " products</button>";
-    echo "<button id='nextPage'";
-    if(isset($_COOKIE["lastPage"]) || count($products) < $numRows){
-        echo " disabled";
-    }
-    echo "> Next " . $numRows . " products >>></button>";
+        // Previous Page Button
+        echo "<button id='prevPage'";
+        if($startRow == 0){
+            echo " disabled";
+        }
+        echo "><<< Previous " . $numRows . " products</button>";
+
+        // Next Page Button
+        echo "<button id='nextPage'";
+        if(isset($_COOKIE["lastPage"]) || count($products) < $numRows){
+            echo " disabled";
+        }
+        echo "> Next " . $numRows . " products >>></button>";
     echo "</div>";
 ?>

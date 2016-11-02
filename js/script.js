@@ -37,15 +37,11 @@ window.onload = function(){
 function clickEvent(e){
     switch(e.target.id) {
         case "prevPage": {
-            console.log("prev");
-            document.cookie = "productPage=" + (parseInt(getCookieValue("productPage")) - 1);
-            location.reload(true);
+            incrementCookie("productPage", -1);
             break;
         }
         case "nextPage": {
-            console.log("next");
-            document.cookie = "productPage=" + (parseInt(getCookieValue("productPage")) + 1);
-            location.reload(true);
+            incrementCookie("productPage", 1);
             break;
         }
     }
@@ -114,4 +110,9 @@ function getCookieValue(cookieName){
 function cookieExists(cookieName){
     var result = document.cookie.indexOf(cookieName) > -1 ? true : false;
     return result;
+}
+
+function incrementCookie(cookieName, incrementBy){
+    document.cookie = "productPage=" + (parseInt(getCookieValue("productPage"))  + incrementBy);
+    location.reload(true);
 }

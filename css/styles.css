@@ -65,6 +65,7 @@ header nav ul a:hover ~ .submenu, .submenu:hover {
 
 /* SECTION */
 section {
+    min-height: 420px;
     padding: 1% 2%;
 }
 
