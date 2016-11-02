@@ -25,7 +25,9 @@
 
             if(count($products) == 0){
                 setcookie("lastPage", true, time() + 2500, "/");
-                setcookie("productPage", $_COOKIE["productPage"] - 1);
+                if($_COOKIE["productPage"] > 0){
+                    setcookie("productPage", $_COOKIE["productPage"] - 1);
+                }
                 Functions::reloadPage();
             }
 
