@@ -103,6 +103,15 @@
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        static public function getCategoryName($categoryId) {
+            $statement = self::getConnection()->prepare("SELECT * FROM sCategory WHERE id = :categoryId;");
+            $statement->bindParam(":categoryId", $categoryId);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            $name = $result["name"];
+            return $name;
+        }
+
         static public function createOrder(&$order){
             $successful = false;
             $statement = self::getConnection()->prepare("INSERT INTO sOrder(ordered_by, order_total) VALUES(:ordered_by, :order_total);");
