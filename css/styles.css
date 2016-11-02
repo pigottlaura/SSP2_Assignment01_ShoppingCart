@@ -75,13 +75,17 @@ section {
 
 label {
     display: inline-block;
-    width: 48%;
-    padding-right: 2%;
     box-sizing: border-box;
 }
 label input {
-    width: 70%;
     float: right;
+}
+form label {
+    width: 48%;
+    padding-right: 2%;
+}
+form label input {
+    width: 70%;
 }
 form {
     width: 1000px;
@@ -130,9 +134,6 @@ footer {
 
 .placeOrder {
     margin-left: 50px;
-}
-#sortBy {
-    display: block;
 }
 .hidden {
     display: none;

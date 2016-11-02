@@ -1,3 +1,4 @@
+<label for="sortBy">Sort Products by:</label>
 <select id="sortBy">
     <option value="price-asc">Price (Ascending)</option>
     <option value="price-desc">Price (Descending)</option>
@@ -6,13 +7,22 @@
     <option value="date_added-asc">Latest (Ascending)</option>
     <option value="date_added-desc">Latest (Descending)</option>
 </select>
+
+<label for="itemsPerPage">Number of Items Per Page:</label>
+<select id="itemsPerPage">
+    <option value="2">2</option>
+    <option value="4">4</option>
+    <option value="8">8</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+</select>
 <?php
-    $numRows = 2;
+    $numRows = 4;
     $startRow = 0;
     setcookie("lastPage", false, time() + 2500, "/");
     $category = isset($_GET["category"]) && $_GET["category"] > 0 ? $_GET["category"] : 1;
-    $sortBy = "id";
-    $sortOrder = "desc";
+    $sortBy = "name";
+    $sortOrder = "asc";
 
     $sortDataValid = InputData::validate(array(
         $_COOKIE
@@ -26,6 +36,7 @@
     ));
 
     if($sortDataValid){
+        $numRows = $_COOKIE["itemsPerPage"];
         $sortBy = $_COOKIE["sortBy"];
         $sortOrder = $_COOKIE["sortOrder"];
         $startRow = $_COOKIE["productPage"] * $numRows;
@@ -39,6 +50,7 @@
         Functions::reloadPage();
     }
 
+    echo "<div>";
     foreach ($products as $product) {
         echo "<div class='productContainer'>";
         echo "<h4>" . $product["name"] . "</h4>";
@@ -50,6 +62,7 @@
         echo "<a class='addToCart' href='?" . $_SERVER['QUERY_STRING'] . "&productId=" . $product["id"] . "'><button>Add to Cart</button></a>";
         echo "</div>";
     }
+    echo "</div>";
 
     echo "<div align='center'>";
     echo "<button id='prevPage'";
@@ -58,7 +71,7 @@
     }
     echo "><<< Previous " . $numRows . " products</button>";
     echo "<button id='nextPage'";
-    if(isset($_COOKIE["lastPage"])){
+    if(isset($_COOKIE["lastPage"]) || count($products) < $numRows){
         echo " disabled";
     }
     echo "> Next " . $numRows . " products >>></button>";

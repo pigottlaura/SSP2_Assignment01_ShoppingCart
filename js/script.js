@@ -11,13 +11,26 @@ window.onload = function(){
 
     if(document.getElementById("sortBy")) {
         var sortBySelect = document.getElementById("sortBy");
-        if(cookieExists("sortBy") && cookieExists("sortOrder")){
-            sortBySelect.value = getCookieValue("sortBy") + "-" + getCookieValue("sortOrder");
-        }
-        if(cookieExists("productPage") == false){
+        var itemsPerPageSelect = document.getElementById("itemsPerPage");
+
+        if(!cookieExists("productPage")){
             document.cookie = "productPage=0";
         }
+        if(!cookieExists("sortBy")){
+            document.cookie = "sortBy=name";
+        }
+        if(!cookieExists("sortOrder")){
+            document.cookie = "sortOrder=asc";
+        }
+        if(!cookieExists("itemsPerPage")){
+            document.cookie = "itemsPerPage=4";
+        }
+
+        sortBySelect.value = getCookieValue("sortBy") + "-" + getCookieValue("sortOrder");
+        itemsPerPageSelect.value = getCookieValue("itemsPerPage");
+
         sortBySelect.addEventListener("change", sortProducts);
+        itemsPerPageSelect.addEventListener("change", changeItemsPerPage);
     }
 }
 
@@ -73,6 +86,15 @@ function sortProducts(e){
 
     document.cookie = "sortBy=" + sortBy;
     document.cookie = "sortOrder=" + sortOrder;
+    document.cookie = "productPage=0";
+
+    location.reload(true);
+}
+
+function changeItemsPerPage(e){
+    var itemsPerPage = e.target.value;
+
+    document.cookie = "itemsPerPage=" + itemsPerPage;
 
     location.reload(true);
 }
