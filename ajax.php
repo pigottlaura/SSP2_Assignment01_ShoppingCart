@@ -1,6 +1,5 @@
 <?php
-    include_once("./autoloader.php");
-    session_start();
+    include_once("./includes/actions/init.inc");
 
     if(isset($_GET["action"])){
         switch ($_GET["action"]) {
