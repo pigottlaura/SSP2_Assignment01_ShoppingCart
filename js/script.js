@@ -6,9 +6,7 @@ window.onload = function(){
 }
 
 function initialiseCookies(){
-    if(!cookieExists("productPage")){
-        document.cookie = "productPage=0";
-    }
+    document.cookie = "productPage=0";
     if(!cookieExists("sortBy")){
         document.cookie = "sortBy=name";
     }
@@ -110,6 +108,7 @@ function changeItemsPerPage(e){
     var itemsPerPage = e.target.value;
 
     document.cookie = "itemsPerPage=" + itemsPerPage;
+    document.cookie = "productPage=0";
 
     refreshProducts();
 }

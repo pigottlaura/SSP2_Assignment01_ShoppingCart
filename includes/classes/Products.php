@@ -26,16 +26,11 @@
             }
 
             $products = Database::getProducts($startRow . "," . ($numRows + 1), $category, $sortBy, $sortOrder);
-            
-            if(count($products) < ($numRows + 1)) {
-                $lastPage = true;
-                $loopProducts = count($products);
-            } else {
-                $lastPage = false;
-                $loopProducts = count($products) - 1;
-            }
 
-            for($i=0; $i < $loopProducts; $i++) {
+            $lastPage = count($products) <= $numRows ? true : false;
+            $loopProducts = count($products) <= $numRows ? count($products) : count($products) - 1;
+
+            for($i=0; $i<$loopProducts; $i++) {
                 $html .= "<div class='productContainer'>";
                 $html .= "<h4>" . $products[$i]["name"] . "</h4>";
                 $html .= "<figure>";
