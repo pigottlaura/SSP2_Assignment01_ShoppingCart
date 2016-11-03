@@ -17,8 +17,6 @@
                 include("./includes/pages/contact-us.inc");
             } else if($_GET["page"] == "view-my-orders") {
                 include("./includes/pages/view-my-orders.inc");
-            } else if($_GET["page"] == "view-order") {
-                include("./includes/pages/view-order.inc");
             } else {
                 include("./includes/pages/home.inc");
             }

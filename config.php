@@ -1,5 +1,6 @@
 <?php
     define("CONF_DEBUG", true);
+    define("CONF_COMP_NAME", "Blueberry Toys");
 
     if($_SERVER['SERVER_NAME'] == "localhost"){
         define("CONF_DB_HOST", "localhost");

@@ -128,7 +128,6 @@
         static private function addItemsToOrder(&$order){
             $successful = false;
             foreach($order->orderItems as $item => $itemDetails) {
-                var_dump($item);
                 $statement = self::getConnection()->prepare("INSERT INTO sOrder_items(order_id, product_id, product_name, number_items, selling_price) VALUES(:order_id, :product_id, :product_name, :number_items, :selling_price);");
                 $statement->bindParam(":order_id", $order->orderId);
                 $statement->bindParam(":product_id", $itemDetails["id"]);

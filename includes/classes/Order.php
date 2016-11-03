@@ -17,12 +17,13 @@
         public function placeOrder(){
             $this->orderTotal = $_SESSION["shopping_session"]->shopping_cart->calculateTotal();
             if(Database::createOrder($this)) {
+                $_SESSION["shopping_session"]->shopping_cart->emptyCart();
                 if(!Email::sendOrderEmail($this)){
                     self::orderError("Order has been successfully placed, but confirmation email failed to send - Order ID #" . $this->orderId);
-                    echo "<br>";
+                    echo "<br><a href='page.php?page=view-order&orderId=" . $this->orderId . "'>View Order Receipt</a>";
+                } else {
+                    Functions::goToPage("page.php?page=view-order&orderId=" . $this->orderId);
                 }
-                $_SESSION["shopping_session"]->shopping_cart->emptyCart();
-                Functions::goToPage("page.php?page=view-order&orderId=" . $this->orderId);
             } else {
                 self::orderError("Failed to create order in database");
             }
@@ -67,7 +68,7 @@
                 $html .= "<tr>";
                 $html .= "<td colspan='2'>" . $order->ordered_by->contact["first_name"] . " " . $order->ordered_by->contact["last_name"] . "</td>";
                 $html .= "<td>&nbsp;</td>";
-                $html .= "<td colspan='2' align='right'>Blueberry Toys</td>";
+                $html .= "<td colspan='2' align='right'>" . CONF_COMP_NAME . "</td>";
                 $html .= "</tr>";
 
                 // ADDRESS LINES
