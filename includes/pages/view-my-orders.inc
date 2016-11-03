@@ -1,4 +1,5 @@
 <?php
+    echo "<h2>View My Orders</h2>";
     $orders = Database::getUsersOrders($_SESSION["shopping_session"]->userId);
 
     if(count($orders) > 0){
