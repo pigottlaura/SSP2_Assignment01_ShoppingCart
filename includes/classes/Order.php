@@ -18,12 +18,12 @@
             $this->orderTotal = $_SESSION["shopping_session"]->shopping_cart->calculateTotal();
             if(Database::createOrder($this)) {
                 $_SESSION["shopping_session"]->shopping_cart->emptyCart();
+                echo "<h2>Thank you for your Order</h2>";
                 if(!Email::sendOrderEmail($this)){
                     self::orderError("Order has been successfully placed, but confirmation email failed to send - Order ID #" . $this->orderId);
-                    echo "<br><a href='page.php?page=view-order&orderId=" . $this->orderId . "'>View Order Receipt</a>";
-                } else {
-                    Functions::goToPage("page.php?page=view-order&orderId=" . $this->orderId);
                 }
+                echo self::createReceipt($this->orderId);
+                echo "<br><a href='page.php?page=view-my-orders'>View All Receipts</a>";
             } else {
                 self::orderError("Failed to create order in database");
             }
