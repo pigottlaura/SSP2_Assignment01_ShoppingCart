@@ -82,7 +82,7 @@ function validateForm(e){
         if(input.hasAttribute("required")) {
             if(input.value.length == 0){
                 formValidated = false;
-                console.log("value required for " + input.getAttribute("name"));
+                input.setAttribute("title", "Value required for " + input.getAttribute("name"));
             }
         }
 
@@ -122,6 +122,7 @@ function checkUsernameAvailablility(e){
         var requestURL = "ajax.php?action=checkUsernameAvailability&requestedUsername=" + requestedUsernameInput.value;
 
         ajaxRequest(requestURL, function(response){
+            console.log(response.responseText);
             var jsonResponse = JSON.parse(response.responseText);
             usernameAvailable = jsonResponse.usernameAvailable * jsonResponse.dataValidated == 1 ? true : false;
 

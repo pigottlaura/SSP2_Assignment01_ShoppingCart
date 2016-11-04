@@ -8,7 +8,7 @@
         public static function validateLogin($loginData){
             $response = array(
                 "successful" => false,
-                "errorMessage" => array()
+                "errors" => array()
             );
             $validateData = InputData::validate($loginData, array(
                 "empty" => array("honeypot"),
@@ -24,11 +24,11 @@
                     self::addUserToSession($userId);
                     $response["successful"] = true;
                 } else {
-                    array_push($response["errorMessage"], "Incorrect username / password combination");
+                    array_push($response["errors"], "Incorrect username / password combination");
                 }
             } else {
                 foreach($validateData["errorMessage"] as $key => $value){
-                    array_push($response["errorMessage"], $value);
+                    array_push($response["errors"], $value);
                 }
             }
             return $response;

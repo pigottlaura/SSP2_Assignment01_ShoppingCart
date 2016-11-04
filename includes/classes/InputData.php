@@ -22,35 +22,35 @@
                 if(isset($options["required"]) && in_array($key, $options["required"], true)){
                     if(empty($data[$key])){
                         $response["dataValidated"] = false;
-                        array_push($response["errorMessage"], "'" . $key . "' is a required field.");
+                        array_push($response["errorMessage"], "\'" . $key . "\' is a required field.");
                     }
                 }
 
                 if(isset($options["string"]) && in_array($key, $options["string"], true)){
                     if(!is_string($value)){
                         $response["dataValidated"] = false;
-                        array_push($response["errorMessage"], "'" . $key . "' contains unusual data.");
+                        array_push($response["errorMessage"], "\'" . $key . "\' contains unusual data.");
                     }
                 }
 
                 if(isset($options["email"]) && in_array($key, $options["email"], true)){
                     if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
                         $response["dataValidated"] = false;
-                        array_push($response["errorMessage"], "'" . $key . "' requires a valid email address.");
+                        array_push($response["errorMessage"], "\'" . $key . "\' requires a valid email address.");
                     }
                 }
 
                 if(isset($options["int"]) && in_array($key, $options["int"], true)) {
                     if(!filter_var($value, FILTER_VALIDATE_INT)){
                         $response["dataValidated"] = false;
-                        array_push($response["errorMessage"], "'" . $key . "' product page number is not valid.");
+                        array_push($response["errorMessage"], "\'" . $key . "\' product page number is not valid.");
                     }
                 }
 
                 if(isset($options["notInt"]) && in_array($key, $options["notInt"], true)){
                     if(filter_var($value, FILTER_VALIDATE_INT)){
                         $response["dataValidated"] = false;
-                        array_push($response["errorMessage"], "'" . $key . "' must contain letters as well as numbers.");
+                        array_push($response["errorMessage"], "\'" . $key . "\' must contain letters as well as numbers.");
                     }
                 }
 
@@ -59,7 +59,7 @@
                     // the can match with any non-word character
                     if(preg_match("/[^a-z]+/i", substr($value, 0, 1), $matches1) || preg_match_all("/[\W]+/i", $value, $matches2)){
                         $response["dataValidated"] = false;
-                        array_push($response["errorMessage"], "'" . $key . "' contains unexpected characters.");
+                        array_push($response["errorMessage"], "\'" . $key . "\' contains unexpected characters.");
                     }
                 }
 
@@ -67,7 +67,6 @@
                     $enumPassed = false;
 
                     foreach($options["enum"][$key] as $enumVal) {
-                        echo strtolower($value) . " " . strtolower($enumVal);
                         if(strtolower($value) == strtolower($enumVal)) {
                             $enumPassed = true;
                         }
@@ -75,7 +74,7 @@
 
                     if(!$enumPassed) {
                         $response["dataValidated"] = false;
-                        array_push($response["errorMessage"], "'" . $key . "' does not match.");
+                        array_push($response["errorMessage"], "\'" . $key . "\' does not match.");
                     }
                 }
             }

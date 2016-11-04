@@ -5,7 +5,10 @@
         }
 
         static public function registerNewUser($formData){
-            $newUserRegistered = false;
+            $response = array(
+                "successful" => false,
+                "errors" => array()
+            );
 
             $validateData = InputData::validate($formData, array(
                 "empty" => array("honeypot"),
@@ -17,18 +20,31 @@
 
             if ($validateData["dataValidated"]) {
                 $sanitisedData = InputData::sanitise($_POST);
-                if (Database::addUser($sanitisedData)) {
-                    $newUserRegistered = true;
+                $usernameAvailability = self::checkUsernameAvailability($sanitisedData["username"]);
+
+                if($usernameAvailability["usernameAvailable"] && $usernameAvailability["dataValidated"]){
+                    if (Database::addUser($sanitisedData)) {
+                        $response["successful"] = true;
+                    }
+                } else {
+                    foreach($usernameAvailability["errors"] as $key => $value){
+                        array_push($response["errors"], $value);
+                    }
+                }
+
+            } else {
+                foreach($validateData["errorMessage"] as $key => $value){
+                    array_push($response["errors"], $value);
                 }
             }
-            return $newUserRegistered;
+            return $response;
         }
 
         static public function checkUsernameAvailability($requestedUsername){
             $response = array(
                 "usernameAvailable" => false,
                 "dataValidated" => false,
-                "error" => array()
+                "errors" => array()
             );
             if(strlen($requestedUsername) > 0){
                 $dataValidated = InputData::validate(array("username" => $requestedUsername), array(
@@ -41,14 +57,14 @@
                 $response["dataValidated"] = $dataValidated["dataValidated"];
 
                 foreach($dataValidated["errorMessage"] as $key => $value){
-                    array_push($response["error"], $value);
+                    array_push($response["errors"], $value);
                 }
 
                 if($response["dataValidated"]){
                     $sanitisedData = InputData::sanitise(array("username" => $requestedUsername));
                     $response["usernameAvailable"] = Database::checkUsernameAvailability($sanitisedData["username"]);
                     if($response["usernameAvailable"] == false) {
-                        array_push($response["error"], "This username is already taken.");
+                        array_push($response["errors"], "This username is already taken.");
                     }
                 }
             }
