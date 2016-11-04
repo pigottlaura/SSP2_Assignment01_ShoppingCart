@@ -30,7 +30,7 @@
     <label>
         Confirm Password:
         <input type="password" name="confirm_password" required>
-        <span id="passwordMatch" class="icon"></span>
+        <span id="requestedUsernameAvailable" class="icon"></span>
     </label>
     <br>
     <input type="submit" value="Register">

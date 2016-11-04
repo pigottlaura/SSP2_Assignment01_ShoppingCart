@@ -163,3 +163,12 @@ footer {
 .icon-no {
     background-position-x: -41px;
 }
+fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+#changePassword {
+    position: absolute;
+    right: 4.2%;
+}

@@ -17,6 +17,8 @@
                 include("./includes/pages/contact-us.inc");
             } else if($_GET["page"] == "view-my-orders") {
                 include("./includes/pages/view-my-orders.inc");
+            } else if($_GET["page"] == "edit-my-details") {
+                include("./includes/pages/edit-my-details.inc");
             } else {
                 include("./includes/pages/home.inc");
             }
@@ -34,6 +36,8 @@
                 include("./includes/actions/login.inc");
             } else if($_GET["action"] == "register") {
                 include("./includes/actions/register.inc");
+            } else if($_GET["action"] == "update-details") {
+                include("./includes/actions/update-details.inc");
             } else if($_GET["action"] == "logout") {
                 Login::logout();
             }

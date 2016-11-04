@@ -44,6 +44,10 @@ function addEventListeners() {
         });
     }
 
+    if(document.getElementById("update-details")){
+        document.getElementById("update-details").addEventListener("submit", validateForm);
+    }
+
     if(document.getElementById("products")) {
         document.getElementById("sortBy").addEventListener("change", sortProducts);
         document.getElementById("itemsPerPage").addEventListener("change", changeItemsPerPage);
@@ -58,6 +62,16 @@ function clickEvent(e){
         }
         case "nextPage": {
             incrementCookie("productPage", 1);
+            break;
+        }
+        case "changePassword": {
+            e.target.parentNode.className = "hidden";
+            document.getElementById("newPassword").className = "";
+
+            var newPasswordHoneypot = document.createElement("input");
+            newPasswordHoneypot.setAttribute("name", "password_change");
+            newPasswordHoneypot.setAttribute("type", "hidden");
+            document.getElementById("update-details").appendChild(newPasswordHoneypot);
             break;
         }
     }
@@ -86,7 +100,7 @@ function validateForm(e){
             }
         }
 
-        if(input.hasAttribute("data-match")){
+        if(input.hasAttribute("data-match") && input.parentNode.parentNode.classList.contains("hidden") == false){
             var inputToMatchTo = document.getElementsByName(input.getAttribute("data-match"))[0];
             if(input.value != inputToMatchTo.value) {
                 var error = input.getAttribute("name") + " does not match with " + input.getAttribute("data-match");

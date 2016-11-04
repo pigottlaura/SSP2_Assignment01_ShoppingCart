@@ -13,6 +13,6 @@
             echo "<h3>You have no previous orders</h3>";
         }
     } else {
-        echo "<h3>Please <a href='page.php?page=login-register'>login</a> to see your previous orders</h3>";
+        Functions::goToPage("page.php?page=login-register");
     }
 ?>

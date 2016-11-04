@@ -61,7 +61,7 @@
         static public function getUserDetails($userId){
             $user = (object) array();
 
-            $statement1 = self::getConnection()->prepare("SELECT first_name, last_name, email FROM sUser WHERE id = :userId;");
+            $statement1 = self::getConnection()->prepare("SELECT first_name, last_name, email, username FROM sUser WHERE id = :userId;");
             $statement1->bindParam(":userId", $userId);
             $statement1->execute();
             $user->contact = $statement1->fetch(PDO::FETCH_ASSOC);
@@ -72,6 +72,22 @@
             $user->address = $statement2->fetch(PDO::FETCH_ASSOC);
 
             return $user;
+        }
+
+        static public function updateUserDetails($newUserDetails){
+            if(isset($newUserDetails["password_change"])){
+                $statement = self::getConnection()->prepare("UPDATE sUser SET first_name=:first_name, last_name=:last_name, email=:email, password=SHA1(:password) WHERE id=:userId;");
+                $statement->bindParam(":password", $newUserDetails["password"]);
+                var_dump($statement);
+            } else {
+                $statement = self::getConnection()->prepare("UPDATE sUser SET first_name=:first_name, last_name=:last_name, email=:email WHERE id=:userId;");
+            }
+            $statement->bindParam(":first_name", $newUserDetails["first_name"]);
+            $statement->bindParam(":last_name", $newUserDetails["last_name"]);
+            $statement->bindParam(":email", $newUserDetails["email"]);
+            $statement->bindParam(":userId", $_SESSION["shopping_session"]->userId);
+            $successful = $statement->execute();
+            return $successful;
         }
 
         static public function getProducts($numProducts=10, $category=1, $orderBy="name", $ascDesc="desc"){
