@@ -34,7 +34,7 @@ function addEventListeners() {
 
     if(document.getElementById("register")) {
         document.getElementById("register").addEventListener("submit", validateForm);
-        document.getElementById("requestedUsername").addEventListener("keyup", checkUsernameAvailablility);
+        document.getElementById("requestedUsername").addEventListener("blur", checkUsernameAvailablility);
     }
 
     if(document.getElementById("products")) {
