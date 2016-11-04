@@ -33,8 +33,15 @@ function addEventListeners() {
     }
 
     if(document.getElementById("register")) {
+        var keyPressTimeout = null;
         document.getElementById("register").addEventListener("submit", validateForm);
         document.getElementById("requestedUsername").addEventListener("blur", checkUsernameAvailablility);
+        document.getElementById("requestedUsername").addEventListener("keyup", function(e) {
+            if(keyPressTimeout){
+                clearTimeout(keyPressTimeout);
+            }
+            keyPressTimeout = setTimeout(checkUsernameAvailablility, 500);
+        });
     }
 
     if(document.getElementById("products")) {
@@ -108,7 +115,6 @@ function checkUsernameAvailablility(e){
         var requestURL = "ajax.php?action=checkUsernameAvailability&requestedUsername=" + requestedUsername;
 
         ajaxRequest(requestURL, function(response){
-            console.log(response.responseText);
             var jsonResponse = JSON.parse(response.responseText);
             usernameAvailable = jsonResponse.usernameAvailable * jsonResponse.dataValidated;
 
