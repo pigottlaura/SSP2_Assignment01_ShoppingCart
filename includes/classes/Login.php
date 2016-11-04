@@ -6,26 +6,32 @@
         }
 
         public static function validateLogin($loginData){
-            $successful = false;
-            $dataValidated = InputData::validate($loginData, array(
+            $response = array(
+                "successful" => false,
+                "errorMessage" => array()
+            );
+            $validateData = InputData::validate($loginData, array(
                 "empty" => array("honeypot"),
                 "required" => array("username", "password"),
-                "string" => array("username", "password")
+                "string" => array("username", "password"),
+                "noSpecialChars" => array("username")
             ));
 
-            if($dataValidated){
+            if($validateData["dataValidated"]){
                 $sanitisedData = InputData::sanitise($loginData);
                 $userId = Database::validateUser($sanitisedData["username"], $sanitisedData["password"]);
                 if($userId > 0){
                     self::addUserToSession($userId);
-                    $successful = true;
+                    $response["successful"] = true;
                 } else {
-                    self::loginError("Wrong credentials");
+                    array_push($response["errorMessage"], "Incorrect username / password combination");
                 }
             } else {
-                self::loginError("Invalid Data");
+                foreach($validateData["errorMessage"] as $key => $value){
+                    array_push($response["errorMessage"], $value);
+                }
             }
-            return $successful;
+            return $response;
         }
 
         public static function logout(){
@@ -35,11 +41,6 @@
 
         public static function addUserToSession($userId){
             $_SESSION["shopping_session"]->userId = $userId;
-        }
-
-        private static function loginError($error){
-            //throw new Exception($error);#
-            echo "Login error - " . $error . "<br>";
         }
     }
 ?>

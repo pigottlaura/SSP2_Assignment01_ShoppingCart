@@ -6,51 +6,60 @@
         }
 
         static public function validate($data, $options){
-            $errorMessage = "";
-            $dataValidated = true;
+            $response = array(
+                "errorMessage" => array(),
+                "dataValidated" => true
+            );
 
             foreach($data as $key => $value){
                 if(isset($options["empty"]) && in_array($key, $options["empty"], true)){
                     if(!empty($data[$key])){
-                        $dataValidated = false;
-                        $errorMessage .= "<li>Unusual form activity detected.</li>";
+                        $response["dataValidated"] = false;
+                        array_push($response["errorMessage"], "Unusual form activity detected.");
                     }
                 }
 
                 if(isset($options["required"]) && in_array($key, $options["required"], true)){
                     if(empty($data[$key])){
-                        $dataValidated = false;
-                        $errorMessage .= "<li>'" . $key . "' is a required field.</li>";
+                        $response["dataValidated"] = false;
+                        array_push($response["errorMessage"], "'" . $key . "' is a required field.");
                     }
                 }
 
                 if(isset($options["string"]) && in_array($key, $options["string"], true)){
                     if(!is_string($value)){
-                        $dataValidated = false;
-                        $errorMessage .= "<li>'" . $key . "' contains unusual data.</li>";
+                        $response["dataValidated"] = false;
+                        array_push($response["errorMessage"], "'" . $key . "' contains unusual data.");
                     }
                 }
 
                 if(isset($options["email"]) && in_array($key, $options["email"], true)){
                     if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
-                        $dataValidated = false;
-                        $errorMessage .= "<li>'" . $key . "' requires a valid email address.</li>";
+                        $response["dataValidated"] = false;
+                        array_push($response["errorMessage"], "'" . $key . "' requires a valid email address.");
                     }
                 }
 
                 if(isset($options["int"]) && in_array($key, $options["int"], true)) {
                     if(!filter_var($value, FILTER_VALIDATE_INT)){
-                        $dataValidated = false;
-                        $errorMessage .= "<li>'" . $key . "' product page number is not valid.</li>";
+                        $response["dataValidated"] = false;
+                        array_push($response["errorMessage"], "'" . $key . "' product page number is not valid.");
+                    }
+                }
+
+                if(isset($options["notInt"]) && in_array($key, $options["notInt"], true)){
+                    if(filter_var($value, FILTER_VALIDATE_INT)){
+                        $response["dataValidated"] = false;
+                        array_push($response["errorMessage"], "'" . $key . "' must contain letters as well as numbers.");
                     }
                 }
 
                 if(isset($options["noSpecialChars"]) && in_array($key, $options["noSpecialChars"], true)){
                     // First character must be a letter (case insensitive), and no character in the rest of
-                    // the can matche with any non-word character
-                    if(preg_match("/[^a-z]+/i", substr($value, 0, 1)) || preg_match_all("/[\W]+/i", $value)){
-                        $dataValidated = false;
-                        //$errorMessage .= "<li>'" . $key . "' contains unexpected characters.</li>";
+                    // the can match with any non-word character
+                    if(preg_match("/[^a-z]+/i", substr($value, 0, 1), $matches1) || preg_match_all("/[\W]+/i", $value, $matches2)){
+                        $response["dataValidated"] = false;
+                        array_push($response["errorMessage"], "'" . $key . "' contains unexpected characters.");
                     }
                 }
 
@@ -65,17 +74,13 @@
                     }
 
                     if(!$enumPassed) {
-                        $dataValidated = false;
-                        $errorMessage .= "<li>'" . $key . "' does not match.</li>";
+                        $response["dataValidated"] = false;
+                        array_push($response["errorMessage"], "'" . $key . "' does not match.");
                     }
                 }
             }
 
-            if(strlen($errorMessage) > 0){
-                echo $errorMessage;
-            }
-
-            return $dataValidated;
+            return $response;
         }
 
         static public function sanitise($data){

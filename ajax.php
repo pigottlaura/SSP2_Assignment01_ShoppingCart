@@ -19,12 +19,9 @@
                 break;
             }
             case "checkUsernameAvailability": {
-                $usernameAvailability = Register::checkUsernameAvailability($_GET["requestedUsername"]);
-                $response = array(
-                    "usernameAvailable" => $usernameAvailability["usernameAvailable"],
-                    "dataValidated" => $usernameAvailability["dataValidated"],
-                    "username" => $_GET["requestedUsername"]
-                );
+                $response = Register::checkUsernameAvailability($_GET["requestedUsername"]);
+                $response["username"] = $_GET["requestedUsername"];
+
                 echo json_encode($response);
                 break;
             }

@@ -18,7 +18,7 @@
                 )
             ));
 
-            if($cookieDataValid) {
+            if($cookieDataValid["dataValidated"]) {
                 $numRows = $_COOKIE["itemsPerPage"];
                 $sortBy = $_COOKIE["sortBy"];
                 $sortOrder = $_COOKIE["sortOrder"];

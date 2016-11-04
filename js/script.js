@@ -87,46 +87,59 @@ function validateForm(e){
         }
 
         if(input.hasAttribute("data-match")){
-            if(input.value != document.getElementsByName(input.getAttribute("data-match"))[0].value) {
+            var inputToMatchTo = document.getElementsByName(input.getAttribute("data-match"))[0];
+            if(input.value != inputToMatchTo.value) {
+                var error = input.getAttribute("name") + " does not match with " + input.getAttribute("data-match");
                 formValidated = false;
+
                 document.getElementById("passwordMatch").className = "icon icon-error";
-                console.log(input.getAttribute("name") + " does not match with " + input.getAttribute("data-match"));
+                document.getElementById("passwordMatch").setAttribute("title", error);
+
+                inputToMatchTo.setAttribute("title", error);
             } else {
                 document.getElementById("passwordMatch").className = "icon";
             }
         }
 
         if(input.getAttribute("name") == "username"){
-            formValidated = checkUsernameAvailablility();
+            if(input.getAttribute("data-available") == "false"){
+                formValidated = false;
+            }
         }
     });
 
-    if(formValidated){
-
-    } else {
+    if(formValidated == false) {
         e.preventDefault();
     }
 }
 
 function checkUsernameAvailablility(e){
     var usernameAvailable = false;
-    var requestedUsername = document.getElementById("requestedUsername").value;
-    if(requestedUsername.length > 0){
-        var requestURL = "ajax.php?action=checkUsernameAvailability&requestedUsername=" + requestedUsername;
+    var requestedUsernameInput = document.getElementById("requestedUsername");
+    var requestedUsernameSpan = document.getElementById("requestedUsernameAvailable");
+
+    if(requestedUsernameInput.value.length > 0){
+        var requestURL = "ajax.php?action=checkUsernameAvailability&requestedUsername=" + requestedUsernameInput.value;
 
         ajaxRequest(requestURL, function(response){
             var jsonResponse = JSON.parse(response.responseText);
-            usernameAvailable = jsonResponse.usernameAvailable * jsonResponse.dataValidated;
+            usernameAvailable = jsonResponse.usernameAvailable * jsonResponse.dataValidated == 1 ? true : false;
 
             var setClassTo = jsonResponse.usernameAvailable ? "icon icon-yes" : "icon icon-no";
             setClassTo = jsonResponse.dataValidated ? setClassTo : "icon icon-error";
-            document.getElementById("requestedUsername").value = jsonResponse.username;
-            document.getElementById("requestedUsernameAvailable").className = setClassTo;
+
+            requestedUsernameInput.value = jsonResponse.username;
+            requestedUsernameInput.setAttribute("title", jsonResponse.error);
+            requestedUsernameInput.setAttribute("data-available", usernameAvailable.toString());
+
+            requestedUsernameSpan.setAttribute("title", jsonResponse.error);
+            requestedUsernameSpan.className = setClassTo;
+
+            return usernameAvailable;
         });
     } else {
-        document.getElementById("requestedUsernameAvailable").className = "icon";
+        requestedUsernameSpan.className = "icon";
     }
-    return usernameAvailable;
 }
 function sortProducts(e){
     var sortBy = e.target.value.split("-")[0];
