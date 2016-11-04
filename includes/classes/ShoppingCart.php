@@ -81,7 +81,7 @@
 
         static public function display(){
             $html = "<h1>Order Details</h1>";
-            foreach ($_SESSION["shopping_session"]->shopping_cart->tempOrderItemDetails as $item => $itemDetails) {
+            foreach ($_SESSION["shopping_session"]->shopping_cart->tempOrderItemDetails->orderItems as $item => $itemDetails) {
                 $_SESSION["shopping_session"]->shopping_cart->orderTotal += $itemDetails["price"] * $itemDetails["numItems"];
 
                 $html .= "<div class='cartItemContainer'>";
@@ -93,7 +93,7 @@
                 $html .= "</div>";
             }
             $html .= "Total: €" . $_SESSION["shopping_session"]->shopping_cart->orderTotal;
-            $html .= "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=order'><button class='placeOrder'>Place Order</button></a>";
+            $html .= "<a href='page.php?page=delivery-details'><button class='placeOrder'>Place Order</button></a>";
             $html .= "<a href='page.php?page=shopping-cart&emptyCart'><button>Empty Cart</button></a>";
             echo $html;
         }

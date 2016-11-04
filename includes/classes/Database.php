@@ -159,9 +159,17 @@
 
         static public function createOrder(&$order){
             $successful = false;
-            $statement = self::getConnection()->prepare("INSERT INTO sOrder(ordered_by, order_total) VALUES(:ordered_by, :order_total);");
+            $statement = self::getConnection()->prepare("INSERT INTO sOrder(ordered_by, order_total, recipient_first_name, recipient_last_name, recipient_houseName, recipient_street, recipient_town, recipient_county, recipient_country, recipient_zipCode) VALUES(:ordered_by, :order_total, :recipient_first_name, :recipient_last_name, :recipient_houseName, :recipient_street, :recipient_town, :recipient_county, :recipient_country, :recipient_zipCode);");
             $statement->bindParam(":ordered_by", $order->orderedBy);
             $statement->bindParam(":order_total", $order->orderTotal);
+            $statement->bindParam(":recipient_first_name", $order->deliveryDetails->contact->recipient_first_name);
+            $statement->bindParam(":recipient_last_name", $order->deliveryDetails->contact->recipient_last_name);
+            $statement->bindParam(":recipient_houseName", $order->deliveryDetails->address->recipient_houseName);
+            $statement->bindParam(":recipient_street", $order->deliveryDetails->address->recipient_street);
+            $statement->bindParam(":recipient_town", $order->deliveryDetails->address->recipient_town);
+            $statement->bindParam(":recipient_county", $order->deliveryDetails->address->recipient_county);
+            $statement->bindParam(":recipient_country", $order->deliveryDetails->address->recipient_country);
+            $statement->bindParam(":recipient_zipCode", $order->deliveryDetails->address->recipient_zipCode);
             if($statement->execute()){
                 $order->orderId = self::$_connection->lastInsertId();
                 if(self::addItemsToOrder($order)){

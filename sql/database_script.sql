@@ -48,6 +48,14 @@ CREATE table sOrder (
 	ordered_by INT(10) NOT NULL,
 	date_ordered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	order_total INT(10),
+	recipient_first_name VARCHAR(20) NOT NULL,
+	recipient_last_name VARCHAR(20) NOT NULL,
+	recipient_houseName VARCHAR(40) NOT NULL,
+	recipient_street VARCHAR(40) NOT NULL,
+	recipient_town VARCHAR(40) NOT NULL,
+	recipient_county VARCHAR(40) NOT NULL,
+	recipient_country VARCHAR(40) NOT NULL,
+	recipient_zipCode VARCHAR(40) NOT NULL,
 	CONSTRAINT order_fk FOREIGN KEY (ordered_by) REFERENCES sUser(id),
 	CONSTRAINT order_pk PRIMARY KEY (id)
 );

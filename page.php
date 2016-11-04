@@ -8,9 +8,11 @@
             if ($_GET["page"] == "products") {
                 include("./includes/pages/products.inc");
             } else if ($_GET["page"] == "shopping-cart") {
-                if(!isset($_GET["action"]) || $_GET["action"] != "order") {
+                if(!isset($_GET["action"]) || $_GET["action"] != "place-order") {
                     include("./includes/pages/shopping-cart.inc");
                 }
+            } else if($_GET["page"] == "delivery-details") {
+                include("./includes/pages/delivery-details.inc");
             } else if($_GET["page"] == "login-register") {
                 include("./includes/pages/login-register.inc");
             } else if($_GET["page"] == "contact-us") {
@@ -28,8 +30,8 @@
 
         // COMPLETE ACTIONS
         if(isset($_GET["action"])){
-            if ($_GET["action"] == "order") {
-                include("./includes/actions/order.inc");
+            if ($_GET["action"] == "place-order") {
+                include("./includes/actions/place-order.inc");
             } else if ($_GET["action"] == "adjustNumItems") {
                 include("./includes/actions/adjustNumItems.inc");
             } else if($_GET["action"] == "login") {
@@ -38,6 +40,8 @@
                 include("./includes/actions/register.inc");
             } else if($_GET["action"] == "update-details") {
                 include("./includes/actions/update-details.inc");
+            } else if($_GET["action"] == "save-delivery-details") {
+                include("./includes/actions/save-delivery-details.inc");
             } else if($_GET["action"] == "logout") {
                 Login::logout();
             }

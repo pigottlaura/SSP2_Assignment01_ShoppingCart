@@ -5,12 +5,14 @@
         public $orderItems;
         public $orderTotal;
         public $orderPlaced = false;
+        public $deliveryDetails;
 
         public function __construct($tempOrderItemDetails){
             $this->orderedBy = $_SESSION["shopping_session"]->userId;
             $this->orderDate = date('d F Y');
-            $this->orderItems = $tempOrderItemDetails;
+            $this->orderItems = $tempOrderItemDetails->orderItems;
             $this->orderPlaced = false;
+            $this->deliveryDetails = $tempOrderItemDetails->deliveryDetails;
             unset($_SESSION["shopping_session"]->shopping_cart->tempOrderItemDetails);
         }
 
@@ -40,6 +42,14 @@
                 $order->items = Database::getOrderItems($orderId);
                 $order->date_ordered = date_create($order->date_ordered);
 
+                $recipientAddress = array(
+                    "address_houseName" => $order->recipient_houseName,
+                    "address_street" => $order->recipient_street,
+                    "address_town" => $order->recipient_town,
+                    "address_county" => $order->recipient_county,
+                    "address_country" => $order->recipient_country,
+                    "address_zipCode" => $order->recipient_zipCode,
+                );
                 $companyAddress = array(
                     "address_houseName" => "The Showgrounds",
                     "address_street" => "5 Wolfe Tone Street",
@@ -64,9 +74,22 @@
 
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
+                // Ordered By
+                $html .= "<tr>";
+                $html .= "<td colspan='2'><strong>Ordered By:</strong> " . $order->ordered_by->contact["first_name"] . " " . $order->ordered_by->contact["last_name"] . "</td>";
+                $html .= "<td colspan='3'>&nbsp;</td>";
+                $html .= "</tr>";
+
+                $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
+
                 // TITLE LINES
                 $html .= "<tr>";
-                $html .= "<td colspan='2'>" . $order->ordered_by->contact["first_name"] . " " . $order->ordered_by->contact["last_name"] . "</td>";
+                $html .= "<td colspan='2'><strong>Deliver To:</strong></td>";
+                $html .= "<td colspan='3'>&nbsp;</td>";
+                $html .= "</tr>";
+                
+                $html .= "<tr>";
+                $html .= "<td colspan='2'>" . $order->recipient_first_name . " " . $order->recipient_last_name . "</td>";
                 $html .= "<td>&nbsp;</td>";
                 $html .= "<td colspan='2' align='right'>" . CONF_COMP_NAME . "</td>";
                 $html .= "</tr>";
@@ -74,8 +97,8 @@
                 // ADDRESS LINES
                 foreach($addressFields as $key => $value){
                     $html .= "<tr>";
-                    if(isset($order->ordered_by->address[$value])) {
-                        $html .= "<td colspan='2'>" . $order->ordered_by->address[$value] . "</td>";
+                    if(isset($recipientAddress)) {
+                        $html .= "<td colspan='2'>" . $recipientAddress[$value] . "</td>";
                     } else {
                         $html .= "<td colspan='2'>&nbsp;</td>";
                     }

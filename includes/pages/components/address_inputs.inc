@@ -1,13 +1,4 @@
 <?php
-    echo "<fieldset id='address'";
-    if(!isset($currentData)) {
-        echo "class='hidden'";
-    }
-    echo ">";
-    if(isset($currentData)){
-        echo "<input type='hidden' name='address_change'>";
-    }
-
     echo "<legend>Address</legend>";
 
     echo "<label>House Name:";
@@ -56,5 +47,4 @@
         }
     echo "'>";
     echo "</label>";
-    echo "</fieldset>";
 ?>

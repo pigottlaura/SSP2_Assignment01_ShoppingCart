@@ -2,7 +2,7 @@
     if(isset($_SESSION["shopping_session"]->userId)){
         $userDetails = Database::getUserDetails($_SESSION["shopping_session"]->userId);
 
-        echo "<h2>Update My Detials</h2>";
+        echo "<h2>Update My Details</h2>";
         echo "<form method='POST' action='";
             echo "page.php?" . $_SERVER["QUERY_STRING"] . "&action=update-details' id='update-details'>";
         echo "<label>First Name:";
@@ -36,6 +36,7 @@
         echo "</label>";
         echo "</fieldset>";
 
+
         if(isset($userDetails->address)){
             // Setting current data, so it can be used in the address_fieldset below
             $currentData = $userDetails->address;
@@ -43,7 +44,17 @@
             echo "<button type='button' id='addAddress'>Add Postal Address</button>";
         }
 
-        include("./includes/pages/components/address_fieldset.inc");
+        // Address Fieldset
+        echo "<fieldset id='address'";
+        if(!isset($currentData)) {
+            echo "class='hidden'";
+        }
+        echo ">";
+        if(isset($currentData)){
+            echo "<input type='hidden' name='address_change'>";
+        }
+        include("./includes/pages/components/address_inputs.inc");
+        echo "</fieldset>";
 
         echo "<br>";
 
