@@ -46,7 +46,9 @@
                 }
 
                 if(isset($options["noSpecialChars"]) && in_array($key, $options["noSpecialChars"], true)){
-                    if(preg_match("/^[a-z]/i", $value) == false || preg_match_all("/[^a-z_0-9][#]/i", $value)){
+                    // First character must be a letter (case insensitive), and no character in the rest of
+                    // the can matche with any non-word character
+                    if(preg_match("/[^a-z]+/i", substr($value, 0, 1)) || preg_match_all("/[\W]+/i", $value)){
                         $dataValidated = false;
                         //$errorMessage .= "<li>'" . $key . "' contains unexpected characters.</li>";
                     }

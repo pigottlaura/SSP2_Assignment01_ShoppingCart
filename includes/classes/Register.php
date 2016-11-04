@@ -39,8 +39,6 @@
                 if($response["dataValidated"]){
                     $sanitisedData = InputData::sanitise(array("username" => $requestedUsername));
                     $response["usernameAvailable"] = Database::checkUsernameAvailability($sanitisedData["username"]);
-                } else {
-
                 }
             }
             return $response;

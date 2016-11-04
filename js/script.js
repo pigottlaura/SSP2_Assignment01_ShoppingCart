@@ -108,11 +108,13 @@ function checkUsernameAvailablility(e){
         var requestURL = "ajax.php?action=checkUsernameAvailability&requestedUsername=" + requestedUsername;
 
         ajaxRequest(requestURL, function(response){
+            console.log(response.responseText);
             var jsonResponse = JSON.parse(response.responseText);
             usernameAvailable = jsonResponse.usernameAvailable * jsonResponse.dataValidated;
 
             var setClassTo = jsonResponse.usernameAvailable ? "icon icon-yes" : "icon icon-no";
             setClassTo = jsonResponse.dataValidated ? setClassTo : "icon icon-error";
+            document.getElementById("requestedUsername").value = jsonResponse.username;
             document.getElementById("requestedUsernameAvailable").className = setClassTo;
         });
     } else {
