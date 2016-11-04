@@ -32,8 +32,7 @@ CREATE table sUser (
 
 CREATE table sAddress (
 	id INT(10) AUTO_INCREMENT,
-	user_id INT(10) NOT NULL,
-	address_houseNumber INT(4),
+	user_id INT(10) UNIQUE NOT NULL,
 	address_houseName VARCHAR(40),
 	address_street VARCHAR(40),
 	address_town VARCHAR(40),

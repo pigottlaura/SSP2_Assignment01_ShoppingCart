@@ -74,6 +74,16 @@ function clickEvent(e){
             document.getElementById("update-details").appendChild(newPasswordHoneypot);
             break;
         }
+        case "addAddress": {
+            e.target.className = "hidden";
+            document.getElementById("address").className = "";
+
+            var newAddressHoneypot = document.createElement("input");
+            newAddressHoneypot.setAttribute("name", "address_new");
+            newAddressHoneypot.setAttribute("type", "hidden");
+            document.getElementById("update-details").appendChild(newAddressHoneypot);
+            break;
+        }
     }
 
     if(e.target.classList.contains("addToCart")){

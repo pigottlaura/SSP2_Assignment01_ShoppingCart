@@ -37,8 +37,14 @@
         echo "</fieldset>";
 
         if(isset($userDetails->address)){
-            echo $userDetails->address;
+            // Setting current data, so it can be used in the address_fieldset below
+            $currentData = $userDetails->address;
+        } else {
+            echo "<button type='button' id='addAddress'>Add Postal Address</button>";
         }
+
+        include("./includes/pages/components/address_fieldset.inc");
+
         echo "<br>";
 
         echo "<input type='submit' value='Update My Details'>";

@@ -69,6 +69,19 @@
                 }
             }
 
+            // Checking if the user is adding or updating their address
+            if(isset($updatedData["address_new"]) || isset($updatedData["address_change"])){
+                $validateAddressData = InputData::validate($updatedData, array(
+                    "required" => array("houseName", "street", "town", "county", "country", "zipCode"),
+                    "string" => array("houseName", "street", "town", "county", "country", "zipCode")
+                ));
+
+                $validateData["dataValidated"] *= $validateAddressData["dataValidated"];
+                foreach($validateAddressData["errorMessage"] as $key => $value){
+                    array_push($validateData["errorMessage"], $value);
+                }
+            }
+
             if ($validateData["dataValidated"]) {
                 $sanitisedData = InputData::sanitise($_POST);
                 $response["successful"] = Database::updateUserDetails($sanitisedData);

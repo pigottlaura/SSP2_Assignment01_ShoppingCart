@@ -69,7 +69,10 @@
             $statement2 = self::getConnection()->prepare("SELECT * FROM sAddress WHERE user_id = :userId;");
             $statement2->bindParam(":userId", $userId);
             $statement2->execute();
-            $user->address = $statement2->fetch(PDO::FETCH_ASSOC);
+            $addressResult = $statement2->fetchAll(PDO::FETCH_ASSOC);
+            if(count($addressResult) > 0){
+                $user->address = $addressResult[0];
+            }
 
             return $user;
         }
@@ -87,6 +90,24 @@
             $statement->bindParam(":email", $newUserDetails["email"]);
             $statement->bindParam(":userId", $_SESSION["shopping_session"]->userId);
             $successful = $statement->execute();
+
+            if(isset($newUserDetails["address_change"]) ||isset($newUserDetails["address_new"])){
+                if(isset($newUserDetails["address_change"])){
+                    $statement2 = self::getConnection()->prepare("UPDATE sAddress SET address_houseName=:houseName, address_street=:street, address_town=:town, address_county=:county , address_country=:country, address_zipCode=:zipCode WHERE user_id = :userId;");
+                } else if(isset($newUserDetails["address_new"])){
+                        $statement2 = self::getConnection()->prepare("INSERT INTO sAddress(user_id, address_houseName, address_street, address_town, address_county , address_country, address_zipCode) VALUES(:userId, :houseName, :street, :town, :county , :country, :zipCode)");
+                    }
+                    $statement2->bindParam(":userId", $_SESSION["shopping_session"]->userId);
+                    $statement2->bindParam(":houseName", $newUserDetails["houseName"]);
+                    $statement2->bindParam(":street", $newUserDetails["street"]);
+                    $statement2->bindParam(":town", $newUserDetails["town"]);
+                    $statement2->bindParam(":county", $newUserDetails["county"]);
+                    $statement2->bindParam(":country", $newUserDetails["country"]);
+                    $statement2->bindParam(":zipCode", $newUserDetails["zipCode"]);
+
+                    $successful *= $statement2->execute();
+            }
+
             return $successful;
         }
 
