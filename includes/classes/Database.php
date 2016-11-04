@@ -39,6 +39,15 @@
             return $successful;
         }
 
+        static public function checkUsernameAvailability($username){
+            $statement = self::getConnection()->prepare("SELECT * FROM sUser WHERE username = :username;");
+            $statement->bindParam(":username", $username);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            $usernameAvailable = count($result) > 0 ? false : true;
+            return $usernameAvailable;
+        }
+
         static public function validateUser($username, $password){
             $statement = self::getConnection()->prepare("SELECT id FROM sUser WHERE username = :username AND password = SHA1(:password);");
             $statement->bindParam(":username", $username);

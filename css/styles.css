@@ -83,6 +83,7 @@ label input {
 }
 form label {
     width: 48%;
+    position: relative;
     padding-right: 2%;
 }
 form label input {
@@ -139,4 +140,26 @@ footer {
 }
 .hidden {
     display: none;
+}
+.icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: absolute;
+    right: 22px;
+    background-image: url("../images/icons.png");
+    background-repeat: no-repeat;
+    background-size: 60px;
+    background-position-x: 28px;
+    background-position-y: -6px;
+}
+
+.icon-yes {
+    background-position-x: -2px;
+}
+.icon-error {
+    background-position-x: -21px;
+}
+.icon-no {
+    background-position-x: -41px;
 }

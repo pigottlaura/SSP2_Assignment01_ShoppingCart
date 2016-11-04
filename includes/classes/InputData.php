@@ -45,6 +45,13 @@
                     }
                 }
 
+                if(isset($options["noSpecialChars"]) && in_array($key, $options["noSpecialChars"], true)){
+                    if(preg_match("/^[a-z]/i", $value) == false || preg_match_all("/[^a-z_0-9][#]/i", $value)){
+                        $dataValidated = false;
+                        //$errorMessage .= "<li>'" . $key . "' contains unexpected characters.</li>";
+                    }
+                }
+
                 if(isset($options["enum"]) && array_key_exists($key,$options["enum"])){
                     $enumPassed = false;
 

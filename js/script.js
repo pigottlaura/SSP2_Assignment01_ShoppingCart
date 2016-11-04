@@ -34,6 +34,7 @@ function addEventListeners() {
 
     if(document.getElementById("register")) {
         document.getElementById("register").addEventListener("submit", validateForm);
+        document.getElementById("requestedUsername").addEventListener("keyup", checkUsernameAvailablility);
     }
 
     if(document.getElementById("products")) {
@@ -81,8 +82,15 @@ function validateForm(e){
         if(input.hasAttribute("data-match")){
             if(input.value != document.getElementsByName(input.getAttribute("data-match"))[0].value) {
                 formValidated = false;
+                document.getElementById("passwordMatch").className = "icon icon-error";
                 console.log(input.getAttribute("name") + " does not match with " + input.getAttribute("data-match"));
+            } else {
+                document.getElementById("passwordMatch").className = "icon";
             }
+        }
+
+        if(input.getAttribute("name") == "username"){
+            formValidated = checkUsernameAvailablility();
         }
     });
 
@@ -93,6 +101,25 @@ function validateForm(e){
     }
 }
 
+function checkUsernameAvailablility(e){
+    var usernameAvailable = false;
+    var requestedUsername = document.getElementById("requestedUsername").value;
+    if(requestedUsername.length > 0){
+        var requestURL = "ajax.php?action=checkUsernameAvailability&requestedUsername=" + requestedUsername;
+
+        ajaxRequest(requestURL, function(response){
+            var jsonResponse = JSON.parse(response.responseText);
+            usernameAvailable = jsonResponse.usernameAvailable * jsonResponse.dataValidated;
+
+            var setClassTo = jsonResponse.usernameAvailable ? "icon icon-yes" : "icon icon-no";
+            setClassTo = jsonResponse.dataValidated ? setClassTo : "icon icon-error";
+            document.getElementById("requestedUsernameAvailable").className = setClassTo;
+        });
+    } else {
+        document.getElementById("requestedUsernameAvailable").className = "icon";
+    }
+    return usernameAvailable;
+}
 function sortProducts(e){
     var sortBy = e.target.value.split("-")[0];
     var sortOrder = e.target.value.split("-")[1];

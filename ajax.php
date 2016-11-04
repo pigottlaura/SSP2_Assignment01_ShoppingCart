@@ -18,6 +18,16 @@
                 }
                 break;
             }
+            case "checkUsernameAvailability": {
+                $usernameAvailability = Register::checkUsernameAvailability($_GET["requestedUsername"]);
+                $response = array(
+                    "usernameAvailable" => $usernameAvailability["usernameAvailable"],
+                    "dataValidated" => $usernameAvailability["dataValidated"],
+                    "username" => $_GET["requestedUsername"]
+                );
+                echo json_encode($response);
+                break;
+            }
         }
     }
 ?>
