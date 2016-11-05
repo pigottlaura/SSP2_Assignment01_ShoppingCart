@@ -78,7 +78,14 @@ function clickEvent(e){
         }
         case "addAddress": {
             e.target.className = "hidden";
-            document.getElementById("address").className = "";
+            var addressFieldset = document.getElementById("address");
+            addressFieldset.className = "";
+            var addressInputs = addressFieldset.querySelectorAll("input");
+
+            // Making all address fields required
+            for(var i=0; i<addressInputs.length; i++){
+                addressInputs[i].setAttribute("required", "required");
+            }
 
             // Creating a hidden input element, to act as a marker server side, to
             // indicate that the user is also choosing to add a new address
