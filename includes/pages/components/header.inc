@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Shopping Cart</title>
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="icon" type="image/png" href="./images/logo.png" />
     <script src="js/script.js"></script>
@@ -11,10 +10,20 @@
         include_once("./includes/actions/init.inc");
     ?>
 
+    <title>
+        <?php echo CONF_COMP_NAME ?>
+    </title>
+
 </head>
 <body>
     <header>
-        <h1><a href="?page=home">My Shopping Cart</a></h1>
+        <h1>
+            <a href="?page=home">
+                <?php
+                echo CONF_COMP_NAME
+                ?>
+            </a>
+        </h1>
         <nav>
             <ul>
                 <li><a href="?page=home">Home</a></li>

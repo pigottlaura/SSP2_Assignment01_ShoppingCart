@@ -17,11 +17,10 @@
 
 <label for="itemsPerPage">Items Per Page:</label>
 <select id="itemsPerPage">
-    <option value="2">2</option>
     <option value="4">4</option>
     <option value="8">8</option>
+    <option value="16">16</option>
     <option value="20">20</option>
-    <option value="50">50</option>
 </select>
 <div id="products"></div>
 
