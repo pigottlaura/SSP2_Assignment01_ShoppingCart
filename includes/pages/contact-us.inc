@@ -1,4 +1,30 @@
 <h2>Contact Us</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim dolor id leo molestie pulvinar. Donec urna sem, sodales ac nisi vel, faucibus tempor purus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed euismod justo sed congue cursus. In elementum efficitur dapibus. Ut fermentum tristique ipsum, a aliquet sapien rhoncus id. Ut dui lorem, lobortis ut risus sed, mollis suscipit risus. Nulla a consectetur erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris convallis eleifend libero, quis vehicula enim rutrum ac. Pellentesque lacinia porta dictum. Nullam semper auctor condimentum. Praesent a tincidunt ligula, eu ultricies est. Sed luctus accumsan ante eget eleifend. Sed malesuada tincidunt dui eget commodo. Fusce volutpat tempor ante, eu facilisis lectus pellentesque vel.</p>
-<p>Fusce ut dictum lacus, in molestie ex. Nam non magna ut tellus elementum scelerisque. Duis tempus urna id nisi facilisis, at pharetra tellus tincidunt. Vivamus vulputate nisi molestie condimentum ultrices. Aliquam semper ultrices ante. Pellentesque lacus felis, pretium auctor pulvinar eu, tempor eget erat. Ut dolor magna, suscipit id ex non, dignissim dapibus justo.</p>
-<p>Aliquam commodo sagittis aliquam. Nullam id tempor enim, in volutpat arcu. Vivamus dapibus elit sit amet volutpat tempus. Fusce erat mauris, porta id dignissim non, convallis a sapien. Sed egestas ullamcorper ligula quis porta. Nulla vel dictum lorem. Morbi ut tempor mauris, eget hendrerit ante. Praesent ut fermentum justo, sed eleifend neque. Nunc eget est id dui varius dignissim. Pellentesque convallis odio in urna convallis finibus. Vestibulum ante sem, dapibus sit amet porta vitae, semper sed felis. Donec consequat risus eget arcu suscipit dictum. In efficitur dui tortor, ut luctus nunc porta sed. Quisque eu facilisis massa, nec sodales erat. Nulla at posuere augue.</p>
+<iframe id="map" src="
+    <?php
+        echo CONF_COMP_MAP
+    ?>
+    " width="400" height="300" frameborder="0" style="border:0" allowfullscreen>
+</iframe>
+<div id="contactDetails">
+    <strong>Company Address:</strong><br>
+    <?php
+        echo CONF_COMP_NAME . "<br>";
+        echo CONF_COMP_ADDRESS_HOUSENAME . "<br>";
+        echo CONF_COMP_ADDRESS_STREET . "<br>";
+        echo CONF_COMP_ADDRESS_TOWN . "<br>";
+        echo CONF_COMP_ADDRESS_COUNTY . "<br>";
+        echo CONF_COMP_ADDRESS_COUNTRY . "<br>";
+        echo CONF_COMP_ADDRESS_ZIPCODE . "<br>";
+    ?>
+
+    <br>
+    <strong>Email:</strong>
+    <?php
+        echo "<a href='mailto:" . CONF_COMP_CONTACT_EMAIL . "'>" . CONF_COMP_CONTACT_EMAIL . "</a><br>";
+    ?>
+
+    <strong>Phone</strong>
+    <?php
+        echo "<a href='tel:" . CONF_COMP_CONTACT_NUMBER . "'>" . CONF_COMP_CONTACT_NUMBER . "</a><br>";
+    ?>
+</div>

@@ -20,7 +20,9 @@
             } else if($_GET["page"] == "view-my-orders") {
                 include("./includes/pages/view-my-orders.inc");
             } else if($_GET["page"] == "edit-my-details") {
-                include("./includes/pages/edit-my-details.inc");
+                if(!isset($_GET["action"]) || $_GET["action"] != "update-details") {
+                    include("./includes/pages/edit-my-details.inc");
+                }
             } else {
                 include("./includes/pages/home.inc");
             }

@@ -25,11 +25,9 @@
     echo "'>";
     echo "</label>";
     echo "<label>County:";
-    echo "<input type='text' name='county' required value='";
-        if(isset($currentAddressData)){
-            echo $currentAddressData["county"];
-        }
-    echo "'>";
+    echo "<select name='county' required>";
+    include("./includes/pages/components/counties_options.inc");
+    echo "</select>";
     echo "</label>";
     echo "<br>";
 

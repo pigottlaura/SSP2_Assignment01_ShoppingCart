@@ -2,12 +2,11 @@
     // Passing the request to the Login class to update the user's details (where the data
     // will be sanitised and validates)
     $updateDetails = Login::updateUserDetails($_POST);
-
-    // Determing if the update to the user's details was successful, based on the response associative array
+    // Determing if the update to the user's details was successful, based on the response object
     if ($updateDetails["successful"]) {
-        Functions::goToPage("page.php?page=home");
+        Functions::removeFromQueryString("action=");
     } else {
-        // The update to the user's details was unsuccessful
+        // The update to the user's deat
         echo "Unable to update user details<br>";
 
         // Looping through any errors that were returned from the registeration attempt (which

@@ -78,15 +78,19 @@ label {
     display: inline-block;
     box-sizing: border-box;
 }
-label input {
+label input, form label select {
     float: right;
+}
+form label select {
+    width: 70.8% !important;
+    min-height: 21px;
 }
 form label {
     width: 48%;
     position: relative;
     padding-right: 2%;
 }
-form label input {
+form label input, form label select {
     width: 70%;
 }
 form {
@@ -171,4 +175,12 @@ fieldset {
 #changePassword {
     position: absolute;
     right: 4.2%;
+}
+
+#map, #contactDetails {
+    display: inline-block;
+    vertical-align: top;
+}
+#contactDetails {
+    margin-left: 2%;
 }

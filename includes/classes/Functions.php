@@ -28,19 +28,17 @@
             self::goToPage("page.php?" . $rebuiltQueryString);
         }
 
+        // Setting the header of the response to the value passed to the function
+        // Killing the current request, to force the page to reload
         static public function goToPage($page){
-            // Setting the header of the response to the value passed to the function
             header("Location: " . $page);
-
-            // Killing the current request, to force the page to reload
             die();
         }
 
+        // Setting the header of the response to refresh
+        // Killing the current request, to force the page to reload
         static public function reloadPage() {
-            // Setting the header of the response to refresh
             header("Refresh:0");
-
-            // Killing the current request, to force the page to reload
             die();
         }
     }
