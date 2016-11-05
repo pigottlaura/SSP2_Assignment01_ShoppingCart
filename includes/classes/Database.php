@@ -93,9 +93,9 @@
 
             if(isset($newUserDetails["address_change"]) ||isset($newUserDetails["address_new"])){
                 if(isset($newUserDetails["address_change"])){
-                    $statement2 = self::getConnection()->prepare("UPDATE sAddress SET address_houseName=:houseName, address_street=:street, address_town=:town, address_county=:county , address_country=:country, address_zipCode=:zipCode WHERE user_id = :userId;");
+                    $statement2 = self::getConnection()->prepare("UPDATE sAddress SET houseName=:houseName, street=:street, town=:town, county=:county, country=:country, zipCode=:zipCode WHERE user_id = :userId;");
                 } else if(isset($newUserDetails["address_new"])){
-                        $statement2 = self::getConnection()->prepare("INSERT INTO sAddress(user_id, address_houseName, address_street, address_town, address_county , address_country, address_zipCode) VALUES(:userId, :houseName, :street, :town, :county , :country, :zipCode)");
+                        $statement2 = self::getConnection()->prepare("INSERT INTO sAddress(user_id, address_houseName, street, town, county, country, zipCode) VALUES(:userId, :houseName, :street, :town, :county , :country, :zipCode)");
                     }
                     $statement2->bindParam(":userId", $_SESSION["shopping_session"]->userId);
                     $statement2->bindParam(":houseName", $newUserDetails["houseName"]);
@@ -159,23 +159,29 @@
 
         static public function createOrder(&$order){
             $successful = false;
-            $statement = self::getConnection()->prepare("INSERT INTO sOrder(ordered_by, order_total, recipient_first_name, recipient_last_name, recipient_houseName, recipient_street, recipient_town, recipient_county, recipient_country, recipient_zipCode) VALUES(:ordered_by, :order_total, :recipient_first_name, :recipient_last_name, :recipient_houseName, :recipient_street, :recipient_town, :recipient_county, :recipient_country, :recipient_zipCode);");
-            $statement->bindParam(":ordered_by", $order->orderedBy);
-            $statement->bindParam(":order_total", $order->orderTotal);
-            $statement->bindParam(":recipient_first_name", $order->deliveryDetails->contact->recipient_first_name);
-            $statement->bindParam(":recipient_last_name", $order->deliveryDetails->contact->recipient_last_name);
-            $statement->bindParam(":recipient_houseName", $order->deliveryDetails->address->recipient_houseName);
-            $statement->bindParam(":recipient_street", $order->deliveryDetails->address->recipient_street);
-            $statement->bindParam(":recipient_town", $order->deliveryDetails->address->recipient_town);
-            $statement->bindParam(":recipient_county", $order->deliveryDetails->address->recipient_county);
-            $statement->bindParam(":recipient_country", $order->deliveryDetails->address->recipient_country);
-            $statement->bindParam(":recipient_zipCode", $order->deliveryDetails->address->recipient_zipCode);
-            if($statement->execute()){
+            $order_statement = self::getConnection()->prepare("INSERT INTO sOrder(ordered_by, order_total, recipient_first_name, recipient_last_name) VALUES(:ordered_by, :order_total, :recipient_first_name, :recipient_last_name);");
+            $order_statement->bindParam(":ordered_by", $order->orderedBy);
+            $order_statement->bindParam(":order_total", $order->orderTotal);
+            $order_statement->bindParam(":recipient_first_name", $order->deliveryDetails->contact->recipient_first_name);
+            $order_statement->bindParam(":recipient_last_name", $order->deliveryDetails->contact->recipient_last_name);
+            if($order_statement->execute()){
                 $order->orderId = self::$_connection->lastInsertId();
                 if(self::addItemsToOrder($order)){
-                    $successful = true;
+                    $address_statement = self::getConnection()->prepare("INSERT INTO sAddress(order_id, houseName, street, town, county, country, zipCode) VALUES(:order_id, :houseName, :street, :town, :county, :country, :zipCode);");
+                    $address_statement->bindParam(":order_id", $order->orderId);
+                    $address_statement->bindParam(":houseName", $order->deliveryDetails->address->recipient_houseName);
+                    $address_statement->bindParam(":street", $order->deliveryDetails->address->recipient_street);
+                    $address_statement->bindParam(":town", $order->deliveryDetails->address->recipient_town);
+                    $address_statement->bindParam(":county", $order->deliveryDetails->address->recipient_county);
+                    $address_statement->bindParam(":country", $order->deliveryDetails->address->recipient_country);
+                    $address_statement->bindParam(":zipCode", $order->deliveryDetails->address->recipient_zipCode);
+
+                    if($address_statement->execute()){
+                        $successful = true;
+                    }
                 }
             }
+
             return $successful;
         }
 
@@ -212,6 +218,13 @@
             $statement->bindParam(":orderId", $orderId);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        static public function getOrderAddress($orderId){
+            $statement = self::getConnection()->prepare("SELECT * FROM sAddress WHERE order_id = :orderId");
+            $statement->bindParam(":orderId", $orderId);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_ASSOC);
         }
     }
 ?>

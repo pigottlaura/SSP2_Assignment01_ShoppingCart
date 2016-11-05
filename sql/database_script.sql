@@ -1,6 +1,7 @@
 DROP DATABASE SSP2_Assignment01;
 CREATE DATABASE SSP2_Assignment01;
 use SSP2_Assignment01;
+SET GLOBAL sql_mode = STRICT_ALL_TABLES;
 
 CREATE table sCategory (
 	id INT(10) AUTO_INCREMENT,
@@ -30,19 +31,6 @@ CREATE table sUser (
 	CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
-CREATE table sAddress (
-	id INT(10) AUTO_INCREMENT,
-	user_id INT(10) UNIQUE NOT NULL,
-	address_houseName VARCHAR(40),
-	address_street VARCHAR(40),
-	address_town VARCHAR(40),
-	address_county VARCHAR(40),
-	address_country VARCHAR(40),
-	address_zipCode VARCHAR(40),
-	CONSTRAINT address_user_fk FOREIGN KEY (user_id) REFERENCES sUser(id),
-	CONSTRAINT address_pk PRIMARY KEY (id)
-);
-
 CREATE table sOrder (
 	id INT(10) AUTO_INCREMENT,
 	ordered_by INT(10) NOT NULL,
@@ -50,14 +38,23 @@ CREATE table sOrder (
 	order_total INT(10),
 	recipient_first_name VARCHAR(20) NOT NULL,
 	recipient_last_name VARCHAR(20) NOT NULL,
-	recipient_houseName VARCHAR(40) NOT NULL,
-	recipient_street VARCHAR(40) NOT NULL,
-	recipient_town VARCHAR(40) NOT NULL,
-	recipient_county VARCHAR(40) NOT NULL,
-	recipient_country VARCHAR(40) NOT NULL,
-	recipient_zipCode VARCHAR(40) NOT NULL,
-	CONSTRAINT order_fk FOREIGN KEY (ordered_by) REFERENCES sUser(id),
+	CONSTRAINT order_user_fk FOREIGN KEY (ordered_by) REFERENCES sUser(id),
 	CONSTRAINT order_pk PRIMARY KEY (id)
+);
+
+CREATE table sAddress (
+	id INT(10) AUTO_INCREMENT,
+	user_id INT(10) UNIQUE,
+	order_id INT(10) UNIQUE,
+	houseName VARCHAR(40),
+	street VARCHAR(40),
+	town VARCHAR(40),
+	county VARCHAR(40),
+	country VARCHAR(40),
+	zipCode VARCHAR(40),
+	CONSTRAINT address_order_fk FOREIGN KEY (order_id) REFERENCES sOrder(id),
+	CONSTRAINT address_user_fk FOREIGN KEY (user_id) REFERENCES sUser(id),
+	CONSTRAINT address_pk PRIMARY KEY (id)
 );
 
 CREATE table sOrder_items (
@@ -81,7 +78,4 @@ INSERT INTO sProduct(name, description, price, image, category) VALUES("Monkey",
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Minion", "", 12.00, "minion.png", 2);
 INSERT INTO sProduct(name, description, price, image) VALUES("Furby", "", 12.00, "furby.png");
 INSERT INTO sUser(first_name, last_name, email, username, password) VALUES("Laura", "Pigott", "pigottlaura@gmail.com", "pigottlaura", SHA1("test"));
-INSERT INTO sAddress(user_id, address_houseName, address_street, address_town, address_county , address_country, address_zipCode) VALUES(1, "Angel Heights", "Dromleigh South", "Bantry", "Cork", "Ireland", "XN11254");
-
-#SELECT * FROM sOrder_items;
-#SELECT * FROM sproduct;
+INSERT INTO sAddress(user_id, houseName, street, town, county , country, zipCode) VALUES(1, "Angel Heights", "Dromleigh South", "Bantry", "Cork", "Ireland", "XN11254");

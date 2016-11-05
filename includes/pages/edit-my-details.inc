@@ -39,18 +39,18 @@
 
         if(isset($userDetails->address)){
             // Setting current data, so it can be used in the address_fieldset below
-            $currentData = $userDetails->address;
+            $currentAddressData = $userDetails->address;
         } else {
             echo "<button type='button' id='addAddress'>Add Postal Address</button>";
         }
 
         // Address Fieldset
         echo "<fieldset id='address'";
-        if(!isset($currentData)) {
+        if(!isset($currentAddressData)) {
             echo "class='hidden'";
         }
         echo ">";
-        if(isset($currentData)){
+        if(isset($currentAddressData)){
             echo "<input type='hidden' name='address_change'>";
         }
         include("./includes/pages/components/address_inputs.inc");

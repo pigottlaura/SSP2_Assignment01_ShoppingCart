@@ -39,32 +39,17 @@
             $order = (object) Database::getOrder($orderId);
             if($_SESSION["shopping_session"]->userId == $order->ordered_by){
                 $order->ordered_by = Database::getUserDetails($order->ordered_by);
+                $order->delivery_address = Database::getOrderAddress($orderId);
                 $order->items = Database::getOrderItems($orderId);
                 $order->date_ordered = date_create($order->date_ordered);
 
-                $recipientAddress = array(
-                    "address_houseName" => $order->recipient_houseName,
-                    "address_street" => $order->recipient_street,
-                    "address_town" => $order->recipient_town,
-                    "address_county" => $order->recipient_county,
-                    "address_country" => $order->recipient_country,
-                    "address_zipCode" => $order->recipient_zipCode,
-                );
                 $companyAddress = array(
-                    "address_houseName" => "The Showgrounds",
-                    "address_street" => "5 Wolfe Tone Street",
-                    "address_town" => "Clonmel",
-                    "address_county" => "Tipperary",
-                    "address_country" => "Ireland",
-                    "address_zipCode" => "YNZZ44"
-                );
-                $addressFields = array(
-                    0 => "address_houseName",
-                    1 => "address_street",
-                    2 => "address_town",
-                    3 => "address_county",
-                    4 => "address_country",
-                    5 => "address_zipCode"
+                    "houseName" => "The Showgrounds",
+                    "street" => "5 Wolfe Tone Street",
+                    "town" => "Clonmel",
+                    "county" => "Tipperary",
+                    "country" => "Ireland",
+                    "zipCode" => "YNZZ44"
                 );
 
                 $html = "<table width='600px'>";
@@ -95,16 +80,16 @@
                 $html .= "</tr>";
 
                 // ADDRESS LINES
-                foreach($addressFields as $key => $value){
+                foreach($companyAddress as $key => $value){
                     $html .= "<tr>";
-                    if(isset($recipientAddress)) {
-                        $html .= "<td colspan='2'>" . $recipientAddress[$value] . "</td>";
+                    if(isset($order->delivery_address[$key])) {
+                        $html .= "<td colspan='2'>" . $order->delivery_address[$key] . "</td>";
                     } else {
                         $html .= "<td colspan='2'>&nbsp;</td>";
                     }
                     $html .= "<td>&nbsp;</td>";
-                    if(isset($companyAddress[$value])){
-                        $html .= "<td colspan='2' align='right'>" . $companyAddress[$value] . "</td>";
+                    if(isset($companyAddress[$key])){
+                        $html .= "<td colspan='2' align='right'>" . $companyAddress[$key] . "</td>";
                     } else {
                         $html .= "<td colspan='2'>&nbsp;</td>";
                     }

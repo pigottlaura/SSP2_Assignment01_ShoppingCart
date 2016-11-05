@@ -3,15 +3,15 @@
 
     echo "<label>House Name:";
     echo "<input type='text' name='houseName' required value='";
-        if(isset($currentData)){
-            echo $currentData["address_houseName"];
+        if(isset($currentAddressData)){
+            echo $currentAddressData["houseName"];
         }
     echo "'>";
     echo "</label>";
     echo "<label>Street";
     echo "<input type='text' name='street' required value='";
-        if(isset($currentData)){
-            echo $currentData["address_street"];
+        if(isset($currentAddressData)){
+            echo $currentAddressData["street"];
         }
     echo "'>";
     echo "</label>";
@@ -19,15 +19,15 @@
 
     echo "<label>Town:";
     echo "<input type='text' name='town' required  value='";
-        if(isset($currentData)){
-            echo $currentData["address_town"];
+        if(isset($currentAddressData)){
+            echo $currentAddressData["town"];
         }
     echo "'>";
     echo "</label>";
     echo "<label>County:";
     echo "<input type='text' name='county' required value='";
-        if(isset($currentData)){
-            echo $currentData["address_county"];
+        if(isset($currentAddressData)){
+            echo $currentAddressData["county"];
         }
     echo "'>";
     echo "</label>";
@@ -35,15 +35,15 @@
 
     echo "<label>Country:";
     echo "<input type='text' name='country' required  value='";
-        if(isset($currentData)){
-            echo $currentData["address_country"];
+        if(isset($currentAddressData)){
+            echo $currentAddressData["country"];
         }
     echo "'>";
     echo "</label>";
     echo "<label>ZipCode:";
     echo "<input type='text' name='zipCode' required value='";
-        if(isset($currentData)){
-            echo $currentData["address_zipCode"];
+        if(isset($currentAddressData)){
+            echo $currentAddressData["zipCode"];
         }
     echo "'>";
     echo "</label>";
