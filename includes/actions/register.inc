@@ -8,6 +8,10 @@
 
         // Checking if the registeration was successful
         if ($register["successful"]) {
+
+            // Sending an email to the user to welcome them to their new account
+            $emailSent = Email::sendNewUserEmail($_SESSION["shopping_session"]->userId);
+
             // Determing where to redirect the user based on the current page they are on
             if ($_GET["page"] == "login-register") {
                 Functions::goToPage("page.php?page=products");

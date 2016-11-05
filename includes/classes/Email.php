@@ -25,8 +25,14 @@
             return $emailSent;
         }
 
-        static public function sendNewUserEmail($user){
+        static public function sendNewUserEmail($userId){
+            $userDetails = Database::getUserDetails($userId);
 
+            $to = $userDetails->contact["email"];
+            $subject = "Welcome to " . CONF_COMP_NAME;
+            $emailBody = Login::createWelcomeMessage($userId);
+
+            self::sendEmail($to, $subject, $emailBody);
         }
 
         static private function sendEmail($to, $subject, $emailBody){

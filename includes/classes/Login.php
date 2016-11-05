@@ -139,5 +139,44 @@
             }
             return $response;
         }
+
+        static public function createWelcomeMessage($userId){
+            $userDetails = Database::getUserDetails($userId);
+
+            $html = "<table width='600px'>";
+            $html .= "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+            $html .= "<tr><td colspan='2'>Hi " . $userDetails->contact["first_name"] . "</td></tr>";
+
+            $html .= "<tr><td colspan='2'>Welcome to your " . CONF_COMP_NAME . " account</td></tr>";
+
+            $html .= "<tr><td colspan='2'>&nbsp;</td></tr>";
+
+            $html .= "<tr><td colspan='2'>Below are the details you provided at registeration:</td></tr>";
+
+            $html .= "<tr>";
+            $html .= "<td><strong>First Name:</strong></td>";
+            $html .= "<td>" . $userDetails->contact["first_name"] . "</td>";
+            $html .= "</tr>";
+
+            $html .= "<tr>";
+            $html .= "<td><strong>Last Name:</strong></td>";
+            $html .= "<td>" . $userDetails->contact["last_name"] . "</td>";
+            $html .= "</tr>";
+
+            $html .= "<tr>";
+            $html .= "<td><strong>Username:</strong></td>";
+            $html .= "<td>" . $userDetails->contact["username"] . "</td>";
+            $html .= "</tr>";
+
+            $html .= "<tr>";
+            $html .= "<td><strong>Email:</strong></td>";
+            $html .= "<td>" . $userDetails->contact["email"] . "</td>";
+            $html .= "</tr>";
+
+            $html .= "</table>";
+
+            return $html;
+        }
     }
 ?>
