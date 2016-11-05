@@ -3,7 +3,7 @@
     // will be sanitised and validates)
     $updateDetails = Login::updateUserDetails($_POST);
 
-    // Determing if the update to the user's details was successful, based on the response object
+    // Determing if the update to the user's details was successful, based on the response associative array
     if ($updateDetails["successful"]) {
         Functions::goToPage("page.php?page=home");
     } else {

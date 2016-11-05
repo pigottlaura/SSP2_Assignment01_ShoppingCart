@@ -7,7 +7,7 @@
         }
 
         static public function validate($data, $options){
-            // Creating a response object, to store the result and errors from this function
+            // Creating a response associative array, to store the result and errors from this function
             // to return them to the caller. Originally, this function would have just echoed
             // out these errors, but since it is now utilised by AJAX requests as well, returning
             // a response object means that this errors can be easily managed both server side
@@ -128,7 +128,7 @@
                     // Checking if the result is still false i.e. the input's value did not
                     // match with any of the allowed values
                     if(!$enumPassed) {
-                        // Setting the dataValidated property of the response object to false
+                        // Setting the dataValidated property of the response associative array to false
                         $response["dataValidated"] = false;
 
                         // Adding this as an error to the response errors array

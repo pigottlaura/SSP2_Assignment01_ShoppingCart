@@ -7,7 +7,7 @@
         }
 
         public static function validateLogin($loginData){
-            // Creating a response object, to return to the caller
+            // Creating a response associative array, to return to the caller
             $response = array(
                 "successful" => false,
                 "errors" => array()
@@ -31,16 +31,16 @@
 
                 // Checking if the userId is greater that 0 i.e. was the login successful
                 if($userId > 0){
-                    // Adding the userId to the session and setting the response object to reflect this success
+                    // Adding the userId to the session and setting the response associative array to reflect this success
                     self::addUserToSession($userId);
                     $response["successful"] = true;
                 } else {
-                    // Adding an error to the response object
+                    // Adding an error to the response associative array
                     array_push($response["errors"], "Incorrect username / password combination");
                 }
             } else {
                 // Since the data provided was not validated, looping through each error
-                // of the validation, and adding it to the response object of the login
+                // of the validation, and adding it to the response associative array of the login
                 foreach($validateData["errors"] as $key => $value){
                     array_push($response["errors"], $value);
                 }
@@ -58,7 +58,7 @@
         }
 
         public static function updateUserDetails($updatedData){
-            // Creating a response object, to return to the caller
+            // Creating a response associative array, to return to the caller
             $response = array(
                 "successful" => false,
                 "errors" => array()
@@ -82,9 +82,9 @@
                     "enum" => array("password" => array($_POST["confirm_password"]))
                 ));
 
-                // Multiplying the "dataValidated" boolean of the response object by
+                // Multiplying the "dataValidated" boolean of the response associative array by
                 // the boolean result of the passwordData validation. Storing the result
-                // in the "dataValidated" property of the response object i.e. the initial
+                // in the "dataValidated" property of the response associative array i.e. the initial
                 // data may have been valid, but if the password data was not then
                 // true * false = false (1 * 0 = 0)
                 $validateData["dataValidated"] *= $validatePasswordData["dataValidated"];
@@ -106,9 +106,9 @@
                     "string" => array("houseName", "street", "town", "county", "country", "zipCode")
                 ));
 
-                // Multiplying the "dataValidated" boolean of the response object by
+                // Multiplying the "dataValidated" boolean of the response associative array by
                 // the boolean result of the addressData validation. Storing the result
-                // in the "dataValidated" property of the response object i.e. the initial
+                // in the "dataValidated" property of the response associative array i.e. the initial
                 // data may have been valid, and the passwordData (if provided) may have been
                 // valid, but if the addressData was not then true * false = false (1 * 0 = 0)
                 $validateData["dataValidated"] *= $validateAddressData["dataValidated"];
@@ -132,7 +132,7 @@
                 $response["successful"] = Database::updateUserDetails($sanitisedData);
             } else {
                 // Looping through any errors reported by the data validations, and adding
-                // them to the response object's errors array
+                // them to the response associative array's errors array
                 foreach($validateData["errors"] as $key => $value){
                     array_push($response["errors"], $value);
                 }

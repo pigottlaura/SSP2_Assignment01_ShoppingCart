@@ -6,7 +6,7 @@
         }
 
         static public function registerNewUser($formData){
-            // Creating a response object, to return to the caller
+            // Creating a response associative array, to return to the caller
             $response = array(
                 "successful" => false,
                 "errors" => array()
@@ -40,7 +40,7 @@
                     }
                 } else {
                     // Since the was not available, or was not validated, looping through each error
-                    // of the validation, and adding it to the response object of the availability check
+                    // of the validation, and adding it to the response associative array of the availability check
                     foreach($usernameAvailability["errors"] as $key => $value){
                         array_push($response["errors"], $value);
                     }
@@ -48,7 +48,7 @@
 
             } else {
                 // Since the data provided was not validated, looping through each error
-                // of the validation, and adding it to the response object of the registeration
+                // of the validation, and adding it to the response associative array of the registeration
                 foreach($validateData["errors"] as $key => $value){
                     array_push($response["errors"], $value);
                 }
@@ -57,7 +57,7 @@
         }
 
         static public function checkUsernameAvailability($requestedUsername){
-            // Creating a response object, to return to the caller
+            // Creating a response associative array, to return to the caller
             $response = array(
                 "usernameAvailable" => false,
                 "dataValidated" => false,
@@ -75,7 +75,7 @@
                     "notInt" => array("username")
                 ));
 
-                // Setting the dataValidated property of the response object
+                // Setting the dataValidated property of the response associative array
                 $response["dataValidated"] = $dataValidated["dataValidated"];
 
                 // Looping through any errors from the username validation, and adding them
