@@ -1,9 +1,13 @@
 <?php
+    // Checking if a user is logged in
     if(isset($_SESSION["shopping_session"]->userId)){
+
+        // Getting the current details of the user
         $userDetails = Database::getUserDetails($_SESSION["shopping_session"]->userId);
 
+        // Checking if the user already has a postal address
         if(isset($userDetails->address)){
-            // Setting current data, so it can be used in the address_fieldset below
+            // Setting current address data, so it can be used in the address_fieldset below
             $currentAddressData = $userDetails->address;
         }
 
@@ -31,6 +35,7 @@
         echo "<input type='submit' value='Confirm Address'>";
         echo "</form>";
     } else {
+        // No user is logged in
         Functions::goToPage("page.php?page=login-register");
     }
 ?>

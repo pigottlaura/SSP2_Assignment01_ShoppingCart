@@ -33,7 +33,7 @@
                 }
 
             } else {
-                foreach($validateData["errorMessage"] as $key => $value){
+                foreach($validateData["errors"] as $key => $value){
                     array_push($response["errors"], $value);
                 }
             }
@@ -50,13 +50,13 @@
                 $dataValidated = InputData::validate(array("username" => $requestedUsername), array(
                     "required" => array("username"),
                     "string" => array("username"),
-                    "noSpecialChars" => array("username"),
+                    "validUsername" => array("username"),
                     "notInt" => array("username")
                 ));
 
                 $response["dataValidated"] = $dataValidated["dataValidated"];
 
-                foreach($dataValidated["errorMessage"] as $key => $value){
+                foreach($dataValidated["errors"] as $key => $value){
                     array_push($response["errors"], $value);
                 }
 

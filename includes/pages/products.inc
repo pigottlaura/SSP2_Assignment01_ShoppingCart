@@ -1,5 +1,8 @@
 <?php
+    // Checking if a category has been specified, if not then defaulting to 1 (i.e. all products)
     $category = isset($_GET["category"]) && $_GET["category"] > 0 ? $_GET["category"] : 1;
+
+    // Getting the relevant cateogry heading, or if category is 1 then defaulting it to "All Products"
     $heading = $category > 1 ? Database::getCategoryName($category) : "All Products";
     echo "<h2>" . $heading . "</h2>";
 ?>
@@ -21,3 +24,8 @@
     <option value="50">50</option>
 </select>
 <div id="products"></div>
+
+<?php
+    // The call for the products to be displayed is made client side, through and AJAX request
+    // as soon as the page loads
+?>

@@ -9,9 +9,10 @@
         error_reporting(E_ALL);
     }
 
+    // Using sessions
     session_start();
 
-    // Initialising Session if it does not already exist
+    // Initialising a new Session if one does not already exist
     if(!$_SESSION) {
         $_SESSION["shopping_session"] = (object) array(
             "shopping_cart" => new ShoppingCart()

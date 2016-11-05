@@ -81,15 +81,15 @@
 
         static public function display(){
             $html = "<h1>Order Details</h1>";
-            foreach ($_SESSION["shopping_session"]->shopping_cart->tempOrderItemDetails->orderItems as $item => $itemDetails) {
+            foreach ($_SESSION["shopping_session"]->tempOrderDetails->orderItems as $item => $itemDetails) {
                 $_SESSION["shopping_session"]->shopping_cart->orderTotal += $itemDetails["price"] * $itemDetails["numItems"];
 
                 $html .= "<div class='cartItemContainer'>";
                 $html .= "<img src='./images/products/" . $itemDetails["image"] . "' alt='" . $itemDetails["name"] . "'>";
                 $html .= "<strong>" . $itemDetails["name"] . "</strong>";
                 $html .= " @ €" . $itemDetails["price"] . " x " . $itemDetails["numItems"] . " = €" . ($itemDetails["price"] * $itemDetails["numItems"]);
-                $html .= "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=adjustNumItems&adjustBy=-1&productId=" . $itemDetails["id"] . "' class='addNumItems'><button>-</button></a>";
-                $html .= "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=adjustNumItems&adjustBy=1&productId=" . $itemDetails["id"] . "' class='removeNumItems'><button>+</button></a>";
+                $html .= "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=adjust-num-items&adjustBy=-1&productId=" . $itemDetails["id"] . "' class='addNumItems'><button>-</button></a>";
+                $html .= "<a href='page.php?" . $_SERVER["QUERY_STRING"] . "&action=adjust-num-items&adjustBy=1&productId=" . $itemDetails["id"] . "' class='removeNumItems'><button>+</button></a>";
                 $html .= "</div>";
             }
             $html .= "Total: €" . $_SESSION["shopping_session"]->shopping_cart->orderTotal;

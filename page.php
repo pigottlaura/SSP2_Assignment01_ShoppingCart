@@ -32,8 +32,8 @@
         if(isset($_GET["action"])){
             if ($_GET["action"] == "place-order") {
                 include("./includes/actions/place-order.inc");
-            } else if ($_GET["action"] == "adjustNumItems") {
-                include("./includes/actions/adjustNumItems.inc");
+            } else if ($_GET["action"] == "adjust-num-items") {
+                include("./includes/actions/adjust-num-items.inc");
             } else if($_GET["action"] == "login") {
                 include("./includes/actions/login.inc");
             } else if($_GET["action"] == "register") {

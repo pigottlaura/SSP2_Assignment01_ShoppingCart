@@ -1,4 +1,5 @@
 <?php
+    // Checking if the adjustment is an increase or a decrease
     if($_GET["adjustBy"] > 0){
         $_SESSION["shopping_session"]->shopping_cart->addItem($_GET["productId"], $_GET["adjustBy"]);
     } else {

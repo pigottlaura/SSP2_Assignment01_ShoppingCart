@@ -7,13 +7,13 @@
         public $orderPlaced = false;
         public $deliveryDetails;
 
-        public function __construct($tempOrderItemDetails){
+        public function __construct($tempOrderDetails){
             $this->orderedBy = $_SESSION["shopping_session"]->userId;
             $this->orderDate = date('d F Y');
-            $this->orderItems = $tempOrderItemDetails->orderItems;
+            $this->orderItems = $tempOrderDetails->orderItems;
             $this->orderPlaced = false;
-            $this->deliveryDetails = $tempOrderItemDetails->deliveryDetails;
-            unset($_SESSION["shopping_session"]->shopping_cart->tempOrderItemDetails);
+            $this->deliveryDetails = $tempOrderDetails->deliveryDetails;
+            unset($_SESSION["shopping_session"]->tempOrderDetails);
         }
 
         public function placeOrder(){

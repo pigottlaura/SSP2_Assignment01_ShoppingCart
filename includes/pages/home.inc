@@ -4,6 +4,8 @@
 
 <h4>vvv LATEST PRODUCTS vvv</h4>
 <?php
+    // Getting the 3 latest products, from all products, ordered by the date
+    // they were added to the database (descending)
     $latestProducts = Database::getProducts(3, 1, "date_added", "desc");
     foreach ($latestProducts as $product) {
         echo "<div class='latestProductContainer'>";
