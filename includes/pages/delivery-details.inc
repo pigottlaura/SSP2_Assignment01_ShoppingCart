@@ -26,6 +26,8 @@
 
         echo "<br>";
 
+        echo "<input type='button' value='Clear Address' id='resetFields'>";
+        echo "<input type='reset' value='Reset to my Address'>";
         echo "<input type='submit' value='Confirm Address'>";
         echo "</form>";
     } else {

@@ -58,6 +58,7 @@
 
         echo "<br>";
 
+        echo "<input type='reset' value='Reset'>";
         echo "<input type='submit' value='Update My Details'>";
         echo "</form>";
     } else {

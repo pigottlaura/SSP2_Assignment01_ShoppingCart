@@ -84,6 +84,17 @@ function clickEvent(e){
             document.getElementById("update-details").appendChild(newAddressHoneypot);
             break;
         }
+        case "resetFields": {
+            var currentForm = e.target.parentNode;
+            var formFields = currentForm.querySelectorAll("input");
+            for(var i=0; i< formFields.length; i++){
+                if(formFields[i].getAttribute("type") != "submit"
+                    && formFields[i].getAttribute("type") != "reset"
+                    && formFields[i].getAttribute("type") != "button"){
+                    formFields[i].value = "";
+                }
+            }
+        }
     }
 
     if(e.target.classList.contains("addToCart")){
