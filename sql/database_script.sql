@@ -92,4 +92,4 @@ INSERT INTO sProduct(name, description, price, image, category) VALUES("Baby Bor
 INSERT INTO sProduct(name, description, price, image, category) VALUES("Jessie Doll", "Toy Story", 16.00, "jessie-doll.jpg", 4);
 INSERT INTO sProduct(name, description, price, image) VALUES("Furby", "Interactive Pet", 12.00, "furby.png");
 INSERT INTO sUser(first_name, last_name, email, username, password) VALUES("Laura", "Pigott", "pigottlaura@gmail.com", "pigottlaura", SHA1("test"));
-INSERT INTO sAddress(user_id, houseName, street, town, county , country, zipCode) VALUES(1, "Angel Heights", "Dromleigh South", "Bantry", "Cork", "Ireland", "XN11254");
+INSERT INTO sAddress(user_id, houseName, street, town, county , country, zipCode) VALUES(1, "Angel Heights", "Dromleigh South", "Bantry", "Co. Cork", "Ireland", "XN11254");
