@@ -4,7 +4,7 @@
     $updateDetails = Login::updateUserDetails($_POST);
     // Determing if the update to the user's details was successful, based on the response object
     if ($updateDetails["successful"]) {
-        Functions::removeFromQueryString("action=");
+        Functions::goToPage("page.php?page=home");
     } else {
         // The update to the user's deat
         echo "Unable to update user details<br>";

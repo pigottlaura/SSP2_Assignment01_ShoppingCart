@@ -39,7 +39,7 @@
                 // given the option to view the receipt in their browser (along with any other previous
                 // receipts they may have)
                 if(!Email::sendOrderEmail($this)){
-                    echo "Order has been successfully placed, but confirmation email failed to send - Order ID #" . $this->orderId ."<br>";
+                    echo "Order has been successfully placed, but confirmation email failed to send - Order ID #" . $this->orderId ."<br><br>";
                 }
 
                 // Generating a receipt for this order, and displaying it on screen

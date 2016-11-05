@@ -30,9 +30,21 @@
 
         echo "<br>";
 
-        echo "<input type='button' value='Clear Address' id='resetFields'>";
-        echo "<input type='reset' value='Reset to my Address'>";
-        echo "<input type='submit' value='Confirm Address'>";
+        // If the user has no address saved, offer them the option to save the one they have entered here
+        if(!isset($userDetails->address)){
+            echo "<label>Save this as my default address";
+            echo "<input type='checkbox' name='saveThisAddress' checked>";
+            echo "</label>";
+        }
+        echo "<br>";
+        echo "<br>";
+
+        echo "<input type='button' value='Clear Details' id='resetFields'>";
+        // If the user has an existing address, allow them to reset the form to this
+        if(isset($userDetails->address)) {
+            echo "<input type='reset' value='Reset to my Address'>";
+        }
+        echo "<input type='submit' value='Confirm Address and Place Order'>";
         echo "</form>";
     } else {
         // No user is logged in

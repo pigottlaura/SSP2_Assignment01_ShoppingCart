@@ -96,7 +96,8 @@ function clickEvent(e){
             for(var i=0; i< formFields.length; i++){
                 if(formFields[i].getAttribute("type") != "submit"
                     && formFields[i].getAttribute("type") != "reset"
-                    && formFields[i].getAttribute("type") != "button"){
+                    && formFields[i].getAttribute("type") != "button"
+                    && formFields[i].getAttribute("disabled") == null){
                     formFields[i].value = "";
                 }
             }

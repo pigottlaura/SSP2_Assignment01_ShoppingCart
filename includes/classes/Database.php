@@ -117,26 +117,41 @@
             //(based on a hidden input that would have been added to the form client side, if they had
             // clicked the "addAddress" button, or just had an existing address already stored)
             if(isset($newUserDetails["address_change"]) ||isset($newUserDetails["address_new"])){
+                $addressResult = false;
                 if(isset($newUserDetails["address_change"])){
                     $addressStatement = self::getConnection()->prepare("UPDATE sAddress SET houseName=:houseName, street=:street, town=:town, county=:county, country=:country, zipCode=:zipCode WHERE user_id = :userId;");
+                    $addressStatement->bindParam(":userId", $_SESSION["shopping_session"]->userId);
+                    $addressStatement->bindParam(":houseName", $newUserDetails["houseName"]);
+                    $addressStatement->bindParam(":street", $newUserDetails["street"]);
+                    $addressStatement->bindParam(":town", $newUserDetails["town"]);
+                    $addressStatement->bindParam(":county", $newUserDetails["county"]);
+                    $addressStatement->bindParam(":country", $newUserDetails["country"]);
+                    $addressStatement->bindParam(":zipCode", $newUserDetails["zipCode"]);
+                    $addressResult = $addressStatement->execute();
                 } else if(isset($newUserDetails["address_new"])){
-                    $addressStatement = self::getConnection()->prepare("INSERT INTO sAddress(user_id, address_houseName, street, town, county, country, zipCode) VALUES(:userId, :houseName, :street, :town, :county , :country, :zipCode)");
+                    $addressResult = self::addNewUserAddress($newUserDetails);
                 }
-                $addressStatement->bindParam(":userId", $_SESSION["shopping_session"]->userId);
-                $addressStatement->bindParam(":houseName", $newUserDetails["houseName"]);
-                $addressStatement->bindParam(":street", $newUserDetails["street"]);
-                $addressStatement->bindParam(":town", $newUserDetails["town"]);
-                $addressStatement->bindParam(":county", $newUserDetails["county"]);
-                $addressStatement->bindParam(":country", $newUserDetails["country"]);
-                $addressStatement->bindParam(":zipCode", $newUserDetails["zipCode"]);
 
-                // Multiplying the current succesful value by the result of the addressStatement's execution
+                // Multiplying the current succesful value by the result of the address result
                 // so that the final response will reflect if all of the request was successful i.e.
                 // if the user details were updated, but the address failed true * false = false (1 * 0 = 0)
-                $successful *= $addressStatement->execute();
+                $successful *= $addressResult;
             }
 
             return $successful;
+        }
+
+        static public function addNewUserAddress($newUserAddress){
+            $addressStatement = self::getConnection()->prepare("INSERT INTO sAddress(user_id, houseName, street, town, county, country, zipCode) VALUES(:userId, :houseName, :street, :town, :county , :country, :zipCode)");
+            $addressStatement->bindParam(":userId", $_SESSION["shopping_session"]->userId);
+            $addressStatement->bindParam(":houseName", $newUserAddress["houseName"]);
+            $addressStatement->bindParam(":street", $newUserAddress["street"]);
+            $addressStatement->bindParam(":town", $newUserAddress["town"]);
+            $addressStatement->bindParam(":county", $newUserAddress["county"]);
+            $addressStatement->bindParam(":country", $newUserAddress["country"]);
+            $addressStatement->bindParam(":zipCode", $newUserAddress["zipCode"]);
+
+            return $addressStatement->execute();
         }
 
         static public function getProducts($numProducts=10, $category=1, $orderBy="name", $ascDesc="desc"){

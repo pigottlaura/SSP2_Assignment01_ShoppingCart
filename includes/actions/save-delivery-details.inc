@@ -27,6 +27,12 @@
             )
         );
 
+        // Checking if the user has chosen to save this address as their default address
+        // (this option is only available if the user had no address saved previously)
+        if(isset($sanitisedData["saveThisAddress"]) && $sanitisedData["saveThisAddress"] == "on"){
+            Database::addNewUserAddress($sanitisedData);
+        }
+
         // Taking the user on to the next step of the order process
         Functions::goToPage("page.php?page=shopping-cart&action=place-order");
     } else {

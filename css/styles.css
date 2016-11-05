@@ -78,7 +78,7 @@ label {
     display: inline-block;
     box-sizing: border-box;
 }
-label input, form label select {
+label input:not([type='checkbox']), form label select {
     float: right;
 }
 form label select {
@@ -90,7 +90,7 @@ form label {
     position: relative;
     padding-right: 2%;
 }
-form label input, form label select {
+form label input:not([type='checkbox']), form label select {
     width: 70%;
 }
 form {

@@ -12,7 +12,9 @@
                     include("./includes/pages/shopping-cart.inc");
                 }
             } else if($_GET["page"] == "delivery-details") {
-                include("./includes/pages/delivery-details.inc");
+                if(!isset($_GET["action"]) || $_GET["action"] != "save-delivery-details") {
+                    include("./includes/pages/delivery-details.inc");
+                }
             } else if($_GET["page"] == "login-register") {
                 include("./includes/pages/login-register.inc");
             } else if($_GET["page"] == "contact-us") {
