@@ -46,6 +46,12 @@
                 Login::logout();
             }
         }
+
+        // EMPTY THE SHOPPING CART
+        if(isset($_GET["emptyCart"])) {
+            $_SESSION["shopping_session"]->shopping_cart->emptyCart();
+            Functions::removeFromQueryString("emptyCart");
+        }
     ?>
 </section>
 <?php

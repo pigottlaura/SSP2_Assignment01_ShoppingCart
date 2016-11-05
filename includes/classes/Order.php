@@ -13,48 +13,76 @@
             $this->orderItems = $tempOrderDetails->orderItems;
             $this->orderPlaced = false;
             $this->deliveryDetails = $tempOrderDetails->deliveryDetails;
+
+            // Unsetting the temporary order details on the session object, as their only
+            // purpose was to get the user from the shopping cart to creating the order.
             unset($_SESSION["shopping_session"]->tempOrderDetails);
         }
 
         public function placeOrder(){
+            // Getting the total cost of the order by calculating the value of the shopping cart
             $this->orderTotal = $_SESSION["shopping_session"]->shopping_cart->calculateTotal();
+
+            // Creating the order in the database, by passing this instance to the Database class.
+            // If this is successful, continuing on to send the user a confirmation email and/or
+            // generate a receipt for them
             if(Database::createOrder($this)) {
+
+                // Emptying the shopping cart, as the order has been successfully placed
                 $_SESSION["shopping_session"]->shopping_cart->emptyCart();
+                $this->orderPlaced = true;
+
                 echo "<h2>Thank you for your Order</h2>";
+
+                // Attempting the send the email to the user. Even if this step fails, the order
+                // has already been successfully placed, so the user will just be shown the error, and
+                // given the option to view the receipt in their browser (along with any other previous
+                // receipts they may have)
                 if(!Email::sendOrderEmail($this)){
-                    self::orderError("Order has been successfully placed, but confirmation email failed to send - Order ID #" . $this->orderId);
+                    echo "Order has been successfully placed, but confirmation email failed to send - Order ID #" . $this->orderId ."<br>";
                 }
+
+                // Generating a receipt for this order, and displaying it on screen
                 echo self::createReceipt($this->orderId);
+
+                // Providing the user with a link to view all of their previous order receipts
                 echo "<br><a href='page.php?page=view-my-orders'>View All Receipts</a>";
-            } else {
-                self::orderError("Failed to create order in database");
             }
         }
 
-        static private function orderError($error){
-            echo "\r\nERROR - " . $error . "\r\n";
-        }
-
         static public function createReceipt($orderId){
+            // Getting the requested order from the database
             $order = (object) Database::getOrder($orderId);
+
+            // Checking that the user that is currently logged in, is the one that placed
+            // this order
             if($_SESSION["shopping_session"]->userId == $order->ordered_by){
+                // Getting the details of the user that placed the order
                 $order->ordered_by = Database::getUserDetails($order->ordered_by);
+                // Getting the delivery address of the order (may not be the same as the user's
+                // saved address details
                 $order->delivery_address = Database::getOrderAddress($orderId);
+                // Getting the items that were ordered
                 $order->items = Database::getOrderItems($orderId);
+                // Creating a date object, from the date value stored for when this order was placed
                 $order->date_ordered = date_create($order->date_ordered);
 
+                // Creating a temporary array to store the address details of the company,
+                // so that they match with the syntax of the addresses database columns (can
+                // only store single values in constants, so can't declare an array() in CONF)
                 $companyAddress = array(
-                    "houseName" => "The Showgrounds",
-                    "street" => "5 Wolfe Tone Street",
-                    "town" => "Clonmel",
-                    "county" => "Tipperary",
-                    "country" => "Ireland",
-                    "zipCode" => "YNZZ44"
+                    "houseName" => CONF_COMP_ADDRESS_HOUSENAME,
+                    "street" => CONF_COMP_ADDRESS_STREET,
+                    "town" => CONF_COMP_ADDRESS_TOWN,
+                    "county" => CONF_COMP_ADDRESS_COUNTY,
+                    "country" => CONF_COMP_ADDRESS_COUNTRY,
+                    "zipCode" => CONF_COMP_ADDRESS_ZIPCODE
                 );
 
+                // Creating Table
                 $html = "<table width='600px'>";
 
-                // HEADING
+                // Main Heading
                 $html .= "<tr><th colspan='5'>Order Confirmation</th></tr>";
 
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
@@ -67,7 +95,7 @@
 
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
-                // TITLE LINES
+                //  Deliver To
                 $html .= "<tr>";
                 $html .= "<td colspan='2'><strong>Deliver To:</strong></td>";
                 $html .= "<td colspan='3'>&nbsp;</td>";
@@ -79,7 +107,10 @@
                 $html .= "<td colspan='2' align='right'>" . CONF_COMP_NAME . "</td>";
                 $html .= "</tr>";
 
-                // ADDRESS LINES
+                // Address lines
+                // Looping through the companyAddress temporary array, to get the headings for each
+                // line of the address, and then accessing these from the delivery address and the
+                // company address
                 foreach($companyAddress as $key => $value){
                     $html .= "<tr>";
                     if(isset($order->delivery_address[$key])) {
@@ -99,6 +130,7 @@
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
+                // Order Id and Date
                 $html .= "<tr>";
                 $html .= "<td colspan='2'><strong>Order ID:</strong> #" . $order->id . "</td>";
                 $html .= "<td></td>";
@@ -113,7 +145,7 @@
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
-                // ITEM DETAILS HEADING
+                // Item details headings
                 $html .= "<tr>";
                 $html .= "<th align='left'>Product ID</th>";
                 $html .= "<th align='left'>Product Name</th>";
@@ -122,7 +154,8 @@
                 $html .= "<th align='left'>Total</th>";
                 $html .= "</tr>";
 
-                // ITEM DETAILS CONTENT
+                // Item details content
+                // Displaying prices with 2 decimal places i.e. €20.00
                 foreach($order->items as $key => $item){
                     $html .= "<tr>";
                     $html .= "<td>#" . $item["product_id"] . "</td>";
@@ -136,21 +169,23 @@
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
-                // ORDER TOTAL
+                // Order Total
                 $html .= "<tr>";
                 $html .= "<td colspan='3'>&nbsp;</td>";
                 $html .= "<td align='right'>Order Total:</td>";
                 $html .= "<td align='right'>€" . number_format($order->order_total, 2) . "</td>";
                 $html .= "</tr>";
 
-                // THANK YOU
+                // Thank You
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
                 $html .= "<tr><td colspan='5' align='center'><strong>Paid with Thanks</strong></td></tr>";
-                $html .= "<tr><td colspan='5' align='center'><em>Your order will be dispatched within 2 working days</em></td></tr>";
+                $html .= "<tr><td colspan='5' align='center'><em>Your order will be dispatched within " . CONF_ORDERS_WORKING_DAYS . " working days</em></td></tr>";
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
                 $html .= "</table>";
+
+                // Returning the HTML to the caller
                 return $html;
             }
         }

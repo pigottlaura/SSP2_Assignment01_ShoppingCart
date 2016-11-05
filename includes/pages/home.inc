@@ -7,6 +7,8 @@
     // Getting the 3 latest products, from all products, ordered by the date
     // they were added to the database (descending)
     $latestProducts = Database::getProducts(3, 1, "date_added", "desc");
+
+    // Loop through each of the products and display them
     foreach ($latestProducts as $product) {
         echo "<div class='latestProductContainer'>";
         echo "<h4>" . $product["name"] . "</h4>";

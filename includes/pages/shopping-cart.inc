@@ -18,7 +18,8 @@
             $_SESSION["shopping_session"]->tempOrderDetails->orderItems->$itemInfo["id"] = $itemInfo;
         }
 
-        ShoppingCart::display();
+        // Echo the HTML result of the shopping cart display
+        echo ShoppingCart::display();
     } else {
         echo "<h2>Shopping Cart is Empty</h2>";
         echo "<img src='./images/emptyShoppingBasket.png'>";

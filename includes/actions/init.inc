@@ -18,10 +18,4 @@
             "shopping_cart" => new ShoppingCart()
         );
     }
-
-    // Tidying Up URL
-    if(isset($_GET["emptyCart"])) {
-        $_SESSION["shopping_session"]->shopping_cart->emptyCart();
-        Functions::removeFromQueryString("emptyCart");
-    }
 ?>
