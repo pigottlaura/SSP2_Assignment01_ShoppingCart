@@ -149,11 +149,11 @@
 
                 // Item details headings
                 $html .= "<tr>";
-                $html .= "<th align='left'>Product ID</th>";
-                $html .= "<th align='left'>Product Name</th>";
-                $html .= "<th align='left'>Price</th>";
-                $html .= "<th align='left'>Quantity</th>";
-                $html .= "<th align='left'>Total</th>";
+                $html .= "<th>Product ID</th>";
+                $html .= "<th>Product Name</th>";
+                $html .= "<th>Price</th>";
+                $html .= "<th>Quantity</th>";
+                $html .= "<th>Total</th>";
                 $html .= "</tr>";
 
                 // Item details content
@@ -162,20 +162,18 @@
                     $html .= "<tr>";
                     $html .= "<td>#" . $item["product_id"] . "</td>";
                     $html .= "<td>" . $item["product_name"] . "</td>";
-                    $html .= "<td align='right'>€" . number_format($item["selling_price"], 2) . "</td>";
-                    $html .= "<td align='center'>" . $item["number_items"] . "</td>";
-                    $html .= "<td align='right'>€" . number_format(($item["selling_price"] * $item["number_items"]), 2). "&nbsp;" . "</td>";
+                    $html .= "<td>€" . number_format($item["selling_price"], 2) . "</td>";
+                    $html .= "<td>" . $item["number_items"] . "</td>";
+                    $html .= "<td style='text-align:right'>€" . number_format(($item["selling_price"] * $item["number_items"]), 2). "</td>";
                     $html .= "</tr>";
                 }
 
-                $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
                 // Order Total
                 $html .= "<tr>";
                 $html .= "<td colspan='3'>&nbsp;</td>";
-                $html .= "<td align='right'>Order Total:</td>";
-                $html .= "<td align='right'>€" . number_format($order->order_total, 2) . "</td>";
+                $html .= "<td colspan='2' style='text-align:right'>Order Total: €" . number_format($order->order_total, 2) . "</td>";
                 $html .= "</tr>";
 
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
