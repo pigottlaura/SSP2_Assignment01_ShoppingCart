@@ -124,6 +124,11 @@ function clickEvent(e){
             document.getElementById("scTotal").innerHTML = jsonResponse.shoppingCartTotalCost;
         });
     }
+
+    // Fix for IE and Firefox not recognising click on link in a button
+    if(e.target.tagName == "BUTTON" && e.target.querySelectorAll("a").length > 0){
+        e.target.querySelector("a").click();
+    }
 }
 
 

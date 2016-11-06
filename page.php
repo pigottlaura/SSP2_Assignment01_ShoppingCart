@@ -4,25 +4,6 @@
 <section>
     <?php
 
-        // COMPLETE ACTIONS
-        if(isset($_GET["action"])){
-            if ($_GET["action"] == "place-order") {
-                include("./includes/actions/place-order.inc");
-            } else if ($_GET["action"] == "adjust-num-items") {
-                include("./includes/actions/adjust-num-items.inc");
-            } else if($_GET["action"] == "login") {
-                include("./includes/actions/login.inc");
-            } else if($_GET["action"] == "register") {
-                include("./includes/actions/register.inc");
-            } else if($_GET["action"] == "update-details") {
-                include("./includes/actions/update-details.inc");
-            } else if($_GET["action"] == "save-delivery-details") {
-                include("./includes/actions/save-delivery-details.inc");
-            } else if($_GET["action"] == "logout") {
-                Login::logout();
-            }
-        }
-
         // GET PAGES
         if(isset($_GET["page"])) {
             if ($_GET["page"] == "products") {
@@ -50,6 +31,25 @@
             }
         } else {
             include("./includes/pages/home.inc");
+        }
+
+        // COMPLETE ACTIONS
+        if(isset($_GET["action"])){
+            if ($_GET["action"] == "place-order") {
+                include("./includes/actions/place-order.inc");
+            } else if ($_GET["action"] == "adjust-num-items") {
+                include("./includes/actions/adjust-num-items.inc");
+            } else if($_GET["action"] == "login") {
+                include("./includes/actions/login.inc");
+            } else if($_GET["action"] == "register") {
+                include("./includes/actions/register.inc");
+            } else if($_GET["action"] == "update-details") {
+                include("./includes/actions/update-details.inc");
+            } else if($_GET["action"] == "save-delivery-details") {
+                include("./includes/actions/save-delivery-details.inc");
+            } else if($_GET["action"] == "logout") {
+                Login::logout();
+            }
         }
 
         // EMPTY THE SHOPPING CART

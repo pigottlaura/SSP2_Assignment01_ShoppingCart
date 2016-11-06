@@ -146,7 +146,7 @@
             $html = "<table width='600px'>";
             $html .= "<tr><td colspan='2'>&nbsp;</td></tr>";
 
-            $html .= "<tr><td colspan='2'>Hi " . $userDetails->contact["first_name"] . "</td></tr>";
+            $html .= "<tr><td colspan='2'>Hi " . $userDetails->contact["first_name"] . ". </td></tr>";
 
             $html .= "<tr><td colspan='2'>Welcome to your " . CONF_COMP_NAME . " account</td></tr>";
 

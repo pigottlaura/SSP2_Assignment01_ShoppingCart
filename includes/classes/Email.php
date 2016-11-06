@@ -20,7 +20,7 @@
             // Sending the order in an email to the user and website owner. Determining whether
             // or not this was successful and returning this result to the user.
             // Passing in the user's email, subject line and email body
-            $emailSent = self::sendEmail($usersEmail, $subjectLine, $emailBody);
+            $emailSent = self::sendEmail($usersEmail, $subjectLine, $emailBody, true);
 
             return $emailSent;
         }
@@ -32,14 +32,16 @@
             $subject = "Welcome to " . CONF_COMP_NAME;
             $emailBody = Login::createWelcomeMessage($userId);
 
-            self::sendEmail($to, $subject, $emailBody);
+            self::sendEmail($to, $subject, $emailBody, false);
         }
 
-        static private function sendEmail($to, $subject, $emailBody){
+        static private function sendEmail($to, $subject, $emailBody, $bccOwner){
             // Setting the email headers. Sending the email from the orders email
-            // address, and BCCing the owners email address
+            // address, and BCCing the owners email address when requested
             $headers = "From: " . CONF_ORDERS_EMAIL . "\r\n";
-            $headers .= "Bcc: " . CONF_OWNER_EMAIL . "\r\n";
+            if($bccOwner){
+                $headers .= "Bcc: " . CONF_OWNER_EMAIL . "\r\n";
+            }
             $headers .= "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 

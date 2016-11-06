@@ -29,10 +29,12 @@ header h1 {
 }
 header nav ul {
     display: flex;
+    display: -ms-flexbox;
     list-style: none;
 }
 header nav ul li {
-    flex: 1;
+    flex-grow: 1;
+    -ms-flex-positive: 1 !important;
 }
 header, header a, footer {
     color: #FFFFFF;

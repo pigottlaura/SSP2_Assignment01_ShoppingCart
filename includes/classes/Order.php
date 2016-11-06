@@ -51,6 +51,8 @@
         }
 
         static public function createReceipt($orderId){
+            $html = "";
+
             // Getting the requested order from the database
             $order = (object) Database::getOrder($orderId);
 
@@ -80,7 +82,7 @@
                 );
 
                 // Creating Table
-                $html = "<table width='600px'>";
+                $html .= "<table width='600px'>";
 
                 // Main Heading
                 $html .= "<tr><th colspan='5'>Order Confirmation</th></tr>";
@@ -100,7 +102,7 @@
                 $html .= "<td colspan='2'><strong>Deliver To:</strong></td>";
                 $html .= "<td colspan='3'>&nbsp;</td>";
                 $html .= "</tr>";
-                
+
                 $html .= "<tr>";
                 $html .= "<td colspan='2'>" . $order->recipient_first_name . " " . $order->recipient_last_name . "</td>";
                 $html .= "<td>&nbsp;</td>";
@@ -176,18 +178,12 @@
                 $html .= "<td align='right'>€" . number_format($order->order_total, 2) . "</td>";
                 $html .= "</tr>";
 
-                // Thank You
-                $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
-                $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
-                $html .= "<tr><td colspan='5' align='center'><strong>Paid with Thanks</strong></td></tr>";
-                $html .= "<tr><td colspan='5' align='center'><em>Your order will be dispatched within " . CONF_ORDERS_WORKING_DAYS . " working days</em></td></tr>";
                 $html .= "<tr><td colspan='5'>&nbsp;</td></tr>";
 
                 $html .= "</table>";
-
-                // Returning the HTML to the caller
-                return $html;
             }
+            // Returning the HTML to the caller
+            return $html;
         }
     }
 ?>
