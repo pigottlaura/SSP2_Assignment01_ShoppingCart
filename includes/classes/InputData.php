@@ -152,6 +152,7 @@
                 $sanitisedData[$key] = trim($value);
                 $sanitisedData[$key] = htmlentities($sanitisedData[$key]);
                 $sanitisedData[$key] = strip_tags($sanitisedData[$key]);
+                $sanitisedData[$key] = str_replace("'", "`", $sanitisedData[$key]);
             }
 
             // Return the array of sanitised fields
